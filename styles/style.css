@@ -9,16 +9,15 @@
   --blue-two: #5f6caf;
 }
 
-header {
-  margin: 10px;
-}
-
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
   font-family: 'Inter', sans-serif;
   background-color: var(--background-color);
+}
+header {
+  margin: 10px;
 }
 
 section {
@@ -27,39 +26,59 @@ section {
   flex-direction: column;
 }
 
-.describe-pet {
-  display: flex;
-  margin: 0 0 50px ;
+.container > * {
+  margin: 20px 0;
 }
 
-.block {
-  min-width: 324px;
-  margin: 15px 0;
+.container p {
+  text-align: center;
+  font-size: 22px;
+  padding: 15px 30px;
+  border-radius: 22px;
+  background-color: var(--red);
+  color: white;
 }
 
-.block > * {
-  margin: 8px 0;
-}
-
-.block input{
-  width: 270px;
-}
-
-.block textarea{
+.container img {
   width: 300px;
 }
-.block input,
-.block textarea {
-  background-color: white;
-  border: none;
-  min-height: 40px;
-  padding: 10px;
+
+button {
+  color: white;
+  cursor: pointer;
 }
 
-.describe-pet h1 {
-  width: fit-content;
-  font-size: 30px;
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }
+
+.buttons button,
+.services button,
+#confirm-description {
+  width: 160px;
+  height: 45px;
+  font-size: 20px;
+  border-radius: 16px;
+  border-style: none;
+}
+
+#confirm {
+  background-color: var(--confirm-color);
+}
+
+#cancel {
+  background-color: var(--cancel-color);
+}
+
+a {
+  text-decoration: none;
+  background-color: inherit;
+  color: inherit;
+}
+
+/* styles choose-service.html */
 .services {
   margin-top: 250px;
 }
@@ -71,67 +90,65 @@ section {
 .services button {
   background-color: var(--red);
   width: 220px;
-  border-radius: 22px;
-}
-
-.container > * {
-  margin: 20px 0;
-}
-
-.container p {
-  color: white;
-  text-align: center;
-  font-size: 22px;
-  padding: 15px 30px;
-  border-radius: 22px;
-  background-color: var(--red);
-}
-
-.container img {
-  width: 300px;
 }
 
 h1 {
   min-width: 300px;
-  background-color: transparent;
   color: var(--title-color);
-  border-radius: 22px;
   text-align: center;
   align-self: center;
   font-weight: 500;
-  font-style: normal;
   font-size: 25px;
   font-family: 'Poppins', sans-serif;
+    /* background-color: transparent; */
+    /* border-radius: 22px; */
 }
 
-.buttons {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
+/* styles describe-pet.html */
+
+.describe-pet {
+  margin: 0 0 50px;
 }
 
-.buttons button,
-.services button {
-  width: 160px;
-  height: 45px;
-  font-size: 20px;
-  border-radius: 16px;
-  border-style: none;
-  color: white;
+.describe-pet h1 {
+  font-size: 30px;
 }
 
-#confirm {
-  background-color: var(--confirm-color);
+.block {
+  min-width: 324px;
+  margin: 15px 0;
 }
 
-a {
-  text-decoration: none;
-  background-color: inherit;
-  color: inherit;
+.block > * {
+  margin: 8px 0;
 }
 
-#cancel {
-  background-color: var(--cancel-color);
+.block p {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.block input {
+  width: 270px;
+}
+
+.block textarea {
+  width: 300px;
+}
+.block input,
+.block textarea {
+  background-color: white;
+  border: none;
+  min-height: 40px;
+  padding: 10px;
+}
+
+.type,
+.size,
+.weigth,
+.stars,
+.observations {
+  margin-left: 16px;
 }
 
 .type {
@@ -146,24 +163,7 @@ a {
   border: none;
   border-radius: 20px;
   background-color: var(--orange);
-  color: white;
   font-size: 20px;
-  cursor: pointer;
-}
-
-.size {
-  display: flex;
-  justify-content: center;
-}
-.size button {
-  background-color: var(--orange);
-  padding: 15px 35px;
-  border-radius: 15px;
-  border: none;
-  color: white;
-  margin: 0 8px;
-  font-size: 20px;
-  cursor: pointer;
 }
 
 .size button:hover,
@@ -171,34 +171,32 @@ a {
   background-color: var(--blue-two);
 }
 
-.block p {
-  font-size: 22px;
-  font-weight: 500;
+.size {
+  display: flex;
+  justify-content: center;
 }
 
-.type,
-.size,
-.weigth,
-.stars,
-.observations{
-  margin-left: 16px;
+.size button {
+  background-color: var(--orange);
+  padding: 15px 35px;
+  border-radius: 15px;
+  border: none;
+  margin: 0 8px;
+  font-size: 20px;
 }
 
 .stars img {
   cursor: pointer;
 }
 
-#confirm-description{
+#confirm-description {
   width: 170px;
-  height: 45px;
-  border: none;
   border-radius: 12px;
-  font-size: 20px;
   background-color: var(--red);
-  color: white;
-  border-radius: 12px;
 }
 
-#confirm-description:hover{
-  background-color: #C6363B;
+#confirm-description:hover {
+  background-color: #c6363b;
 }
+
+/* styles select.html */
