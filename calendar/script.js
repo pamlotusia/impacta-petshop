@@ -26,9 +26,13 @@ document.addEventListener('DOMContentLoaded', function () {
       i < 42 - firstDayOfWeek;
       i++, index++
     ) {
-      let dt = new Date(ano, mes, i)
+      let dt = new Date(ano, mes, i+1)
       let dayTable = tableDays.getElementsByTagName('td')[index]
+      dayTable.classList.remove('mes-anterior')
+      dayTable.classList.remove('proximo-mes')
       dayTable.innerHTML = dt.getDate()
+
+
 
       if (i < 1) {
         dayTable.classList.add('mes-anterior')
@@ -43,4 +47,17 @@ document.addEventListener('DOMContentLoaded', function () {
   let mes = now.getMonth()
   let ano = now.getFullYear()
   GetDaysCalendar(mes, ano)
+
+  const botao_proximo = document.getElementById('btn-next')
+  const botao_anterior = document.getElementById('btn-ant')
+
+  botao_proximo.onclick = function(){
+    mes++
+    GetDaysCalendar(mes, ano)
+  }
+
+  botao_anterior.onclick = function(){
+    mes--
+    GetDaysCalendar(mes, ano)
+  }
 })

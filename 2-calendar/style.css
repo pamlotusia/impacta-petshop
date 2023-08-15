@@ -1,0 +1,323 @@
+:root {
+  --dark-text: #f8fbff;
+  --light-body: #f3f8fe;
+  --light-main: #fdfdfd;
+  --light-second: #c3c2c8;
+  --light-hover: #f0f0f0;
+  --light-text: #151426;
+  --light-btn: #9796f0;
+  --blue: #0000ff;
+  --white: #fff;
+  --shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  --font-family: consolas;
+}
+
+*{
+  padding: 0 ;
+  margin:0 ;
+  box-sizing: border-box;
+}
+
+html,body{
+  place-items: center;
+  font-family: var(--font-family);
+  background: linear-gradient(to right, #9796f0, #fbc7d4);
+  overflow: hidden;
+}
+
+.container{
+  width: max-content;
+  height: max-content;
+  position: relative;
+  display: flex;
+  padding: 2% 0px 0px 0px ;
+  justify-content: center;
+  top: 10%;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.calendar{
+  height: 610px;
+  width: max-content;
+  background-color: white;
+  border-radius: 25px;
+  overflow: hidden;
+  padding: 30px 50px 0 50px;
+  box-shadow: var(--shadow);
+}
+
+.calendar-header{
+  background: #9796f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  color: var(--white);
+  padding: 10px;
+}
+
+.calendar-body{
+  pad: 10px;
+}
+
+.calendar-week-days{
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  font-weight: 600;
+  cursor: pointer;
+  color: rgb(104, 104, 104);
+}
+
+.calendar-week-days div:hover{
+  color: black;
+  transform: scale(1.2);
+  transition: all .2s ease-in-out;
+}
+
+.calendar-week-days div{
+  display: grid;
+  place-items: center;
+  color: var(--light-text);
+  height: 50px;
+}
+
+.calendar-days{
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  color: var(--light-text);
+}
+
+.calendar-days div{
+  width: 37px;
+  height: 33px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  position: relative;
+  cursor: pointer;
+  animation: to-top 1s forwards;
+}
+
+.month-picker{
+  padding: 5px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.month-picker:hover{
+  background-color: var(--light-btn);
+  color: var(--light-hover);
+}
+
+.year-picker{
+  display: flex;
+  align-items: center;
+}
+
+.year-change{
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  margin: 0 10px ;
+  cursor: pointer;
+}
+
+.year-change:hover{
+  transition: all .2s ease-in-out;
+  transform: scale(1.12);
+}
+
+.year-change:hover pre{
+  color: var(--light-body);
+}
+
+.calendar-footer{
+  padding: 10px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+#year:hover{
+  cursor: pointer;
+  transform: scale(1.2);
+  transition: all .2s ease-in-out;
+}
+
+.calendar-days div span{
+  position: absolute;
+}
+
+.calendar-days div:hover{
+  transition: width .2s ease-in-out, heigth .2s ease-in-out;
+  background-color: #fbc7d4;
+  border-radius: 20%;
+  color: var(--dark-text);
+}
+
+.month-list{
+  position: relative;
+  left: 0;
+  top: -50px;
+  background-color: #ebebeb;
+  color: var(--light-text);
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 5px;
+  border-radius: 20px;
+}
+
+.month-list > div{
+  display: grid;
+  place-content: center;
+  margin: 5px 10px;
+  transition: all .2s ease-in-out;
+}
+
+.month-list > div> div {
+  border-radius: 15px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.month-list > div > div:hover{
+  background-color: var(--light-btn);
+  color: var(--dark-text);
+  transform: scale(0.9);
+  transition: all .2s ease-in-out;
+}
+
+.month-list .show{
+  visibility: visible;
+  pointer-events: visible;
+  transition: 0.6 ease-in-out;
+  animation: to-left .71s forwards;
+}
+
+.month-list.hideonce{
+  visibility: hidden;
+}
+
+.month-list.hide{
+  animation: to-right 1s forwards;
+  visibility: none;
+  pointer-events: none;
+}
+
+.date-time-formate{
+  width: max-content;
+  height: max-content;
+  font-family: Dubai Light, Century Gothic;
+  position: relative;
+  display: inline;
+  top: 140px;
+  justify-content: center;
+}
+
+.day-text-formate{
+  font-family: Microsoft JhengHei UI;
+  font-size: 1.4rem;
+  padding-right: 5%;
+  border-right: 3px solid #9796f0;
+  position: absolute;
+  left: -1rem;
+}
+
+.date-time-value{
+  display: block;
+  height: max-content;
+  width: max-content;
+  position: relative;
+  left: 40%;
+  top: -18px;
+  text-align: center;
+}
+
+.time-formate{
+  font-size: 1.5rem;
+}
+
+.time-formate.hideTime{
+  animation: hidetime 1.5s forwards;
+}
+
+.day-text-formate.hidetime{
+  animation: hidetime 1.5s forwards;
+}
+
+.date-formate.hideTime{
+  animation: hidetime 1.5s forwards;
+}
+
+.day-text-formate.showTime{
+  animation: showtime 1s forwards;
+}
+
+.time-formate.showtime{
+  animation: showtime 1s forwards;
+}
+
+.date-formate.showtime{
+  animation: showtime 1s forwards;
+}
+
+@keyframes to-top {
+  0%{
+    transform: translateY(0);
+  }100%{
+    transform: translateY(100%);
+    opacity: 1;
+  }
+}
+
+@keyframes to-left{
+  0%{
+    transform: translateX(230%);
+    opacity: 1;
+  }100%{
+    transform: translateX(230%);
+    opacity: 1;
+  }
+}
+
+@keyframes to-right{
+  0%{
+    transform: translateX(0%);
+    opacity: 1;
+  }100%{
+    transform: translateX(-150%);
+    opacity: 1;
+  }
+}
+
+@keyframes showtime{
+  0%{
+    transform: translateX(250%);
+    opacity: 1;
+  }100%{
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+
+@keyframes hidetime{
+  0%{
+    transform: translateX(0%);
+    opacity: 1;
+  }100%{
+    transform: translateX(-370%);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 375px){
+  .month-list>div{
+    margin: 5px 0;
+  }
+}
