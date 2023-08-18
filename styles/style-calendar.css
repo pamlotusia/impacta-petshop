@@ -1,11 +1,13 @@
 :root {
+  --selected-day: #dfba96;
   --dark-text: #f8fbff;
   --light-body: #f3f8fe;
   --light-main: #fdfdfd;
   --light-second: #c3c2c8;
   --light-hover: #f0f0f0;
   --light-text: #151426;
-  --light-btn: #9796f0;
+  --red: #e3585d;
+  --dark-blue: #211f51;
   --blue: #0000ff;
   --white: #fff;
   --shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
@@ -37,7 +39,7 @@
 }
 
 .calendar-header {
-  background: #9796f0;
+  background: var(--dark-blue);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -127,20 +129,20 @@
 }
 .calendar-days div:hover {
   transition: width 0.2s ease-in-out, height 0.2s ease-in-out;
-  background-color: #fbc7d4;
+  background-color: var(--selected-day);
   border-radius: 20%;
   color: var(--dark-text);
 }
 .calendar-days div.current-date {
   color: var(--dark-text);
-  background-color: var(--light-btn);
+  background-color: var(--dark-blue);
   border-radius: 20%;
 }
 .month-list {
   position: absolute;
   left: 0;
-  background-color: #ebebeb;
-  color: var(--light-text);
+  background-color: var(--dark-blue);
+  color: white;
   display: grid;
   grid-template-columns: repeat(3, auto);
   gap: 5px;
@@ -158,8 +160,8 @@
   cursor: pointer;
 }
 .month-list > div > div:hover {
-  background-color: var(--light-btn);
-  color: var(--dark-text);
+  background-color: var(--red);
+  color: var(--black-blue);
   transform: scale(0.9);
   transition: all 0.2s ease-in-out;
 }
@@ -190,7 +192,7 @@
   font-family: Microsoft JhengHei UI;
   font-size: 1.4rem;
   padding-right: 5%;
-  border-right: 3px solid #9796f0;
+  border-right: 3px solid #e3585d;
   position: absolute;
   left: -1rem;
 }
