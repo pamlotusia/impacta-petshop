@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <select id="mySelect">
+  </select>
+  
+  <script>
+    // List of names
+    var nameList = ["Name 1", "Name 2", "Name 3", "Name 4"];
+  
+    // Get reference to the select element
+    var selectElement = document.getElementById("mySelect");
+  
+    // Loop through the list of names and generate options
+    for (var i = 0; i < nameList.length; i++) {
+      var option = document.createElement("option");
+      option.value = nameList[i];
+      option.textContent = nameList[i];
+      selectElement.appendChild(option);
+    }
+  </script>
+  
+</body>
+</html>

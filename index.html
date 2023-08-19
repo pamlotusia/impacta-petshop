@@ -18,12 +18,6 @@
     
   </head>
   <body>
-    <header>
-      <span class="material-symbols-outlined">
-        arrow_back
-        </span>
-    </header>
-
     <section class="container">
       <img src="/group.svg" alt="dog-gromming" />
 
@@ -32,7 +26,10 @@
       <div class="container-calendar">
         <div class="calendar">
           <div class="calendar-header">
-            <span class="month-picker" id="month-picker"> Maio </span>
+
+            <select name="months" id="month-picker">
+            </select>
+
             <div class="year-picker" id="year-picker">
               <span class="year-change" id="pre-year">
                 <pre><</pre>
@@ -59,15 +56,6 @@
           </div>
     
           <div class="calendar-footer"></div>
-          
-          <!-- <div class="date-time-formate">
-            <div class="day-text-formate">TODAY</div>
-            <div class="date-time-value">
-              <div class="time-formete">02:51:20</div>
-              <div class="date-formate"> 23 - july - 2022</div>
-            </div>
-          </div> -->
-          <div class="month-list "></div>
         </div>
       </div>
 
@@ -75,7 +63,7 @@
         <button type="reset" id="cancel"> 
           cancelar</button>
         <button type="submit" id="confirm">
-          <a href="choose-service.html">confirmar</a>
+          <a href="/pages/choose-service.html">confirmar</a>
           </button>
       </div>
     </section>
