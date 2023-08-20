@@ -133,94 +133,8 @@
   background-color: var(--light-brown);
   border-radius: 20%;
 }
-.month-list {
-  position: absolute;
-  left: 0;
-  background-color: var(--dark-blue);
-  color: white;
-  display: grid;
-  grid-template-columns: repeat(3, auto);
-  gap: 5px;
-  border-radius: 20px;
-}
-.month-list > div {
-  display: grid;
-  place-content: center;
-  margin: 5px 10px;
-  transition: all 0.2s ease-in-out;
-}
-.month-list > div > div {
-  border-radius: 15px;
-  padding: 10px;
-  cursor: pointer;
-}
-.month-list > div > div:hover {
-  background-color: var(--red);
-  color: var(--black-blue);
-  transform: scale(0.9);
-  transition: all 0.2s ease-in-out;
-}
-.month-list.show {
-  visibility: visible;
-  pointer-events: visible;
-  transition: 0.6s ease-in-out;
-  animation: to-left 0.71s forwards;
-}
-.month-list.hideonce {
-  visibility: hidden;
-}
-.month-list.hide {
-  animation: to-right 1s forwards;
-  visibility: none;
-  pointer-events: none;
-}
-.date-time-formate {
-  width: max-content;
-  height: max-content;
-  font-family: Dubai Light, Century Gothic;
-  position: relative;
-  display: inline;
-  top: 140px;
-  justify-content: center;
-}
-.day-text-formate {
-  font-family: Microsoft JhengHei UI;
-  font-size: 1.4rem;
-  padding-right: 5%;
-  border-right: 3px solid #e3585d;
-  position: absolute;
-  left: -1rem;
-}
-.date-time-value {
-  display: block;
-  height: max-content;
-  width: max-content;
-  position: relative;
-  left: 30%;
-  top: -18px;
-  text-align: center;
-}
-.time-formate {
-  font-size: 1.5rem;
-}
-.time-formate.hideTime {
-  animation: hidetime 1.5s forwards;
-}
-.day-text-formate.hidetime {
-  animation: hidetime 1.5s forwards;
-}
-.date-formate.hideTime {
-  animation: hidetime 1.5s forwards;
-}
-.day-text-formate.showtime {
-  animation: showtime 1s forwards;
-}
-.time-formate.showtime {
-  animation: showtime 1s forwards;
-}
-.date-formate.showtime {
-  animation: showtime 1s forwards;
-}
+
+
 @keyframes to-top {
   0% {
     transform: translateY(0);
@@ -229,50 +143,5 @@
   100% {
     transform: translateY(100%);
     opacity: 1;
-  }
-}
-@keyframes to-left {
-  0% {
-    transform: translatex(230%);
-    opacity: 1;
-  }
-  100% {
-    transform: translatex(0);
-    opacity: 1;
-  }
-}
-@keyframes to-right {
-  10% {
-    transform: translatex(0);
-    opacity: 1;
-  }
-  100% {
-    transform: translatex(-150%);
-    opacity: 1;
-  }
-}
-@keyframes showtime {
-  0% {
-    transform: translatex(250%);
-    opacity: 1;
-  }
-  100% {
-    transform: translatex(0%);
-    opacity: 1;
-  }
-}
-@keyframes hidetime {
-  0% {
-    transform: translatex(0%);
-    opacity: 1;
-  }
-  100% {
-    transform: translatex(-370%);
-    opacity: 1;
-  }
-}
-@media (max-width: 375px) {
-  .month-list > div {
-    margin: 5px 0px;
   }
 }
