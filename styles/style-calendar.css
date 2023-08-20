@@ -1,14 +1,8 @@
 :root {
-  --selected-day: #dfba96;
+  --light-brown: #dfba96;
   --dark-text: #f8fbff;
-  --light-body: #f3f8fe;
-  --light-main: #fdfdfd;
-  --light-second: #c3c2c8;
-  --light-hover: #f0f0f0;
   --light-text: #151426;
-  --red: #e3585d;
   --dark-blue: #211f51;
-  --blue: #0000ff;
   --white: #fff;
   --shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
@@ -30,7 +24,7 @@
 .calendar {
   position: relative;
   width: max-content;
-  min-height: 450px;
+  min-height: 400px;
   background-color: white;
   border-radius: 25px;
   overflow: hidden;
@@ -39,6 +33,7 @@
 }
 
 .calendar-header {
+  min-width: 300px;
   background: var(--dark-blue);
   display: flex;
   justify-content: space-between;
@@ -47,6 +42,16 @@
   color: var(--white);
   padding: 10px;
 }
+
+#month-picker{
+  background: var(--dark-blue);
+  color: var(--white);
+  font-size: 16px;
+  border: none;
+  padding-right: 25px;
+  background-position: right center;
+}
+
 .calendar-body {
   pad: 10px;
 }
@@ -68,7 +73,7 @@
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 2px;
-  color: var(--color-txt);
+  color: var(--light-text);
 }
 .calendar-days div {
   width: 37px;
@@ -81,17 +86,7 @@
   cursor: pointer;
   animation: to-top 1s forwards;
 }
-.month-picker {
-  padding: 5px 10px;
-  border-radius: 10px;
-  cursor: pointer;
-}
-.month-picker:hover {
-  background-color: var(--color-hover);
-}
-.month-picker:hover {
-  color: var(--color-txt);
-}
+
 .year-picker {
   display: flex;
   align-items: center;
@@ -129,13 +124,13 @@
 }
 .calendar-days div:hover {
   transition: width 0.2s ease-in-out, height 0.2s ease-in-out;
-  background-color: var(--selected-day);
+  background-color: var(--dark-blue);
   border-radius: 20%;
   color: var(--dark-text);
 }
 .calendar-days div.current-date {
   color: var(--dark-text);
-  background-color: var(--dark-blue);
+  background-color: var(--light-brown);
   border-radius: 20%;
 }
 .month-list {
