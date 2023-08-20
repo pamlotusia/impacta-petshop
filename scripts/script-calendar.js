@@ -9,7 +9,7 @@ const getFebDays = year => {
 }
 
 let calendar = document.querySelector('.calendar')
-let month_picker = document.querySelector('#month-picker')
+const month_picker = document.querySelector('#month-picker')
 const month_names = [
   'Janeiro',
   'Fevereiro',
@@ -68,44 +68,37 @@ const generateCalendar = (month, year) => {
   }
 }
 
-// month_names.forEach((e, index) => {
-//   let month = document.createElement('div')
-//   month.innerHTML = `<div>${e}</div>`
+//cria as options do mês
+month_names.forEach((e, index) => {
+  let month = document.createElement('option')
+  month.value = index
+  month.textContent = e
+  month_picker.appendChild(month)
+})
 
-//   month.onclick = () => {
-//     currentMonth.value = index
-//     generateCalendar(currentMonth.value, currentYear.value)
-//   }
-// })
+//altera os dias do calendário de acordo com o mês selecionado
+month_picker.addEventListener('change', () =>{
+  let selectedMonth = parseInt(month_picker.value)
+  generateCalendar(selectedMonth, currentYear.value)
+})
 
-// month_names.forEach((index) => {
-//   month_names.onclick = () => {
-//     currentMonth.value = index
-//     generateCalendar(currentMonth.value, currentYear.value)
-//   }
-// })
-
-
-for (let i = 0; i < month_names.length; i++) {
-  let month_option = document.createElement('option')
-  month_option.value = month_names[i]
-  month_option.textContent = month_names[i]
-  month_picker.appendChild(month_option)
-
-  console.log(month_option.value)
-}
-
+//muda o ano
 document.querySelector('#pre-year').onclick = () => {
-  --currentYear.value
+  currentYear.value--
   generateCalendar(currentMonth.value, currentYear.value)
 }
 
 document.querySelector('#next-year').onclick = () => {
-  ++currentYear.value
+  currentYear.value++
   generateCalendar(currentMonth.value, currentYear.value)
 }
 
 let currentDate = new Date()
 let currentMonth = { value: currentDate.getMonth() }
 let currentYear = { value: currentDate.getFullYear() }
+
+//inicia o cabeçalho do calendario no mês atual
+month_picker.value = currentMonth.value
+
+//inicia o proprio calendario com a data atual
 generateCalendar(currentMonth.value, currentYear.value)
