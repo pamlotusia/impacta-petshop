@@ -1,23 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/styles/style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/style.css" />
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Poppins:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <section class="services">
+      <p class="title">Selecione um serviço</p>
 
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-</head>
-<body>
-  <section class="services">
-    <h1 class="title">Selecione um serviço</h1>
-    
-    <a href="describe-pet.html"><button id="bathing-grooming">banho e tosa</button></a>
+      <button id="bathing-grooming">banho e tosa</button>
 
-    <a href="describe-pet.html"><button id="bathing">banho</button></a>
-    
-  </section>
-  
-</body>
+      <a href="end-page.html"><button id="bathing">banho</button></a>
+    </section>
+
+    <section class="type-grooming hide">
+      <p class="title">Escolha a tosa</p>
+
+      <div class="container-types-grooming">
+        <button id="type-1">higiênica</button>
+        <button id="type-2">baixa</button>
+        <button id="type-3">média</button>
+        <button id="type-4">alta</button>
+      </div>
+      
+      <a href="end-page.html"
+        ><button type="submit" id="confirm-service">confirmar</button></a
+      >
+    </section>
+
+    <script src="/scripts/script-service.js"></script>
+  </body>
 </html>
