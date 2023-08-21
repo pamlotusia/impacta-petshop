@@ -1,13 +1,16 @@
 :root {
-  --cancel-color: #dfba96;
-  --confirm-color: #ff8364;
-  --background-color: #f5efe9;
+  --cancel-color: #e3e3f3;
+  --confirm-color: #ffa31a;
+  --background-color: #F7F7F9;
   --title-color: #211f51;
-  --red: #e3585d;
+  --pink: #ff6b6c;
+  --pink-two: #f79e9e;
   --orange: #ff8364;
   --blue-one: #545197;
   --blue-two: #5f6caf;
+  --blue-three: #d5d5e4;
   --light-text: #615f6d;
+  --grey-button: #d6d4e2;
 }
 
 * {
@@ -36,8 +39,7 @@ section {
   font-size: 30px;
   font-weight: 500;
   border-radius: 22px;
-  color: var(--red);
-  text-shadow: rgb(251 205 205) -1px 1px 2px;
+  color: var(--title-color);
   font-family: 'Poppins', sans-serif;
 }
 
@@ -64,28 +66,27 @@ button {
   margin-bottom: 3em;
 }
 
-.buttons button,
-.services button,
-#confirm-description {
-  width: 160px;
-  height: 45px;
-  font-size: 20px;
-  border-radius: 16px;
-  border-style: none;
+.buttons button{
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  width: 150px;
+  height: 50px;
+  border: none;
+  border-radius: 20px;
 }
 
 #confirm {
   background-color: var(--confirm-color);
 }
 
-#confirm:hover,
-#cancel:hover,
-.services button:hover {
-  filter: saturate(1.3);
+#confirm:hover{
+  box-shadow: 0 0 5px #f0c17b  ;
 }
 
 #cancel {
   background-color: var(--cancel-color);
+  color: var(--light-text);
 }
 
 a {
@@ -102,16 +103,22 @@ a {
 .services > * {
   margin: 10px;
 }
+.services button,
+#confirm-description {
+  width: 250px;
+  height: 60px;
+  font-size: 16px;
+  border-radius: 20px;
+  border-style: none;
+}
 
 .services button {
-  background-color: var(--red);
-  width: 260px;
-  height: 60px;
-  font-size: 26px;
+  background-color: var(--pink);
+  font-size: 22px;
 }
 
 .services button:hover {
-  background-color: #d9232a;
+  box-shadow: 0 0 5px var(--pink-two) ;
 }
 
 p {
@@ -122,8 +129,6 @@ p {
   font-weight: 500;
   font-size: 30px;
   font-family: 'Poppins', sans-serif;
-  /* background-color: transparent; */
-  /* border-radius: 22px; */
 }
 
 .hide {
@@ -149,26 +154,29 @@ p {
   height: 50px;
   border: none;
   border-radius: 15px;
-  font-size: 20px;
-  background: var(--blue-two);
+  font-size: 18px;
+  font-weight: 500;
+  background: var(--blue-three);
+  color: black;
 }
 
 .container-types-grooming button:hover {
-  background: var(--title-color);
+  background-color: var(--title-color);
+  color: var(--background-color);
 }
 
 #confirm-service {
   margin-top: 50px;
   width: 230px;
   height: 60px;
-  font-size: 26px;
-  background: #f78c56;
+  font-size: 24px;
+  background: var(--confirm-color);
   border: none;
   border-radius: 22px;
 }
 
 #confirm-service:hover {
-  background: #d95716;
+  box-shadow: 0 0 3px #e99f30;
 }
 
 /* styles describe-pet.html */
