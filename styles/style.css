@@ -9,8 +9,7 @@
   --blue-one: #545197;
   --blue-two: #5f6caf;
   --blue-three: #d5d5e4;
-  --light-text: #615f6d;
-  --grey-button: #d6d4e2;
+  --light-text: #575757;
 }
 
 * {
@@ -67,8 +66,8 @@ button {
 }
 
 .buttons button{
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: bold;
   text-transform: uppercase;
   width: 150px;
   height: 50px;

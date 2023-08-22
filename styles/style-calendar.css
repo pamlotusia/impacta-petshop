@@ -1,5 +1,6 @@
 :root {
-  --light-brown: #dfba96;
+  --confirm-color: #ffa31a;
+  --blue-three: #d5d5e4;
   --dark-text: #f8fbff;
   --light-text: #151426;
   --dark-blue: #211f51;
@@ -124,13 +125,12 @@
 }
 .calendar-days div:hover {
   transition: width 0.2s ease-in-out, height 0.2s ease-in-out;
-  background-color: var(--dark-blue);
+  background-color: var(--confirm-color);
   border-radius: 20%;
   color: var(--dark-text);
 }
 .calendar-days div.current-date {
-  color: var(--dark-text);
-  background-color: var(--light-brown);
+  background-color: var(--blue-three);
   border-radius: 20%;
 }
 
