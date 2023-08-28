@@ -1,3 +1,25 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-app.js";
+
+import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-database.js"
+
+const appSettings = {
+  databaseURL: "https://petshop-impacta-ae693-default-rtdb.firebaseio.com"
+}
+
+
+const app = initializeApp(appSettings)
+const database = getDatabase(app)
+
+
+
+
+
+
+
+
+
+
 const isLeapYear = year => {
   return (
     (year % 4 === 0 && year % 100 !== 0 && year % 400 !== 0) ||
@@ -46,6 +68,8 @@ const generateCalendar = (month, year) => {
 
   let currentDate = new Date()
 
+  let selectedDate = null
+
   calendar_header_year.innerHTML = year
 
   let first_day = new Date(year, month)
@@ -63,9 +87,25 @@ const generateCalendar = (month, year) => {
       ) {
         day.classList.add('current-date')
       }
+
+      day.addEventListener('click', () => {
+        // Remove a classe de destaque de qualquer dia selecionado anteriormente
+        const highlightedDay = document.querySelector('.selected-date')
+        if (highlightedDay) {
+          highlightedDay.classList.remove('selected-date')
+        }
+
+        // Destaca o dia selecionado
+        day.classList.add('selected-date')
+
+        // Armazena a data selecionada na variável selectedDate
+        selectedDate = new Date(year, month, i - first_day.getDay() + 1)
+      })
     }
+
     calendar_days.appendChild(day)
   }
+  return
 }
 
 //cria as options do mês
@@ -77,7 +117,7 @@ month_names.forEach((e, index) => {
 })
 
 //altera os dias do calendário de acordo com o mês selecionado
-month_picker.addEventListener('change', () =>{
+month_picker.addEventListener('change', () => {
   let selectedMonth = parseInt(month_picker.value)
   generateCalendar(selectedMonth, currentYear.value)
 })
@@ -102,3 +142,8 @@ month_picker.value = currentMonth.value
 
 //inicia o proprio calendario com a data atual
 generateCalendar(currentMonth.value, currentYear.value)
+
+
+
+
+
