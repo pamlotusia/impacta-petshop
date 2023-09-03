@@ -5,12 +5,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def homepage():
-    return render_template('principal.html')
-
-
-@app.route('/servicos')
-def services():
-    return render_template('choose-service.html')
+    return render_template('index.html')
 
 
 @app.route('/teste')
