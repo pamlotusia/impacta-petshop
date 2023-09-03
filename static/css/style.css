@@ -1,7 +1,7 @@
 :root {
   --cancel-color: #e3e3f3;
   --confirm-color: #ffa31a;
-  --background-color: #F7F7F9;
+  --background-color: #f7f7f9;
   --title-color: #211f51;
   --pink: #ff6b6c;
   --pink-two: #f79e9e;
@@ -17,6 +17,7 @@
   margin: 0;
   box-sizing: border-box;
   font-family: 'Inter', sans-serif;
+  overflow: hidden;
 }
 
 html {
@@ -30,7 +31,8 @@ section {
 }
 
 .container > * {
-  margin: 10px 0;
+  margin: 30px 0;
+  justify-content: center;
 }
 
 .container p {
@@ -40,17 +42,26 @@ section {
   border-radius: 22px;
   color: var(--title-color);
   font-family: 'Poppins', sans-serif;
+  margin-top: 100px;
 }
 
-input[type='time'] {
+.horario{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+
+input[type='time'],
+input[type='date'] {
   width: 200px;
   height: 50px;
   font: 1.5em 'Inter', sans-serif;
-  padding-left: 50px;
+  text-align: center;
   color: var(--light-text);
   border: 2px solid var(--light-text);
   border-radius: 10px;
-  margin: 20px 0;
+  margin: 15px 0;
 }
 
 button {
@@ -65,7 +76,7 @@ button {
   margin-bottom: 3em;
 }
 
-.buttons button{
+.buttons button {
   font-size: 16px;
   font-weight: bold;
   text-transform: uppercase;
@@ -79,8 +90,8 @@ button {
   background-color: var(--confirm-color);
 }
 
-#confirm:hover{
-  box-shadow: 0 0 5px #f0c17b  ;
+#confirm:hover {
+  box-shadow: 0 0 5px #f0c17b;
 }
 
 #cancel {
@@ -117,7 +128,7 @@ a {
 }
 
 .services button:hover {
-  box-shadow: 0 0 5px var(--pink-two) ;
+  box-shadow: 0 0 5px var(--pink-two);
 }
 
 p {
@@ -277,6 +288,6 @@ p {
 
 /* styles end-page.html */
 
-.container-message{
+.container-message {
   background: hsla(0, 0%, 100%, 0.878);
 }
