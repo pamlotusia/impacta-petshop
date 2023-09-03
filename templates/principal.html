@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Page</title>
+    <link rel="stylesheet" href="/styles/style.css" />
+    <link rel="stylesheet" href="/styles/style-calendar.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    
+  </head>
+  <body>
+    <section class="container">
+      <img src="/group.svg" alt="dog-gromming" />
+
+      <p>Agende seu horário</p>
+
+      <div class="container-calendar">
+        <div class="calendar">
+          <div class="calendar-header">
+
+            <select name="months" id="month-picker">
+            </select>
+
+            <div class="year-picker" id="year-picker">
+              <span class="year-change" id="pre-year">
+                <pre><</pre>
+              </span>
+              <span id="year">2020</span>
+              <span class="year-change" id="next-year">
+                <pre>></pre>
+              </span>
+            </div>
+          </div>
+    
+          <div class="calendar-body">
+            <div class="calendar-week-days">
+              <div>Dom</div>
+              <div>Seg</div>
+              <div>Ter</div>
+              <div>Qua</div>
+              <div>Qui</div>
+              <div>Sex</div>
+              <div>Sab</div>
+            </div>
+    
+            <div class="calendar-days"></div>
+          </div>
+    
+          <div class="calendar-footer"></div>
+        </div>
+      </div>
+
+      <input type="time">
+
+      <div class="buttons">
+        <button type="reset" id="cancel"> 
+          cancelar</button>
+        <button type="submit" id="confirm">
+          <a href="choose-service.html">confirmar</a>
+          </button>
+      </div>
+    </section>
+    <script src="/scripts/script-calendar.js"></script>
+  </body>
+</html>

@@ -17,7 +17,6 @@
   margin: 0;
   box-sizing: border-box;
   font-family: 'Inter', sans-serif;
-  overflow: hidden;
 }
 
 html {
@@ -28,30 +27,7 @@ section {
   display: flex;
   align-items: center;
   flex-direction: column;
-}
-
-/* .container{
-  top: 80px;
-  position: relative;
-} */
-
-.container > * {
-  display: flex;
-}
-.container p{
-  margin-top: 50px;
-}
-.container > input {
-  padding: 5px;
-  margin: 10px;
-  width: 290px;
-  height: 50px;
-  border: none;
-  font: 18px sans-serif;
-  text-align: center;
-  border-radius: 4px;
-  background-color: var(--cancel-color);
-  cursor: pointer;
+  margin: 0 0 50px ;
 }
 
 .title {
@@ -62,34 +38,106 @@ section {
   font-weight: 500;
   font-size: 30px;
   font-family: 'Poppins', sans-serif;
-  margin-bottom: 25px;
+  margin: 70px 0 15px;
 }
 
-
-/* Estilos para a bolinha quando o input está selecionado */
-.custom-radio input[type="radio"]:checked + label::before {
-  display: inline-block;
-  width: 1em;
-  height: 1em;
-  background-color: var(--confirm-color); /* Cor de fundo quando selecionado */
-  margin-right: 5px; /* Espaço entre a bolinha e o texto */
-}
-
-/* Estilos para o label (texto) */
-.custom-radio label {
-  display: inline-block;
-  vertical-align: middle;
-}
-
-.services input[type='radio']{
+.inputs{
   color: var(--title-color);
-  margin: 0 10px;
-  font-weight: 400;
-  font: 1.5em 'Poppins', sans-serif;
-  font: 1.5em 'Inter', sans-serif;
+  font-family: 'Inter', sans-serif;
+}
+input {
+  cursor: pointer;
 }
 
-.container-message{
+.inputs > input {
+  display: flex;
+  padding: 5px;
+  width: 290px;
+  height: 50px;
+  border: none;
+  text-align: center;
+  font-size: 18px;
+  border-radius: 4px;
+  background-color: var(--cancel-color);
+  color: #211f51;
+  place-content: '';
+  /* aumentar icone e retirar texto de dentro se der */
+}
+
+.inputs p {
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+  width: 30px;
+  height: 30px;
+}
+
+
+/* services container */
+.services div {
+  display: inline-flex;
+  align-items: center;
+}
+
+.custom-radio > *{
+  margin: 5px;
+}
+.custom-radio label{
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  align-items: center;
+}
+
+.custom-radio input[type='radio'],
+.type-services input[type='radio'] {
+  display: none;
+}
+
+.custom-radio input[type='radio']+label:before,
+.type-services input[type='radio']+label:before{
+  content: '';
+  display: inline-flex;
+  width: 10px;
+  height: 10px;
+  margin-right: 3px;
+
+  background-clip: content-box;
+  padding: 2px;
+  border: 2px solid #211f51;
+  background-color: transparent;
+  border-radius: 50%;
+
+}
+.custom-radio input[type='radio']:checked +label:before,
+.type-services input[type='radio']:checked +label:before{
+background-color: var(--confirm-color);
+border: 2px solid var(--confirm-color);
+}
+
+.custom-radio input[type='radio']:checked +label,
+.type-services input[type='radio']:checked +label{
+  color: var(--confirm-color);
+}
+
+/* type services container */
+.type-services{
+  margin-bottom: 55px;
+}
+
+.type-services-inputs{
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap:20px;
+}
+
+
+/* messagecontainer */
+.container-message {
   max-width: 400px;
   position: absolute;
   top: 80px;
@@ -97,11 +145,11 @@ section {
   flex-direction: column;
   align-items: center;
 }
-.container-message .title{
+.container-message .title {
   width: 100px;
   font-size: 24px;
 }
-.block{
+.block {
   background-color: #fafaface;
   box-shadow: 1px 1px 5px hsl(0, 0%, 25%);
   border: 20px;
@@ -112,11 +160,10 @@ section {
   align-items: center;
   flex-direction: column;
 }
-.block img{
+.block img {
   width: 300px;
   z-index: -1;
 }
-
 
 .buttons {
   display: flex;
@@ -154,4 +201,3 @@ section {
 .hide {
   visibility: hidden;
 }
-

@@ -9,45 +9,91 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Poppins:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
   </head>
   <body>
     <section>
-      <div class="container show">
+      <div class="container-date show">
         <p class="title">Agende seu horário</p>
-        <input
-          type="text"
-          name=""
-          id="input-name"
-          placeholder="digite seu nome"
-        />
-        <input type="date" name="" id="input-date" />
-        <input type="time" name="" id="input-time" />        
+        <div class="inputs">
+          <p>Nome</p>
+          <input
+            type="text"
+            name=""
+            id="input-name"
+            placeholder="digite seu nome"
+          />
+          <p>Data</p>
+          <input type="date" name="" id="input-date"/>
+          <p>Horário</p>
+          <input type="time" name="" id="input-time" />
+        </div>
       </div>
 
       <div class="services show">
         <p class="title">Selecione o serviço</p>
         <div class="custom-radio">
-          <input type="radio" id="banho" value="banho" name="services"/> 
+          <input type="radio" id="banho" value="banho" name="services" />
           <label for="banho">Apenas banho</label>
         </div>
         <div class="custom-radio">
-          <input type="radio" id="banho-tosa" value="banho-tosa" name="services"/>
+          <input
+            type="radio"
+            id="banho-tosa"
+            value="banho-tosa"
+            name="services"
+          />
           <label for="banho-tosa">Banho & tosa</label>
         </div>
-          
       </div>
 
       <div class="type-services show">
         <p class="title">Escolha a tosa</p>
-        <input type="radio" id="banho" value="banho" name="type-services"/> Higiênica
-        <input type="radio" id="banho-tosa" value="banho-tosa" name="type-services"/>Baixa
-        <input type="radio" id="banho-tosa" value="banho-tosa" name="type-services"/>Média
-        <input type="radio" id="banho-tosa" value="banho-tosa" name="type-services"/>Alta
+
+        <div class="type-services-inputs">
+          <input
+            type="radio"
+            id="tosa-higienica"
+            value="banho"
+            name="type-services"
+          />
+          <label for="tosa-higienica">Higiênica</label>
+
+          <input
+            type="radio"
+            id="tosa-baixa"
+            value="banho-tosa"
+            name="type-services"
+          />
+          <label for="tosa-baixa">Baixa</label>
+
+          <input
+            type="radio"
+            id="tosa-media"
+            value="banho-tosa"
+            name="type-services"
+          />
+          <label for="tosa-media">Média</label>
+
+          <input
+            type="radio"
+            id="tosa-alta"
+            value="banho-tosa"
+            name="type-services"
+          />
+          <label for="tosa-alta">Alta</label>
+
+        </div>
       </div>
 
       <div class="container-message hide">
@@ -56,18 +102,16 @@
           <p id="type-service"><i>serviço</i></p>
           <p id="day-choosed">dia:</p>
           <p id="time-choosed">horario:</p>
-      
         </div>
-        <img src="/pana.svg" alt="">
+        <img src="/pana.svg" alt="" />
       </div>
 
       <div class="buttons show">
         <button id="btn-cancel">cancelar</button>
         <button id="btn-confirm">confirmar</button>
       </div>
-      
     </section>
 
-    <script src="js/firebase.js" type="module"></script>
+    <script src="js/teste.js" type="module"></script>
   </body>
 </html>
