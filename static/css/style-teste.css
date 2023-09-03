@@ -156,7 +156,6 @@ border: 2px solid var(--confirm-color);
   height: 200px;
   top: 200px;
   position: absolute;
-
   display: flex;
   align-items: center;
   flex-direction: column;
