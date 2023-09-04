@@ -47,8 +47,22 @@ const messageTime= document.querySelector('#time-choosed')
 const section1 = document.querySelector('#section-1')
 const section2 = document.querySelector('#section-2')
 
-// insert data
+let serviceArray = [bathService, bathAndGroomingService]
 
+//insert input service test
+
+// function verificaChecked(elemento){
+//   let saveInput = null
+//   if (elemento.checked == true){
+//     saveInput = elemento
+//     console.log(saveInput)}
+  
+//    return saveInput
+// }
+
+console.log(serviceArray)
+
+// insert data
 function insertData() {
   set(ref(db, 'agendamentos/' + date.value), {
     nameClient: name.value,
