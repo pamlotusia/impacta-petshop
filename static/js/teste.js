@@ -32,48 +32,26 @@ const date = document.querySelector('#input-date')
 const btnConfirm = document.querySelector('#btn-confirm')
 const time = document.querySelector('#input-time')
 
-const bathService = document.querySelector('#banho')
-const bathAndGroomingService = document.querySelector('#banho-tosa')
-
-const hygienicGrooming = document.querySelector('#tosa-higienica')
-const lowGrooming = document.querySelector('#tosa-baixa')
-const mediumGrooming = document.querySelector('#tosa-media')
-const highGrooming = document.querySelector('#tosa-alta')
-
 const messageService = document.querySelector('#type-service')
 const messageDate = document.querySelector('#day-choosed')
-const messageTime= document.querySelector('#time-choosed')
+const messageTime = document.querySelector('#time-choosed')
 
 const section1 = document.querySelector('#section-1')
 const section2 = document.querySelector('#section-2')
 
-let serviceArray = [bathService, bathAndGroomingService]
 
-//insert input service test
-
-// function verificaChecked(elemento){
-//   let saveInput = null
-//   if (elemento.checked == true){
-//     saveInput = elemento
-//     console.log(saveInput)}
-  
-//    return saveInput
-// }
-
-console.log(serviceArray)
-
-// insert data
 function insertData() {
+  // Verifique se os campos obrigatórios foram preenchidos corretamente
   set(ref(db, 'agendamentos/' + date.value), {
     nameClient: name.value,
     dateChoosed: date.value,
-    timeChoosed: time.value
+    timeChoosed: time.value,
   })
     .then(() => {
-      alert('data stored successfully')
+      alert('Dados armazenados com sucesso.')
     })
     .catch(error => {
-      alert('unsuccessfull, error ' + error)
+      alert('Erro ao armazenar dados: ' + error)
     })
 }
 
@@ -82,13 +60,11 @@ function getData() {
 
   get(child(dbRef, 'agendamentos/' + date.value))
     .then(snapshot => {
-      if (snapshot.exists()){
+      if (snapshot.exists()) {
         date.value = snapshot.val().dateChoosed
         time.value = snapshot.val().timeChoosed
-
         messageDate.innerHTML = date.value
         messageTime.innerHTML = time.value
-
       } else {
         alert('No data found')
       }
@@ -99,7 +75,9 @@ function getData() {
 }
 
 btnConfirm.addEventListener('click', function () {
-  insertData()
+  // Verifica se os campos obrigatórios foram preenchidos corretamente
+  insertData()  
+
   section1.classList.remove('show')
   section1.classList.add('hide')
   section2.classList.remove('hide')
@@ -107,7 +85,7 @@ btnConfirm.addEventListener('click', function () {
 
   getData()
 
-  setTimeout(()=>{
+  setTimeout(() => {
     name.value = ''
     date.value = ''
     time.value = ''
