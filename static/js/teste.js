@@ -29,8 +29,12 @@ const db = getDatabase(app)
 // referencias
 const name = document.querySelector('#input-name')
 const date = document.querySelector('#input-date')
-const btnConfirm = document.querySelector('#btn-confirm')
 const time = document.querySelector('#input-time')
+const btnService = document.querySelectorAll('input[name="services"]')
+let selectedService
+const btnTypeService = document.querySelectorAll('input[name="type-services"]')
+let selectedTypeService = null
+const btnConfirm = document.querySelector('#btn-confirm')
 
 const messageService = document.querySelector('#type-service')
 const messageDate = document.querySelector('#day-choosed')
@@ -39,6 +43,21 @@ const messageTime = document.querySelector('#time-choosed')
 const section1 = document.querySelector('#section-1')
 const section2 = document.querySelector('#section-2')
 
+btnService.forEach(element => {
+  element.addEventListener('click', function () {
+    element.classList.add('.checked')
+    selectedService = element
+    console.log(selectedService.getAttribute('data-text'))
+  })
+})
+
+btnTypeService.forEach(element => {
+  element.addEventListener('click', function () {
+    element.classList.add('.checked')
+    selectedTypeService = element
+    console.log(selectedTypeService.getAttribute('data-text'))
+  })
+})
 
 function insertData() {
   // Verifique se os campos obrigatórios foram preenchidos corretamente
@@ -46,6 +65,10 @@ function insertData() {
     nameClient: name.value,
     dateChoosed: date.value,
     timeChoosed: time.value,
+    serviceSelected: selectedService.getAttribute('data-text'),
+
+    //funciona apenas se o serviço selecionado inclui tosa
+    typeServiceSelected: selectedTypeService.getAttribute('data-text')
   })
     .then(() => {
       alert('Dados armazenados com sucesso.')
@@ -63,8 +86,15 @@ function getData() {
       if (snapshot.exists()) {
         date.value = snapshot.val().dateChoosed
         time.value = snapshot.val().timeChoosed
-        messageDate.innerHTML = date.value
+        selectedService.value = snapshot.val().serviceSelected
+
+        //arrumando a exibição da data
+        let currDate = date.value.toString().split('-')
+        let finalDate = currDate.reverse().join('/')
+
+        messageDate.innerHTML = finalDate
         messageTime.innerHTML = time.value
+        messageService.innerHTML = selectedService.value
       } else {
         alert('No data found')
       }
@@ -76,7 +106,7 @@ function getData() {
 
 btnConfirm.addEventListener('click', function () {
   // Verifica se os campos obrigatórios foram preenchidos corretamente
-  insertData()  
+  insertData()
 
   section1.classList.remove('show')
   section1.classList.add('hide')
@@ -89,6 +119,14 @@ btnConfirm.addEventListener('click', function () {
     name.value = ''
     date.value = ''
     time.value = ''
+
+    btnService.forEach(element => {
+      element.checked = false;
+    })
+
+    btnTypeService.forEach(element => {
+      element.checked = false;
+    })
 
     section1.classList.remove('hide')
     section1.classList.add('show')
