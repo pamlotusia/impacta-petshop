@@ -67,9 +67,9 @@ function insertData() {
     serviceSelected: selectedService.getAttribute('data-text'),
   
   })
-    .then(() => {
-      alert('Dados armazenados com sucesso.')
-    })
+    // .then(() => {
+    //   // alert('Dados armazenados com sucesso.')
+    // })
     .catch(error => {
       alert('Erro ao armazenar dados: ' + error)
     })
@@ -129,5 +129,5 @@ btnConfirm.addEventListener('click', function () {
     section1.classList.add('show')
     section2.classList.remove('show')
     section2.classList.add('hide')
-  }, 3000)
+  }, 6000)
 })
