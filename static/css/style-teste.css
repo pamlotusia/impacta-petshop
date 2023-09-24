@@ -281,7 +281,7 @@ main {
   text-transform: uppercase;
 }
 
-#section-login  a, 
+#section-login a,
 #section-signup a {
   text-decoration: none;
   color: var(--title-color);
@@ -289,7 +289,7 @@ main {
 }
 
 /* SIGN UP PAGE */
-#section-signup{
+#section-signup {
   height: max-content;
   width: 100vw;
   padding-top: 100px;
@@ -303,23 +303,19 @@ main {
   color: #fff;
 }
 
-.container-personal-data .container-signup{
+.container-personal-data .container-signup {
   margin-top: 50px;
 }
 .container-signup > * {
-  margin: 30px ;
+  margin: 30px;
   border-radius: 8px;
   height: 70px;
   width: 350px;
   cursor: pointer;
 }
 
-
-
-
-
 /* RESPONSIVO */
-@media (min-width: 700px){
+@media (min-width: 700px) {
   #section-login,
   #section-signup {
     height: 90vh;
@@ -339,7 +335,7 @@ main {
     background-color: var(--confirm-color);
   }
 
-  .container-signup{
+  .container-signup {
     margin-top: 50px;
   }
 
@@ -354,6 +350,4 @@ main {
     align-items: center;
     justify-content: center;
   }
-
 }
-
