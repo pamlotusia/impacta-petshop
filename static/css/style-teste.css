@@ -210,7 +210,7 @@ input[type='time']::-webkit-calendar-picker-indicator {
   visibility: hidden;
 }
 
-/* pagina login */
+/* SIGN IN PAGE*/
 main {
   display: flex;
   justify-content: center;
@@ -270,7 +270,8 @@ main {
   color: var(--light-text);
 }
 
-.container-login button {
+.container-login button,
+.container-signup button {
   width: 340px;
   border: none;
   background-color: var(--confirm-color);
@@ -280,14 +281,47 @@ main {
   text-transform: uppercase;
 }
 
-#section-login a {
+#section-login  a, 
+#section-signup a {
   text-decoration: none;
   color: var(--title-color);
   font-size: 14px;
 }
 
+/* SIGN UP PAGE */
+#section-signup{
+  height: max-content;
+  width: 100vw;
+  padding-top: 100px;
+  background-color: var(--confirm-color);
+}
+
+#section-signup p {
+  font-family: 'Poppins';
+  padding-bottom: 75px;
+  font-size: 32px;
+  color: #fff;
+}
+
+.container-personal-data .container-signup{
+  margin-top: 50px;
+}
+.container-signup > * {
+  margin: 30px ;
+  border-radius: 8px;
+  height: 70px;
+  width: 350px;
+  cursor: pointer;
+}
+
+
+
+
+
+/* RESPONSIVO */
 @media (min-width: 700px){
-  #section-login {
+  #section-login,
+  #section-signup {
     height: 90vh;
     width: 600px;
     margin-top: 50px;
@@ -295,6 +329,18 @@ main {
     border-radius: 50px;
     border: 1px solid var(--confirm-color);
     background-color: var(--confirm-color);
+  }
+
+  #section-signup {
+    height: max-content;
+    padding-top: 95px;
+    border-radius: 50px;
+    border: 1px solid var(--confirm-color);
+    background-color: var(--confirm-color);
+  }
+
+  .container-signup{
+    margin-top: 50px;
   }
 
   .container-personal-data {
