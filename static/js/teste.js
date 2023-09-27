@@ -1,5 +1,11 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.3.1/firebase-app.js'
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged
+} from 'https://www.gstatic.com/firebasejs/10.3.1/firebase-auth.js'
 
 import {
   getDatabase,
@@ -26,7 +32,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 const db = getDatabase(app)
 
-// referencias
+// Initialize Firebase Authentication and get a reference to the service
+const auth = getAuth()
+
+// Elementos da página de agendamento
 const name = document.querySelector('#input-name')
 const date = document.querySelector('#input-date')
 const time = document.querySelector('#input-time')
@@ -39,10 +48,49 @@ const btnConfirm = document.querySelector('#btn-confirm')
 const messageService = document.querySelector('#type-service')
 const messageDate = document.querySelector('#day-choosed')
 const messageTime = document.querySelector('#time-choosed')
-
 const section1 = document.querySelector('#section-1')
 const section2 = document.querySelector('#section-2')
 
+// Sign in & Sign up elements
+const btnSignUp = document.querySelector('#sign-up')
+const fullName = document.querySelector('input #username')
+const tel = document.querySelector('input #tel')
+const email = document.querySelector('input #email')
+const password = document.querySelector('input #password') 
+
+// Login & Sign up Page
+btnSignUp.addEventListener('click', function(){
+
+
+  createUserWithEmailAndPassword(auth, fullName.value, email.value, password.value, tel.value)
+    .then(userCredential => {
+      // Signed in
+      const user = userCredential.user
+      // ...
+      alert('Success!')
+    })
+    .catch(error => {
+      const errorCode = error.code
+      const errorMessage = error.message
+      alert(errorMessage)
+    })
+
+  console.log('oioioioioii')
+})
+
+signInWithEmailAndPassword(auth, email, password)
+  .then(userCredential => {
+    // Signed in
+    const user = userCredential.user
+    // ...
+  })
+  .catch(error => {
+    const errorCode = error.code
+    const errorMessage = error.message
+  })
+
+
+// Atribuindo classe checked aos inputs manualmente
 btnService.forEach(element => {
   element.addEventListener('click', function () {
     element.classList.add('.checked')
@@ -50,7 +98,6 @@ btnService.forEach(element => {
     console.log(selectedService.getAttribute('data-text'))
   })
 })
-
 btnTypeService.forEach(element => {
   element.addEventListener('click', function () {
     element.classList.add('.checked')
@@ -59,6 +106,7 @@ btnTypeService.forEach(element => {
   })
 })
 
+// Funções de inserção de dados no banco
 function insertData() {
   // Verifique se os campos obrigatórios foram preenchidos corretamente
   set(ref(db, 'agendamentos/' + date.value), {
@@ -80,7 +128,6 @@ function insertData() {
 
 function getData() {
   const dbRef = ref(db)
-
   get(child(dbRef, 'agendamentos/' + date.value))
     .then(snapshot => {
       if (snapshot.exists()) {
@@ -108,10 +155,9 @@ btnConfirm.addEventListener('click', function () {
   // Verifica se os campos obrigatórios foram preenchidos corretamente
   insertData()
 
-  section1.classList.remove('show')
-  section1.classList.add('hide')
-  section2.classList.remove('hide')
-  section2.classList.add('show')
+  // esconde ou exibe sections
+  section1.classList.toggle('hide')
+  section2.classList.toggle('hide')
 
   getData()
 
@@ -121,11 +167,11 @@ btnConfirm.addEventListener('click', function () {
     time.value = ''
 
     btnService.forEach(element => {
-      element.checked = false;
+      element.checked = false
     })
 
     btnTypeService.forEach(element => {
-      element.checked = false;
+      element.checked = false
     })
 
     section1.classList.remove('hide')
@@ -134,3 +180,4 @@ btnConfirm.addEventListener('click', function () {
     section2.classList.add('hide')
   }, 3000)
 })
+

@@ -34,7 +34,7 @@
             placeholder="digite seu nome"
           />
           <p>Data</p>
-          <input type="date" name="" id="input-date"/>
+          <input type="date" name="" id="input-date" />
           <p>Horário</p>
           <input type="time" name="" id="input-time" />
         </div>
@@ -43,7 +43,12 @@
       <div class="services">
         <p class="title">Selecione o serviço</p>
         <div class="custom-radio">
-          <input type="radio" id="banho" value="banho" name="services" data-text="Apenas banho"
+          <input
+            type="radio"
+            id="banho"
+            value="banho"
+            name="services"
+            data-text="Apenas banho"
           />
           <label for="banho">Apenas banho</label>
         </div>
@@ -54,7 +59,6 @@
             value="banho-tosa"
             name="services"
             data-text="Banho & tosa"
-            
           />
           <label for="banho-tosa">Banho & tosa</label>
         </div>
@@ -70,7 +74,6 @@
             value="banho"
             name="type-services"
             data-text="Tosa higiênica"
-            
           />
           <label for="tosa-higienica">Higiênica</label>
 
@@ -80,7 +83,6 @@
             value="banho-tosa"
             name="type-services"
             data-text="Tosa baixa"
-            
           />
           <label for="tosa-baixa">Baixa</label>
 
@@ -101,11 +103,9 @@
             data-text="Tosa alta"
           />
           <label for="tosa-alta">Alta</label>
-
         </div>
       </div>
 
-  
       <div class="buttons">
         <button id="btn-cancel">cancelar</button>
         <button id="btn-confirm">confirmar</button>
@@ -116,15 +116,18 @@
       <div class="container-message">
         <p class="title">Seu agendamento foi concluído com sucesso!</p>
         <div class="block">
-            <p id="type-service"><i>serviço</i></p>
-            <p id="day-choosed">dia</p>
+          <p id="type-service"><i>serviço</i></p>
+          <p id="day-choosed">dia</p>
 
-            <p>às <span id="time-choosed"></span></p>
+          <p>às <span id="time-choosed"></span></p>
         </div>
         <img src="{{url_for('static', filename='css/pana.svg')}}" alt="" />
       </div>
     </section>
 
-    <script src="{{ url_for('static', filename='js/script.js')}}" type="module"></script>
+    <script
+      src="{{ url_for('static', filename='js/script.js')}}"
+      type="module"
+    ></script>
   </body>
 </html>

@@ -20,11 +20,11 @@
         <div class="container-personal-data">
           <div class="container-signup">
             <div class="input-data">
-              <label for="name">Nome completo</label>
+              <label for="username">Nome completo</label>
               <input
                 type="text"
                 name="signup"
-                id="name"
+                id="username"
                 placeholder="Escreva seu nome"
               />
             </div>
@@ -34,7 +34,7 @@
               <input
                 type="text"
                 name="signup"
-                id="password"
+                id="tel"
                 placeholder="Digite seu telefone sem pontos ou traços ( . , - )"
               />
             </div>
@@ -60,20 +60,22 @@
             </div>
 
             <div class="input-data">
-              <label for="password">Confirme a senha</label>
+              <label for="password-confirm">Confirme a senha</label>
               <input
                 type="password"
                 name="signup"
-                id="password"
+                id="password-confirm"
                 placeholder="digite sua senha"
               />
             </div>
 
-            <button type="submit">Entrar</button>
+            <button type="submit" id="sign-up">Entrar</button>
           </div>
-          <p><a href="">Já possui uma conta? Entre por aqui</a></p>
+          <p><a href="{{url_for('login')}}">Já possui uma conta? Entre por aqui</a></p>
         </div>
       </section>
     </main>
+
+    <script src="{{ url_for('static', filename='js/teste.js')}}" type="module"></script>
   </body>
 </html>

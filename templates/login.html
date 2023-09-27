@@ -33,9 +33,12 @@
             </div>
             <button type="submit">Entrar</button>
           </div>
-          <p><a href="">Não possui uma conta ainda? Cadastre-se agora!</a></p>
+          <p><a href="{{url_for('signup')}}">Não possui uma conta ainda? Cadastre-se agora!</a></p>
         </div>
       </section>
     </main>
+
+
+    <script src="{{ url_for('static', filename='js/teste.js')}}" type="module"></script>
   </body>
 </html>
