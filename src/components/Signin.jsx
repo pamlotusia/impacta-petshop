@@ -1,7 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+
 const Signin = () => {
+
   return (
     <div className='max-w-[700px] mx-auto my-16 p-4'>
      <div>
