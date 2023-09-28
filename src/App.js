@@ -1,7 +1,7 @@
 import React from 'react'
 import Signin from './components/Signin'
 import Signup from './components/Signup'
-import Account from './components/Account'
+import Home from './components/Home'
 import ProtectedRoute from './components/ProtectedRoute'
 import { Route, Routes } from 'react-router-dom'
 import { AuthContextProvider } from './contexts/AuthContext'
@@ -10,16 +10,15 @@ import { AuthContextProvider } from './contexts/AuthContext'
 const App = () => {
   return (
     <div>
-      <h1 className="text-center text-3xl font-bold">Firebase Auth Context</h1>
       <AuthContextProvider>
       <Routes>
           <Route path='/' element={<Signin />} />
           <Route path='/signup' element={<Signup />} />
           <Route
-            path='/account'
+            path='/home'
             element={
               <ProtectedRoute>
-                <Account />
+                <Home />
               </ProtectedRoute>
             }
           />

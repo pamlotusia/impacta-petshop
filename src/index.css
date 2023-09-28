@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Poppins:wght@400;500&display=swap');
+
+.bg-background-color {
+  background-color: #F7F7F9 /* Substitua pelos valores RGB que desejar */
+}
+.bg-confirm-color {
+  background-color: #FFA31A/* Substitua pelos valores RGB que desejar */
+}
+
+.light-blue-input{
+  background-color: #E3E3F3
+}
+
+.font-button-confirm{
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  border-radius: 6px;
+}
+
+.login-img{
+  margin-bottom: -8.5px
+}

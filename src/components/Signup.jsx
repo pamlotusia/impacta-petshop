@@ -9,12 +9,12 @@ const Signup = () => {
   const { createUser } = UserAuth()
   const navigate = useNavigate()
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault()
     setError('')
     try {
       await createUser(email, password)
-      navigate('/account')
+      navigate('/home')
     } catch (e) {
       setError(e.message)
       console.log(e.message)
@@ -22,37 +22,68 @@ const Signup = () => {
   }
 
   return (
-    <div className="max-w-[700px] mx-auto my-16 p-4">
-      <div>
-        <h1 className="text-2xl font-bold py-2">Sign up for a free account</h1>
-        <p className="py-2">
-          Already have an account yet?
-          <Link to="/" className="underline">
-            Sign in.
-          </Link>
-        </p>
+    <div className="max-w-md mx-auto p-5 rounded-md  my-20 py-8">
+      <div className="rounded-md max-w-full bg-background-color shadow-lg p-7">
+        <h1 className="text-2xl text-center font-bold py-6">Crie sua conta</h1>
+
+        <form onSubmit={handleSubmit}>
+          <div className="mb-5 bg-white p-2 rounded-lg">
+            <label className="block text-gray-700 text-sm font-bold">
+              Nome completo:
+            </label>
+            <input
+              onChange={e => setEmail(e.target.value)}
+              className="w-full px-3 py-1 focus:outline-none"
+              type="text"
+              required
+            />
+          </div>
+
+          <div className="mb-5 bg-white p-2 rounded-lg">
+            <label className="block text-gray-700 text-sm font-bold">
+              Telefone:
+            </label>
+            <input
+              onChange={e => setEmail(e.target.value)}
+              className="w-full px-3 py-1 focus:outline-none"
+              type="text"
+              required
+            />
+          </div>
+
+          <div className="mb-5 bg-white p-2 rounded-lg">
+            <label className="block text-gray-700 text-sm font-bold">
+              E-mail:
+            </label>
+            <input
+              onChange={e => setEmail(e.target.value)}
+              className="w-full px-3 py-1 focus:outline-none"
+              type="email"
+              required
+            />
+          </div>
+          <div className="mb-4 bg-white p-2 rounded-lg">
+            <label className="block text-gray-700 text-sm font-bold">
+              Senha:
+            </label>
+            <input
+              onChange={e => setPassword(e.target.value)}
+              className="w-full px-3 py-1 focus:outline-none"
+              type="password"
+              required
+            />
+          </div>
+          <button className="bg-confirm-color mb-10 mt-10 w-full p-4 my-2 text-white uppercase font-bold font-button-confirm">
+            Cadastre-se
+          </button>
+          <p className="py-2 text-center">
+            Já possui uma conta?
+            <Link to="/" className="font-bold">
+              Entre por aqui
+            </Link>
+          </p>
+        </form>
       </div>
-      <form onSubmit={handleSubmit}>
-        <div className="flex flex-col py-2">
-          <label className="py-2 font-medium">Email Address</label>
-          <input
-            onChange={e => setEmail(e.target.value)}
-            className="border p-3"
-            type="email"
-          />
-        </div>
-        <div className="flex flex-col py-2">
-          <label className="py-2 font-medium">Password</label>
-          <input
-            onChange={e => setPassword(e.target.value)}
-            className="border p-3"
-            type="password"
-          />
-        </div>
-        <button className="border border-blue-500 bg-blue-600 hover:bg-blue-500 w-full p-4 my-2 text-white">
-          Sign Up
-        </button>
-      </form>
     </div>
   )
 }
