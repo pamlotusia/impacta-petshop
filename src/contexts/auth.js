@@ -1,73 +1,70 @@
 import { createContext, useEffect, useState } from "react";
+import { initializeApp } from "firebase/app";
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyALV3U-w7Ds8tMrzrZZZz9XJ50hYI6XAUM",
+  authDomain: "petshop-impacta-ae693.firebaseapp.com",
+  databaseURL: "https://petshop-impacta-ae693-default-rtdb.firebaseio.com",
+  projectId: "petshop-impacta-ae693",
+  storageBucket: "petshop-impacta-ae693.appspot.com",
+  messagingSenderId: "186447942464",
+  appId: "1:186447942464:web:c54645ad0f1c4f0ddb60a5"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const userToken = localStorage.getItem("user_token");
-    const usersStorage = localStorage.getItem("users_bd");
+    // Firebase listener to track authentication state changes
+    const unsubscribe = firebase.auth().onAuthStateChanged((firebaseUser) => {
+      if (firebaseUser) {
+        setUser(firebaseUser);
+      } else {
+        setUser(null);
+      }
+    });
 
-    if (userToken && usersStorage) {
-      const hasUser = JSON.parse(usersStorage)?.filter(
-        (user) => user.email === JSON.parse(userToken).email
-      );
-
-      if (hasUser) setUser(hasUser[0]);
-    }
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
-  const signin = (email, password) => {
-    const usersStorage = JSON.parse(localStorage.getItem("users_bd"));
-
-    const hasUser = usersStorage?.filter((user) => user.email === email);
-
-    if (hasUser?.length) {
-      if (hasUser[0].email === email && hasUser[0].password === password) {
-        const token = Math.random().toString(36).substring(2);
-        localStorage.setItem("user_token", JSON.stringify({ email, token }));
-        setUser({ email, password });
-        return;
-      } else {
-        return "E-mail ou senha incorretos";
-      }
-    } else {
-      return "Usuário não cadastrado";
+  const signin = async (email, password) => {
+    try {
+      const response = await firebase.auth().signInWithEmailAndPassword(email, password);
+      setUser(response.user);
+    } catch (error) {
+      return error.message;
     }
   };
 
-  const signup = (email, password) => {
-    const usersStorage = JSON.parse(localStorage.getItem("users_bd"));
-
-    const hasUser = usersStorage?.filter((user) => user.email === email);
-
-    if (hasUser?.length) {
-      return "Já tem uma conta com esse E-mail";
+  const signup = async (email, password) => {
+    try {
+      const response = await firebase.auth().createUserWithEmailAndPassword(email, password);
+      setUser(response.user);
+    } catch (error) {
+      return error.message;
     }
-
-    let newUser;
-
-    if (usersStorage) {
-      newUser = [...usersStorage, { email, password }];
-    } else {
-      newUser = [{ email, password }];
-    }
-
-    localStorage.setItem("users_bd", JSON.stringify(newUser));
-
-    return;
   };
 
-  const signout = () => {
-    setUser(null);
-    localStorage.removeItem("user_token");
+  const signout = async () => {
+    try {
+      await firebase.auth().signOut();
+      setUser(null);
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
   };
 
   return (
-    <AuthContext.Provider
-      value={{ user, signed: !!user, signin, signup, signout }}
-    >
+    <AuthContext.Provider value={{ user, signed: !!user, signin, signup, signout }}>
       {children}
     </AuthContext.Provider>
   );
