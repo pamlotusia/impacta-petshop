@@ -1,11 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { UserAuth } from '../contexts/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
+import { db, auth } from '../firebase'
+import { set } from 'firebase/database'
 
 const Home = () => {
   const { user, logout } = UserAuth()
-
   const navigate = useNavigate()
+
+  const [selectedDate, setSeletecDate] = useState('')
+  const [selectedTime, setSeletecTime] = useState('')
+  const [selectedService, setSeletedService] = useState('')
+  const [selectedTosa, setSelectedTosa] = useState('')
 
   const handleLogout = async () => {
     try {
@@ -14,6 +20,34 @@ const Home = () => {
       console.log('you are logout')
     } catch (e) {
       console.log(e.message)
+    }
+  }
+
+  const handleConfirm = async () => {
+    if (!selectedDate || !selectedTime || !selectedService || !selectedTosa) {
+      alert(
+        'Por favor, preencha todos os campos para garantir que o seu agendamento seja concluido com sucesso'
+      )
+      return
+    }
+    try {
+      const user = auth.currentUser
+      if (!user) {
+        alert('Usuario não encontrado')
+        return
+      }
+      const uid = user.uid
+      const data = {
+        date: selectedDate,
+        time: selectedTime,
+        service: selectedService,
+        tosa: selectedTosa
+      }
+
+      await set(db.ref(`agendamentos/${selectedDate}/${uid}`, data))
+      alert('Dados salvos com sucesso')
+    } catch (e) {
+      alert(e, e.message)
     }
   }
 
@@ -29,6 +63,7 @@ const Home = () => {
         <div className="mb-3 p-2 rounded-lg">
           <label className="text-gray-700 text-sm font-bold ">Data</label>
           <input
+          onChange={e => setSeletecDate(e.target.value)}
             type="date"
             className="w-full px-3 py-3 focus:outline-none light-blue-input "
           />
@@ -36,6 +71,7 @@ const Home = () => {
         <div className="mb-4 p-2 rounded-lg">
           <label className="text-gray-700 text-sm font-bold">Horário</label>
           <input
+          onChange={e => setSeletecTime(e.target.value)}
             type="time"
             className="w-full px-3 py-3 focus:outline-none light-blue-input"
           />
@@ -48,6 +84,8 @@ const Home = () => {
         <div className="flex justify-center">
           <div className=" flex mb-3  p-2 rounded-lg">
             <input
+            onChange={e => setSeletedService(e.target.value)}
+              name="serviço"
               id="banho"
               value="banho"
               data-text="Apenas banho"
@@ -61,6 +99,8 @@ const Home = () => {
 
           <div className=" flex mb-3  p-2 rounded-lg">
             <input
+            // onChange={e => setSeletedService(e.target.value)}
+              name="serviço"
               id="banho"
               value="banho"
               data-text="Apenas banho"
@@ -80,6 +120,8 @@ const Home = () => {
         <div className="flex justify-center">
           <div className=" flex mb-3  p-2 rounded-lg">
             <input
+            onChange={e => setSelectedTosa(e.target.value)}
+              name="tipo-tosa"
               id="banho"
               value="banho"
               data-text="Tosa Higiênica"
@@ -93,6 +135,8 @@ const Home = () => {
 
           <div className=" flex mb-3  p-2 rounded-lg">
             <input
+            // onChange={e => setSelectedTosa(e.target.value)}
+              name="tipo-tosa"
               id="banho"
               value="banho"
               data-text="Apenas banho"
@@ -106,6 +150,8 @@ const Home = () => {
 
           <div className=" flex mb-3  p-2 rounded-lg">
             <input
+            // onChange={e => setSelectedTosa(e.target.value)}
+              name="tipo-tosa"
               id="banho"
               value="banho"
               data-text="Tosa Higiênica"
@@ -119,6 +165,8 @@ const Home = () => {
 
           <div className=" flex mb-3  p-2 rounded-lg">
             <input
+            // onChange={e => setSelectedTosa(e.target.value)}
+              name="tipo-tosa"
               id="banho"
               value="banho"
               data-text="Apenas banho"
@@ -132,8 +180,13 @@ const Home = () => {
         </div>
       </form>
       <div className="flex justify-center">
-        <button className="border px-6 py-2 my-4 m-5 rounded-md">Cancelar</button>
-        <button className="px-6 py-2 my-4 m-5 bg-confirm-color rounded-md">Confirmar</button>
+        <button className="border px-6 py-2 my-4 m-5 rounded-md">
+          Cancelar
+        </button>
+        <button className="px-6 py-2 my-4 m-5 bg-confirm-color rounded-md"
+        onSubmit={handleConfirm}>
+          Confirmar
+        </button>
       </div>
     </div>
   )

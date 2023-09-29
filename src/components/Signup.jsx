@@ -1,6 +1,16 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserAuth } from '../contexts/AuthContext'
+import {
+  getDatabase,
+  ref,
+  get,
+  set,
+  child,
+  update,
+  remove
+} from 'firebase/database'
+import { db, auth } from '../firebase'
 
 const Signup = () => {
   const [email, setEmail] = useState('')
@@ -8,16 +18,39 @@ const Signup = () => {
   const [error, setError] = useState('')
   const { createUser } = UserAuth()
   const navigate = useNavigate()
+  const [username, setName] = useState('')
+  const [phone, setPhone] = useState('')
 
   const handleSubmit = async e => {
     e.preventDefault()
     setError('')
     try {
       await createUser(email, password)
+      saveUserData(username, phone, email)
       navigate('/home')
     } catch (e) {
       setError(e.message)
       console.log(e.message)
+    }
+  }
+
+  const saveUserData = async (name, phone, email) => {
+    try {
+      const user = auth.currentUser
+      if(!user){
+        alert('Usuario não autenticado')
+        return
+      }
+      const uid = user.uid
+      
+      await set(ref(db, `users/${uid}`), {
+        name: username,
+        phone: phone,
+        email: email
+      })
+    } catch (e) {
+      console.log('Erro ao salvar dados no banco de dados:', e)
+      alert('Erro ao salvar dados no banco de dados:', e)
     }
   }
 
@@ -29,10 +62,10 @@ const Signup = () => {
         <form onSubmit={handleSubmit}>
           <div className="mb-5 bg-white p-2 rounded-lg">
             <label className="block text-gray-700 text-sm font-bold">
-              Nome completo:
+              Nome completo
             </label>
             <input
-              onChange={e => setEmail(e.target.value)}
+              onChange={e => setName(e.target.value)}
               className="w-full px-3 py-1 focus:outline-none"
               type="text"
               required
@@ -41,10 +74,10 @@ const Signup = () => {
 
           <div className="mb-5 bg-white p-2 rounded-lg">
             <label className="block text-gray-700 text-sm font-bold">
-              Telefone:
+              Telefone
             </label>
             <input
-              onChange={e => setEmail(e.target.value)}
+              onChange={e => setPhone(e.target.value)}
               className="w-full px-3 py-1 focus:outline-none"
               type="text"
               required
@@ -53,7 +86,7 @@ const Signup = () => {
 
           <div className="mb-5 bg-white p-2 rounded-lg">
             <label className="block text-gray-700 text-sm font-bold">
-              E-mail:
+              E-mail
             </label>
             <input
               onChange={e => setEmail(e.target.value)}
@@ -64,7 +97,7 @@ const Signup = () => {
           </div>
           <div className="mb-4 bg-white p-2 rounded-lg">
             <label className="block text-gray-700 text-sm font-bold">
-              Senha:
+              Senha
             </label>
             <input
               onChange={e => setPassword(e.target.value)}

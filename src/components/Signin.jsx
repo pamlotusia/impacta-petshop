@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserAuth } from '../contexts/AuthContext'
-import MinhaImagem from '../images/login-icon.svg'
+import ImagemLogin from '../images/login-icon.svg'
+
 
 const Signin = () => {
   const [email, setEmail] = useState('')
@@ -15,16 +16,18 @@ const Signin = () => {
     setError('')
     try {
       await signIn(email, password)
-      navigate('/account')
+      navigate('/home')
     } catch (e) {
       setError(e.message)
       console.log(e.message)
     }
   }
 
+  
+
   return (
     <div className="max-w-md mx-auto p-5 rounded-md  my-20 py-8">
-      <img src={MinhaImagem} alt="" className="mx-auto login-img" />
+      <img src={ImagemLogin} alt="" className="mx-auto login-img" />
       <div className="rounded-md max-w-full bg-background-color shadow-lg p-7">
         <h2
           className="text-2xl font-bold mb-10
