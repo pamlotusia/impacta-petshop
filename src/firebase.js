@@ -2,12 +2,12 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from 'firebase/auth'
 import {
   getDatabase,
-  ref,
-  get,
-  set,
-  child,
-  update,
-  remove
+  // ref,
+  // get,
+  // set,
+  // child,
+  // update,
+  // remove
 } from "firebase/database"
 
 const firebaseConfig = {

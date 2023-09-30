@@ -22,9 +22,6 @@ const Signin = () => {
       console.log(e.message)
     }
   }
-
-  
-
   return (
     <div className="max-w-md mx-auto p-5 rounded-md  my-20 py-8">
       <img src={ImagemLogin} alt="" className="mx-auto login-img" />

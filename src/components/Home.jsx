@@ -1,15 +1,16 @@
 import React, { useState } from 'react'
 import { UserAuth } from '../contexts/AuthContext'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { db, auth } from '../firebase'
-import { set } from 'firebase/database'
+import { set, getDatabase, ref } from 'firebase/database'
+import PopUp from './PopUp'
 
 const Home = () => {
   const { user, logout } = UserAuth()
   const navigate = useNavigate()
 
-  const [selectedDate, setSeletecDate] = useState('')
-  const [selectedTime, setSeletecTime] = useState('')
+  const [selectedDate, setSelectedDate] = useState('')
+  const [selectedTime, setSelectedTime] = useState('')
   const [selectedService, setSeletedService] = useState('')
   const [selectedTosa, setSelectedTosa] = useState('')
 
@@ -24,7 +25,7 @@ const Home = () => {
   }
 
   const handleConfirm = async () => {
-    if (!selectedDate || !selectedTime || !selectedService || !selectedTosa) {
+    if (!selectedDate || !selectedTime || !selectedService) {
       alert(
         'Por favor, preencha todos os campos para garantir que o seu agendamento seja concluido com sucesso'
       )
@@ -36,7 +37,27 @@ const Home = () => {
         alert('Usuario não encontrado')
         return
       }
+
+      const selectedServiceOption = document.querySelector(
+        'input[name="servico"]:checked'
+      )
+
+      if (selectedServiceOption) {
+        setSeletedService(selectedServiceOption.value)
+      }
+
+      let selectedTosaOption = document.querySelector(
+        'input[name="tipo-tosa"]:checked'
+      )
+
+      if (selectedTosaOption) {
+        setSelectedTosa(selectedTosaOption.id)
+      } else {
+        setSelectedTosa('sem tosa')
+      }
+
       const uid = user.uid
+      const userName = user.displayName
       const data = {
         date: selectedDate,
         time: selectedTime,
@@ -44,7 +65,10 @@ const Home = () => {
         tosa: selectedTosa
       }
 
-      await set(db.ref(`agendamentos/${selectedDate}/${uid}`, data))
+      const db = getDatabase()
+      const agendamentoRef = ref(db, `agendamentos/${selectedDate}/${uid}`)
+      await set(agendamentoRef, data)
+
       alert('Dados salvos com sucesso')
     } catch (e) {
       alert(e, e.message)
@@ -52,7 +76,7 @@ const Home = () => {
   }
 
   return (
-    <div className="max-w-md mx-auto  p-5 rounded-md shadow-lg my-20 py-8 bg-background-color">
+    <div className="w-[700px] mx-auto  p-10 rounded-md shadow-lg my-20 py-8 bg-background-color">
       <button onClick={handleLogout} className="border px-6 py-2 my-4 mb-10">
         Logout
       </button>
@@ -61,17 +85,17 @@ const Home = () => {
       </h1>
       <form>
         <div className="mb-3 p-2 rounded-lg">
-          <label className="text-gray-700 text-sm font-bold ">Data</label>
+          <label className="text-gray-700 text-mdn font-bold ">Data</label>
           <input
-          onChange={e => setSeletecDate(e.target.value)}
+            onChange={e => setSelectedDate(e.target.value)}
             type="date"
             className="w-full px-3 py-3 focus:outline-none light-blue-input "
           />
         </div>
         <div className="mb-4 p-2 rounded-lg">
-          <label className="text-gray-700 text-sm font-bold">Horário</label>
+          <label className="text-gray-700 text-md font-bold">Horário</label>
           <input
-          onChange={e => setSeletecTime(e.target.value)}
+            onChange={e => setSelectedTime(e.target.value)}
             type="time"
             className="w-full px-3 py-3 focus:outline-none light-blue-input"
           />
@@ -84,7 +108,9 @@ const Home = () => {
         <div className="flex justify-center">
           <div className=" flex mb-3  p-2 rounded-lg">
             <input
-            onChange={e => setSeletedService(e.target.value)}
+              onChange={e =>
+                setSeletedService(e.target.nextElementSibling.textContent)
+              }
               name="serviço"
               id="banho"
               value="banho"
@@ -99,16 +125,16 @@ const Home = () => {
 
           <div className=" flex mb-3  p-2 rounded-lg">
             <input
-            // onChange={e => setSeletedService(e.target.value)}
+              onChange={e =>
+                setSeletedService(e.target.nextElementSibling.textContent)
+              }
               name="serviço"
-              id="banho"
-              value="banho"
-              data-text="Apenas banho"
+              id="banho_tosa"
+              data-text="Banho & Tosa"
               type="radio"
-              className=""
             />
             <label className="text-gray-700 text-sm font-medium ml-6">
-              Apenas banho
+              Banho & Tosa
             </label>
           </div>
         </div>
@@ -118,73 +144,76 @@ const Home = () => {
         </p>
 
         <div className="flex justify-center">
-          <div className=" flex mb-3  p-2 rounded-lg">
+          <div className=" flex mb-3  p-2 rounded-lg ml-2">
             <input
-            onChange={e => setSelectedTosa(e.target.value)}
+              onChange={e =>
+                setSelectedTosa(e.target.nextElementSibling.textContent)
+              }
               name="tipo-tosa"
-              id="banho"
-              value="banho"
+              id="tosa-higienica"
               data-text="Tosa Higiênica"
               type="radio"
-              className=""
             />
-            <label className="text-gray-700 text-sm font-medium ml-6">
+            <label className="text-gray-700 text-sm font-medium ml-2">
               Tosa Higiênica
             </label>
           </div>
 
           <div className=" flex mb-3  p-2 rounded-lg">
             <input
-            // onChange={e => setSelectedTosa(e.target.value)}
+              onChange={e =>
+                setSelectedTosa(e.target.nextElementSibling.textContent)
+              }
               name="tipo-tosa"
-              id="banho"
-              value="banho"
-              data-text="Apenas banho"
+              id="tosa-baixa"
+              data-text="Tosa baixa"
               type="radio"
-              className=""
             />
-            <label className="text-gray-700 text-sm font-medium ml-6">
-              Apenas banho
+            <label className="text-gray-700 text-sm font-medium ml-2">
+              Tosa baixa
             </label>
           </div>
 
           <div className=" flex mb-3  p-2 rounded-lg">
             <input
-            // onChange={e => setSelectedTosa(e.target.value)}
+              onChange={e =>
+                setSelectedTosa(e.target.nextElementSibling.textContent)
+              }
               name="tipo-tosa"
-              id="banho"
-              value="banho"
-              data-text="Tosa Higiênica"
+              id="tosa-media"
+              data-text="Tosa média"
               type="radio"
               className=""
             />
-            <label className="text-gray-700 text-sm font-medium ml-6">
-              Tosa Higiênica
+            <label className="text-gray-700 text-sm font-medium ml-2">
+            Tosa média
             </label>
           </div>
 
           <div className=" flex mb-3  p-2 rounded-lg">
             <input
-            // onChange={e => setSelectedTosa(e.target.value)}
+              onChange={e =>
+                setSelectedTosa(e.target.nextElementSibling.textContent)
+              }
               name="tipo-tosa"
-              id="banho"
-              value="banho"
-              data-text="Apenas banho"
+              id="tosa-alta"
+              data-text="Tosa alta"
               type="radio"
-              className=""
             />
-            <label className="text-gray-700 text-sm font-medium ml-6">
-              Apenas banho
+            <label className="text-gray-700 text-sm font-medium ml-2">
+              Tosa alta
             </label>
           </div>
         </div>
       </form>
       <div className="flex justify-center">
-        <button className="border px-6 py-2 my-4 m-5 rounded-md">
+        <button className="border px-6 py-2 my-4 m-5 rounded-md font-bold uppercase">
           Cancelar
         </button>
-        <button className="px-6 py-2 my-4 m-5 bg-confirm-color rounded-md"
-        onSubmit={handleConfirm}>
+        <button
+          className="px-6 py-2 my-4 m-5 bg-confirm-color rounded-md text-white font-bold uppercase"
+          onClick={handleConfirm}
+        >
           Confirmar
         </button>
       </div>
