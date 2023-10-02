@@ -13,6 +13,11 @@ const Home = () => {
   const [selectedTime, setSelectedTime] = useState('')
   const [selectedService, setSeletedService] = useState('')
   const [selectedTosa, setSelectedTosa] = useState('')
+  
+  const [popupData, setPopupData] = useState(null)
+
+  let currDate = selectedDate.toString().split('-')
+  let finalDate = currDate.reverse().join('/')
 
   const handleLogout = async () => {
     try {
@@ -57,12 +62,12 @@ const Home = () => {
       }
 
       const uid = user.uid
-      const userName = user.displayName
+
       const data = {
         date: selectedDate,
         time: selectedTime,
         service: selectedService,
-        tosa: selectedTosa
+        tosa: selectedTosa,
       }
 
       const db = getDatabase()
@@ -73,10 +78,21 @@ const Home = () => {
     } catch (e) {
       alert(e, e.message)
     }
+
+    setPopupData({
+      date: finalDate,
+      service: selectedService,
+      time: selectedTime,
+    })
+  }
+
+  const handleClosePopup = () => {
+    setPopupData(null);
   }
 
   return (
-    <div className="w-[700px] mx-auto  p-10 rounded-md shadow-lg my-20 py-8 bg-background-color">
+    
+    <div className="w-[700px] mx-auto  p-10 rounded-md shadow-lg my-20 py-8 bg-background-color relative">
       <button onClick={handleLogout} className="border px-6 py-2 my-4 mb-10">
         Logout
       </button>
@@ -89,7 +105,7 @@ const Home = () => {
           <input
             onChange={e => setSelectedDate(e.target.value)}
             type="date"
-            className="w-full px-3 py-3 focus:outline-none light-blue-input "
+            className="w-full px-3 py-3 focus:outline-none light-blue-input date-input "
           />
         </div>
         <div className="mb-4 p-2 rounded-lg">
@@ -97,7 +113,7 @@ const Home = () => {
           <input
             onChange={e => setSelectedTime(e.target.value)}
             type="time"
-            className="w-full px-3 py-3 focus:outline-none light-blue-input"
+            className="w-full px-3 py-3 focus:outline-none light-blue-input time-input"
           />
         </div>
 
@@ -217,6 +233,14 @@ const Home = () => {
           Confirmar
         </button>
       </div>
+      {popupData && (
+      <PopUp
+        date={popupData.date}
+        service={popupData.service}
+        time={popupData.time}
+        onClose={handleClosePopup}
+      />
+    )}
     </div>
   )
 }

@@ -11,6 +11,10 @@
   background-color: #FFA31A/* Substitua pelos valores RGB que desejar */
 }
 
+.color-title{
+  color: #211F51;
+}
+
 .light-blue-input{
   background-color: #E3E3F3
 }
@@ -23,4 +27,12 @@
 
 .login-img{
   margin-bottom: -8.5px
+}
+
+.date-input::-webkit-calendar-picker-indicator {
+  font-size: 24px; 
+}
+
+.time-input::-webkit-calendar-picker-indicator {
+  font-size: 24px; 
 }
