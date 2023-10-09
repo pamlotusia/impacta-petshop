@@ -5,6 +5,7 @@ import Home from './components/Home'
 import ProtectedRoute from './components/ProtectedRoute'
 import { Route, Routes } from 'react-router-dom'
 import { AuthContextProvider } from './contexts/AuthContext'
+import Navbar from './components/Navbar'
 
 
 const App = () => {
@@ -18,6 +19,7 @@ const App = () => {
             path='/home'
             element={
               <ProtectedRoute>
+                <Navbar />
                 <Home />
               </ProtectedRoute>
             }
