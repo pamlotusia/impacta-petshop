@@ -1,8 +1,30 @@
-# Getting Started with Create React App
+# Site de um petshop
+_principal funcionalidade: agendar serviço de banho e tosa_
+
+### Tecnologias usadas:
+* React
+* Tailwind CSS
+* Javascript
+* HTML
+* CSS
+
+### Banco de dados:
+* Firebase Realtime Database
+
+*Projeto demandado pela faculdade*
+
+https://github.com/pamlotusia/impacta-petshop/assets/85904398/6bf46bcd-b92b-4417-baf0-6f4161098e75
+
+## Para clonar repositório
+* **git clone [link do repo]**
+* **npm install** - vai procurar as dependencias do arquivo package.json e fazer a instalação delas.
+*  **npm start** - para iniciar o servidor local.
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+### Available Scripts
 
 In the project directory, you can run:
 
