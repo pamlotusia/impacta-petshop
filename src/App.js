@@ -6,6 +6,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import { Route, Routes } from 'react-router-dom'
 import { AuthContextProvider } from './contexts/AuthContext'
 import Navbar from './components/Navbar'
+import RegisterPet from './components/RegisterPet'
 
 
 const App = () => {
@@ -21,6 +22,15 @@ const App = () => {
               <ProtectedRoute>
                 <Navbar />
                 <Home />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/cadastrar-pet'
+            element={
+              <ProtectedRoute>
+                <Navbar />
+                <RegisterPet />
               </ProtectedRoute>
             }
           />
