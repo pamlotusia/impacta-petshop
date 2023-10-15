@@ -19,15 +19,6 @@ const Home = () => {
   let currDate = selectedDate.toString().split('-')
   let finalDate = currDate.reverse().join('/')
 
-  const handleLogout = async () => {
-    try {
-      await logout()
-      navigate('/')
-      console.log('you are logout')
-    } catch (e) {
-      console.log(e.message)
-    }
-  }
 
   const handleConfirm = async () => {
     if (!selectedDate || !selectedTime || !selectedService) {
@@ -93,9 +84,7 @@ const Home = () => {
   return (
     
     <div className="w-[700px] mx-auto  p-10 rounded-md shadow-lg my-20 py-8 bg-background-color relative">
-      <button onClick={handleLogout} className="border px-6 py-2 my-4 mb-10">
-        Logout
-      </button>
+
       <h1 className="text-2xl text-center font-bold mb-4">
         Agende seu horário
       </h1>
