@@ -7,6 +7,7 @@ import { Route, Routes } from 'react-router-dom'
 import { AuthContextProvider } from './contexts/AuthContext'
 import Navbar from './components/Navbar'
 import RegisterPet from './components/RegisterPet'
+import RegisterTest from './components/RegisterTest'
 
 
 const App = () => {
@@ -30,10 +31,21 @@ const App = () => {
             element={
               <ProtectedRoute>
                 <Navbar />
-                <RegisterPet />
+                <RegisterPet />                
               </ProtectedRoute>
             }
           />
+
+          <Route
+            path='/cadastrar-teste'
+            element={
+              <ProtectedRoute>
+                <Navbar />
+                <RegisterTest />
+              </ProtectedRoute>
+            }
+          />
+
         </Routes>
       </AuthContextProvider>
     </div>

@@ -7,9 +7,6 @@
 .bg-background-color {
   background-color: #F7F7F9; /* Substitua pelos valores RGB que desejar */
 }
-.bg-confirm-color {
-  background-color: #FFA31A;/* Substitua pelos valores RGB que desejar */
-}
 
 .btn-cancel{
   background-color: #F0F0F9;
@@ -25,6 +22,15 @@
 .medium-blue{
   background-color: #5F6CAF;
 }
+.yellow {
+  background-color: #FFA31A;/* Substitua pelos valores RGB que desejar */
+}
+.green{
+  background-color: #65E7A8;
+}
+.pink{
+  background-color: #FF6B6C;
+}
 
 .font-button-confirm{
   font-family: 'Inter', sans-serif;
@@ -35,6 +41,7 @@
 .custom-shadow {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Altere os valores conforme necessário */
 }
+
 .button-active {
   background-color: #211F51; /* Cor do fundo quando ativo (clicado) */
   color: #fff; /* Cor do texto quando ativo (clicado) */
