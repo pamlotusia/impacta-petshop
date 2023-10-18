@@ -55,7 +55,7 @@ const Signin = () => {
           </div>
           <button
             type="submit"
-            className="bg-confirm-color mb-10 mt-10 w-full p-4 my-2 text-white uppercase font-bold font-button-confirm"
+            className="yellow mb-10 mt-10 w-full p-4 my-2 text-white uppercase font-bold font-button-confirm"
           >
             Entrar
           </button>
