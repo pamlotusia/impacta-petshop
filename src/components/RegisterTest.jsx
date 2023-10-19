@@ -1,19 +1,22 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import iconDog from '../images/icon-dog.svg'
 import iconCat from '../images/icon-cat.svg'
 import iconBird from '../images/icon-bird.svg'
 import iconRodent from '../images/icon-rodent.svg'
 import starIcon from '../images/star.svg'
 
+import { UserAuth } from '../contexts/AuthContext'
+
+import { db, auth } from '../firebase'
+import { set, getDatabase, ref, query } from 'firebase/database'
+
 const RegisterTest = () => {
   const [formData, setFormData] = useState({
     // Inicialize os campos do formulário com valores padrão se necessário
     campoNome: '',
-    campoIdade: '',
-    campoPeso: '',
-    })
+  })
 
-  const [selectedAnimal, setSelectedAnimal] = useState(null);
+  const [selectedAnimal, setSelectedAnimal] = useState(null)
 
   const handleFormChange = e => {
     const { name, value } = e.target
@@ -35,26 +38,66 @@ const RegisterTest = () => {
         <div className="w-[700px] ml-10">
           <Formulario
             onChange={handleFormChange}
+            formData={formData}
             selectedAnimal={selectedAnimal}
             onAnimalButtonClick={handleAnimalButtonClick}
           />
         </div>
         <div className="flex flex-col mt-10">
-        <CardPreview formData={formData} selectedAnimal={selectedAnimal} />
+          <CardPreview formData={formData} selectedAnimal={selectedAnimal} />
         </div>
       </div>
     </section>
   )
 }
 
-const CardPreview = ({ formData, campoNome, campoIdade, campoPeso, selectedAnimal }) => {
+const CardPreview = ({
+  formData,
+  campoNome,
+  campoIdade,
+  campoPeso,
+  selectedAnimal
+}) => {
+  const [nameAnimal, setNameAnimal] = useState('')
+
+  useEffect(() => {
+    setNameAnimal(formData.campoNome)
+  }, [formData.campoNome])
+
+  const handleConfirmPet = async () => {
+    if (!nameAnimal) {
+      alert('por favor preencha os campos')
+      return
+    }
+    try {
+      const user = auth.currentUser
+      const uid = user.uid
+
+      const data = {
+        namePet: nameAnimal,
+      }
+
+      const db = getDatabase()
+      const petRef = ref(db, `users/${uid}/pets/${data.namePet}`)
+      await set(petRef, data)
+
+      alert('pet cadastrado com sucesso!!!')
+
+    } catch (e) {
+      alert(e, e.message)
+    }
+  }
+
+  
+
+
   const animalColors = {
     dog: 'medium-blue',
     cat: 'yellow',
     bird: 'green',
-    rodent: 'pink',
-  };
-  
+    rodent: 'pink'
+  }
+
   const getAnimalIcon = animalType => {
     switch (animalType) {
       case 'dog':
@@ -80,13 +123,22 @@ const CardPreview = ({ formData, campoNome, campoIdade, campoPeso, selectedAnima
           >
             <img src={getAnimalIcon(selectedAnimal)} alt="" />
           </div>
-          <p className="w-full text-lg  text-center font-medium break-words px-3">{formData.campoNome}</p>
-          <p>{formData.campoIdade}</p>
+          <p
+            className="w-full text-lg  text-center font-medium break-words px-3"
+          
+          >
+            {formData.campoNome}
+          </p>
+          <p>
+            {formData.campoIdade}
+          </p>
         </div>
 
         <div className="grid grid-cols-2 px-10 py-5">
           <p className="px-4">tamanho</p>
-          <p className="px-4">{formData.campoPeso}</p>
+          <p className="px-4">
+            {formData.campoPeso}
+          </p>
           <p className="p-4">temperamento</p>
         </div>
       </div>
@@ -94,7 +146,10 @@ const CardPreview = ({ formData, campoNome, campoIdade, campoPeso, selectedAnima
         <button className="text-center uppercase  btn-cancel w-[138px] h-[50px] rounded-3xl uppercase font-bold ml-5">
           cancelar
         </button>
-        <button className="text-center uppercase yellow w-[138px] h-[50px] rounded-3xl uppercase font-bold text-white mr-5">
+        <button
+          className="text-center uppercase yellow w-[138px] h-[50px] rounded-3xl uppercase font-bold text-white mr-5"
+          onClick={handleConfirmPet}
+        >
           confirmar
         </button>
       </div>
@@ -102,7 +157,8 @@ const CardPreview = ({ formData, campoNome, campoIdade, campoPeso, selectedAnima
   )
 }
 
-const Formulario = ({ onChange, selectedAnimal, onAnimalButtonClick }) => {
+const Formulario = ({ onChange, formData, selectedAnimal, onAnimalButtonClick }) => {
+
   return (
     <div className="w-[700px] ml-10">
       <div className="flex justify-left mb-[60px]">
@@ -115,6 +171,7 @@ const Formulario = ({ onChange, selectedAnimal, onAnimalButtonClick }) => {
             id="name"
             className="w-[280px] h-[40px] border rounded focus:outline-none shadow-md p-2"
             name="campoNome"
+            value={formData.campoNome}            
             onChange={onChange}
           />
         </div>
@@ -127,6 +184,7 @@ const Formulario = ({ onChange, selectedAnimal, onAnimalButtonClick }) => {
             id="name"
             className="w-[280px] h-[40px] border rounded  focus:outline-none shadow-md p-2"
             name="campoIdade"
+            
             onChange={onChange}
           />
         </div>
@@ -137,7 +195,9 @@ const Formulario = ({ onChange, selectedAnimal, onAnimalButtonClick }) => {
         <div className="flex justify-center mx-0">
           <button
             className={`w-[110px] h-[100px] ${
-              selectedAnimal === 'dog'  ? 'medium-blue text-white' : 'light-blue-input color-title'
+              selectedAnimal === 'dog'
+                ? 'medium-blue text-white'
+                : 'light-blue-input color-title'
             } rounded-2xl flex flex-col justify-center items-center mx-2 custom-shadow text-white`}
             onClick={() => onAnimalButtonClick('dog')}
           >
@@ -147,7 +207,9 @@ const Formulario = ({ onChange, selectedAnimal, onAnimalButtonClick }) => {
 
           <button
             className={`w-[110px] h-[100px] ${
-              selectedAnimal === 'cat' ? 'yellow text-white' : 'light-blue-input colot-title'
+              selectedAnimal === 'cat'
+                ? 'yellow text-white'
+                : 'light-blue-input color-title'
             } rounded-2xl flex flex-col justify-center items-center mx-2 custom-shadow`}
             onClick={() => onAnimalButtonClick('cat')}
           >
@@ -157,7 +219,9 @@ const Formulario = ({ onChange, selectedAnimal, onAnimalButtonClick }) => {
 
           <button
             className={`w-[110px] h-[100px] ${
-              selectedAnimal === 'bird' ? 'green text-white' : 'light-blue-input color-title'
+              selectedAnimal === 'bird'
+                ? 'green text-white'
+                : 'light-blue-input color-title'
             } rounded-2xl flex flex-col justify-center items-center mx-2 custom-shadow`}
             onClick={() => onAnimalButtonClick('bird')}
           >
@@ -167,7 +231,9 @@ const Formulario = ({ onChange, selectedAnimal, onAnimalButtonClick }) => {
 
           <button
             className={`w-[110px] h-[100px] ${
-              selectedAnimal === 'rodent' ? 'pink text-white' : 'light-blue-input color-title'
+              selectedAnimal === 'rodent'
+                ? 'pink text-white'
+                : 'light-blue-input color-title'
             } rounded-2xl flex flex-col justify-center items-center mx-2 custom-shadow`}
             onClick={() => onAnimalButtonClick('rodent')}
           >
@@ -207,6 +273,7 @@ const Formulario = ({ onChange, selectedAnimal, onAnimalButtonClick }) => {
             id="name"
             className="w-[250px] h-[40px] border rounded  focus:outline-none shadow-md"
             name="campoPeso"
+            
             placeholder="8kg"
             onChange={onChange}
           />
