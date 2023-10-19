@@ -56,7 +56,8 @@ const CardPreview = ({
   campoNome,
   campoIdade,
   campoPeso,
-  selectedAnimal
+  selectedAnimal,
+  selectedSize
 }) => {
   const [nameAnimal, setNameAnimal] = useState('')
   const [ageAnimal, setAgeAnimal] = useState('')
@@ -138,7 +139,7 @@ const CardPreview = ({
         </div>
 
         <div className="grid grid-cols-2 px-10 py-5">
-          <p className="px-4">tamanho</p>
+          <p className="px-4">{selectedSize}</p>
           <p className="px-4">{formData.campoPeso}</p>
           <p className="p-4">temperamento</p>
         </div>
@@ -164,6 +165,12 @@ const Formulario = ({
   selectedAnimal,
   onAnimalButtonClick
 }) => {
+  const [selectedSize, setSelectedSize] = useState(null)
+
+  const handleSizeButtonClick = (size) =>{
+    setSelectedSize(size)
+  }
+
   return (
     <div className="w-[700px] ml-10">
       <div className="flex justify-left mb-[60px]">
@@ -254,13 +261,17 @@ const Formulario = ({
             Tamanho
           </p>
           <div className="flex justify-left">
-            <button className="w-[81px] h-[78px] light-blue-input rounded-2xl mx-2">
+            <button className={`w-[81px] h-[78px] ${selectedSize === 'p' ? 'button-active' : 'light-blue-input'} rounded-2xl mx-2`}
+            onClick={() => handleSizeButtonClick('p')}>              
               <p className="text-4xl text-white uppercase">p</p>
             </button>
-            <button className="w-[81px] h-[78px] light-blue-input rounded-2xl mx-2">
+
+            <button className={`w-[81px] h-[78px] ${selectedSize === 'm' ? 'button-active' : 'light-blue-input'} rounded-2xl mx-2`}
+            onClick={() => handleSizeButtonClick('m')}>
               <p className="text-4xl text-white uppercase">m</p>
             </button>
-            <button className="w-[81px] h-[78px] light-blue-input rounded-2xl mx-2">
+            <button className={`w-[81px] h-[78px] ${selectedSize === 'g' ? 'button-active' : 'light-blue-input'} rounded-2xl mx-2`}
+            onClick={() => handleSizeButtonClick('g')}>
               <p className="text-4xl text-white uppercase ">g</p>
             </button>
           </div>
