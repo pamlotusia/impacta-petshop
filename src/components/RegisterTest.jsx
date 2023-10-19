@@ -17,6 +17,7 @@ const RegisterTest = () => {
   })
 
   const [selectedAnimal, setSelectedAnimal] = useState(null)
+  const [selectedSize, setSelectedSize] = useState(null)
 
   const handleFormChange = e => {
     const { name, value } = e.target
@@ -29,6 +30,7 @@ const RegisterTest = () => {
   const handleAnimalButtonClick = animal => {
     setSelectedAnimal(animal)
   }
+
   return (
     <section>
       <p className="text-3xl text-center font-bold mb-[60px] mt-10">
@@ -41,10 +43,12 @@ const RegisterTest = () => {
             formData={formData}
             selectedAnimal={selectedAnimal}
             onAnimalButtonClick={handleAnimalButtonClick}
+            selectedSize={selectedSize}
+            setSelectedSize={setSelectedSize}
           />
         </div>
         <div className="flex flex-col mt-10">
-          <CardPreview formData={formData} selectedAnimal={selectedAnimal} />
+          <CardPreview formData={formData} selectedAnimal={selectedAnimal} selectedSize={selectedSize} />
         </div>
       </div>
     </section>
@@ -53,11 +57,8 @@ const RegisterTest = () => {
 
 const CardPreview = ({
   formData,
-  campoNome,
-  campoIdade,
-  campoPeso,
-  selectedAnimal,
-  selectedSize
+  selectedAnimal = {selectedAnimal},
+  selectedSize = { selectedSize }
 }) => {
   const [nameAnimal, setNameAnimal] = useState('')
   const [ageAnimal, setAgeAnimal] = useState('')
@@ -163,15 +164,16 @@ const Formulario = ({
   onChange,
   formData,
   selectedAnimal,
-  onAnimalButtonClick
+  onAnimalButtonClick,
+  selectedSize,
+  setSelectedSize
 }) => {
-  const [selectedSize, setSelectedSize] = useState(null)
 
-  const handleSizeButtonClick = (size) =>{
+  const handleSizeButtonClick = size => {
     setSelectedSize(size)
   }
 
-  return (
+    return (
     <div className="w-[700px] ml-10">
       <div className="flex justify-left mb-[60px]">
         <div className="flex flex-col m-2">
@@ -261,17 +263,31 @@ const Formulario = ({
             Tamanho
           </p>
           <div className="flex justify-left">
-            <button className={`w-[81px] h-[78px] ${selectedSize === 'p' ? 'button-active' : 'light-blue-input'} rounded-2xl mx-2`}
-            onClick={() => handleSizeButtonClick('p')}>              
+            <button
+              className={`w-[81px] h-[78px] ${
+                selectedSize === 'pequeno' 
+                  ? 'button-active'
+                  : 'light-blue-input'
+              } rounded-2xl mx-2`}
+              onClick={() => handleSizeButtonClick('pequeno')}
+            >
               <p className="text-4xl text-white uppercase">p</p>
             </button>
 
-            <button className={`w-[81px] h-[78px] ${selectedSize === 'm' ? 'button-active' : 'light-blue-input'} rounded-2xl mx-2`}
-            onClick={() => handleSizeButtonClick('m')}>
+            <button
+              className={`w-[81px] h-[78px] ${
+                selectedSize === 'médio' ? 'button-active' : 'light-blue-input'
+              } rounded-2xl mx-2`}
+              onClick={() => handleSizeButtonClick('médio')}
+            >
               <p className="text-4xl text-white uppercase">m</p>
             </button>
-            <button className={`w-[81px] h-[78px] ${selectedSize === 'g' ? 'button-active' : 'light-blue-input'} rounded-2xl mx-2`}
-            onClick={() => handleSizeButtonClick('g')}>
+            <button
+              className={`w-[81px] h-[78px] ${
+                selectedSize === 'grande' ? 'button-active' : 'light-blue-input'
+              } rounded-2xl mx-2`}
+              onClick={() => handleSizeButtonClick('grande')}
+            >
               <p className="text-4xl text-white uppercase ">g</p>
             </button>
           </div>
