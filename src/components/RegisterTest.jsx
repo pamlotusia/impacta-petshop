@@ -5,15 +5,15 @@ import iconBird from '../images/icon-bird.svg'
 import iconRodent from '../images/icon-rodent.svg'
 import starIcon from '../images/star.svg'
 
-import { UserAuth } from '../contexts/AuthContext'
-
-import { db, auth } from '../firebase'
-import { set, getDatabase, ref, query } from 'firebase/database'
+import { auth } from '../firebase'
+import { set, getDatabase, ref } from 'firebase/database'
 
 const RegisterTest = () => {
   const [formData, setFormData] = useState({
     // Inicialize os campos do formulário com valores padrão se necessário
     campoNome: '',
+    campoIdade: '',
+    campoPeso: ''
   })
 
   const [selectedAnimal, setSelectedAnimal] = useState(null)
@@ -59,10 +59,20 @@ const CardPreview = ({
   selectedAnimal
 }) => {
   const [nameAnimal, setNameAnimal] = useState('')
+  const [ageAnimal, setAgeAnimal] = useState('')
+  const [weightAnimal, setWeightAnimal] = useState('')
 
   useEffect(() => {
     setNameAnimal(formData.campoNome)
   }, [formData.campoNome])
+
+  useEffect(() => {
+    setAgeAnimal(formData.campoIdade)
+  }, [formData.campoIdade])
+
+  useEffect(() => {
+    setWeightAnimal(formData.campoPeso)
+  }, [formData.campoPeso])
 
   const handleConfirmPet = async () => {
     if (!nameAnimal) {
@@ -74,22 +84,20 @@ const CardPreview = ({
       const uid = user.uid
 
       const data = {
-        namePet: nameAnimal,
+        nomePet: nameAnimal,
+        idadePet: ageAnimal,
+        pesoPeso: weightAnimal
       }
 
       const db = getDatabase()
-      const petRef = ref(db, `users/${uid}/pets/${data.namePet}`)
+      const petRef = ref(db, `users/${uid}/pets/${data.nomePet}`)
       await set(petRef, data)
 
       alert('pet cadastrado com sucesso!!!')
-
     } catch (e) {
       alert(e, e.message)
     }
   }
-
-  
-
 
   const animalColors = {
     dog: 'medium-blue',
@@ -123,22 +131,15 @@ const CardPreview = ({
           >
             <img src={getAnimalIcon(selectedAnimal)} alt="" />
           </div>
-          <p
-            className="w-full text-lg  text-center font-medium break-words px-3"
-          
-          >
+          <p className="w-full text-lg  text-center font-medium break-words px-3">
             {formData.campoNome}
           </p>
-          <p>
-            {formData.campoIdade}
-          </p>
+          <p>{formData.campoIdade}</p>
         </div>
 
         <div className="grid grid-cols-2 px-10 py-5">
           <p className="px-4">tamanho</p>
-          <p className="px-4">
-            {formData.campoPeso}
-          </p>
+          <p className="px-4">{formData.campoPeso}</p>
           <p className="p-4">temperamento</p>
         </div>
       </div>
@@ -157,8 +158,12 @@ const CardPreview = ({
   )
 }
 
-const Formulario = ({ onChange, formData, selectedAnimal, onAnimalButtonClick }) => {
-
+const Formulario = ({
+  onChange,
+  formData,
+  selectedAnimal,
+  onAnimalButtonClick
+}) => {
   return (
     <div className="w-[700px] ml-10">
       <div className="flex justify-left mb-[60px]">
@@ -171,7 +176,7 @@ const Formulario = ({ onChange, formData, selectedAnimal, onAnimalButtonClick })
             id="name"
             className="w-[280px] h-[40px] border rounded focus:outline-none shadow-md p-2"
             name="campoNome"
-            value={formData.campoNome}            
+            value={formData.campoNome}
             onChange={onChange}
           />
         </div>
@@ -184,7 +189,7 @@ const Formulario = ({ onChange, formData, selectedAnimal, onAnimalButtonClick })
             id="name"
             className="w-[280px] h-[40px] border rounded  focus:outline-none shadow-md p-2"
             name="campoIdade"
-            
+            value={formData.campoIdade}
             onChange={onChange}
           />
         </div>
@@ -273,7 +278,7 @@ const Formulario = ({ onChange, formData, selectedAnimal, onAnimalButtonClick })
             id="name"
             className="w-[250px] h-[40px] border rounded  focus:outline-none shadow-md"
             name="campoPeso"
-            
+            value={formData.campoPeso}
             placeholder="8kg"
             onChange={onChange}
           />
