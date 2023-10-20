@@ -4,6 +4,7 @@ import iconCat from '../images/icon-cat.svg'
 import iconBird from '../images/icon-bird.svg'
 import iconRodent from '../images/icon-rodent.svg'
 import starIcon from '../images/star.svg'
+import selectedStar from '../images/star-selected.svg'
 
 import { auth } from '../firebase'
 import { set, getDatabase, ref } from 'firebase/database'
@@ -18,6 +19,7 @@ const RegisterTest = () => {
 
   const [selectedAnimal, setSelectedAnimal] = useState(null)
   const [selectedSize, setSelectedSize] = useState(null)
+  const [starValue, setStarValue] = useState(null)
 
   const handleFormChange = e => {
     const { name, value } = e.target
@@ -29,6 +31,10 @@ const RegisterTest = () => {
 
   const handleAnimalButtonClick = animal => {
     setSelectedAnimal(animal)
+  }
+
+  const handleStarValueChange = (value) => {
+    setStarValue(value)
   }
 
   return (
@@ -45,10 +51,11 @@ const RegisterTest = () => {
             onAnimalButtonClick={handleAnimalButtonClick}
             selectedSize={selectedSize}
             setSelectedSize={setSelectedSize}
+            onStarValueChange={handleStarValueChange}
           />
         </div>
         <div className="flex flex-col mt-10">
-          <CardPreview formData={formData} selectedAnimal={selectedAnimal} selectedSize={selectedSize} />
+          <CardPreview formData={formData} selectedAnimal={selectedAnimal} selectedSize={selectedSize} starValue={starValue}/>
         </div>
       </div>
     </section>
@@ -58,7 +65,8 @@ const RegisterTest = () => {
 const CardPreview = ({
   formData,
   selectedAnimal = {selectedAnimal},
-  selectedSize = { selectedSize }
+  selectedSize = { selectedSize },
+  starValue
 }) => {
   const [nameAnimal, setNameAnimal] = useState('')
   const [ageAnimal, setAgeAnimal] = useState('')
@@ -142,7 +150,7 @@ const CardPreview = ({
         <div className="grid grid-cols-2 px-10 py-5">
           <p className="px-4">{selectedSize}</p>
           <p className="px-4">{formData.campoPeso}</p>
-          <p className="p-4">temperamento</p>
+          <p className="p-2">{starValue}</p>
         </div>
       </div>
       <div className="flex justify-evenly mt-8">
@@ -166,8 +174,27 @@ const Formulario = ({
   selectedAnimal,
   onAnimalButtonClick,
   selectedSize,
-  setSelectedSize
+  setSelectedSize,
+  onStarValueChange
 }) => {
+  const [selectedImages, setSelectedImages] = useState([false, false, false, false, false])
+  const starValues = ['poucas ideia', 'calmo', 'moderado', 'simpatico', 'felizão']
+
+  const handleImageClick = (index) =>{
+    const newSelectedImages = [...selectedImages]
+
+    onStarValueChange(starValues[index])
+
+    //deselecionar estrelas
+    newSelectedImages.fill(false)
+
+    //seleciona a imagem da primeira posição pra frente
+    for (let i = 0; i<=index; i++){
+      newSelectedImages[i] =true
+    }
+     
+    setSelectedImages(newSelectedImages)
+  }
 
   const handleSizeButtonClick = size => {
     setSelectedSize(size)
@@ -318,11 +345,13 @@ const Formulario = ({
             Temperamento
           </p>
           <div className="flex justify-left">
-            <img src={starIcon} alt="" className="w-[30px] mx-1" />
-            <img src={starIcon} alt="" className="w-[30px] mx-1" />
-            <img src={starIcon} alt="" className="w-[30px] mx-1" />
-            <img src={starIcon} alt="" className="w-[30px] mx-1" />
-            <img src={starIcon} alt="" className="w-[30px] mx-1" />
+            {selectedImages.map((selected, index) => (
+              <img 
+              key={index}
+              src={selected ? selectedStar : starIcon}
+              className={`w-[30px] mx-1 ${selected ? 'selected-image' : 'unselected-image'}`}
+              onClick={() => handleImageClick(index)}/>
+            ))}
           </div>
         </div>
 
