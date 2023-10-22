@@ -6,6 +6,11 @@ const Appointments = () => {
   const [userAppointments, setUserAppointments] = useState([])
   const LOCAL_STORAGE_KEY = 'userAppointments'
 
+  const formatDate = date => {
+    const parts = date.split('-')
+    return parts.reverse().join('/')
+  }
+
   useEffect(() => {
     const user = auth.currentUser
 
@@ -32,11 +37,13 @@ const Appointments = () => {
             for (const date in appointmentsData) {
               if (appointmentsData.hasOwnProperty(date)) {
                 if (appointmentsData[date][userId]) {
+                  const formattedDate = formatDate(date)
+                  const appointment = {
+                    ...appointmentsData[date][userId],
+                    date: formattedDate
+                  }
                   // Adicionar os agendamentos do usuário
-                  userAppointments.push(appointmentsData[date][userId])
-
-                  let currDate = date.toString().split('-')
-                  let finalDate = date.reverse().join('/')
+                  userAppointments.push(appointment)
                 }
               }
             }
@@ -70,10 +77,10 @@ const Appointments = () => {
         {userAppointments.map((appointment, index) => (
           <div
             key={index}
-            className={`w-[260px] min-h-[200px] rounded-2xl mx-10 custom-shadow flex flex-col items-center justify-center`}
+            className={`w-[260px] min-h-[180px] rounded-2xl mx-10 custom-shadow flex flex-col items-center justify-center`}
           >
             <ul className="text-center break-words">
-              <li className="w-full text-lg font-medium px-3 mt-2">
+              <li className="w-full text-lg font-medium px-3 mt-2 color-title ">
                 {appointment.service}
               </li>
               <li>{appointment.date}</li>
