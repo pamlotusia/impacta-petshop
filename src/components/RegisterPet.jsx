@@ -59,7 +59,7 @@ const RegisterTest = () => {
 
   return (
     <section>
-      <p className="text-3xl text-center font-bold mb-[60px] mt-10">
+      <p className="text-3xl text-center color-title font-bold mb-[60px] mt-10text-3xl text-center color-title font-bold mb-[60px] mt-10">
         Cadastre seu pet!
       </p>
       <div className="flex justify-center mt-10">
