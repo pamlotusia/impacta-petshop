@@ -7,8 +7,6 @@ import { Route, Routes } from 'react-router-dom'
 import { AuthContextProvider } from './contexts/AuthContext'
 import Navbar from './components/Navbar'
 import RegisterPet from './components/RegisterPet'
-import RegisterTest from './components/RegisterTest'
-
 
 const App = () => {
   return (
