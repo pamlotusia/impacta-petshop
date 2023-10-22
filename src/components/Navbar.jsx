@@ -54,8 +54,7 @@ const Navbar = () => {
                 <div className="py-1">
                   <Menu.Item>
                     {({ active }) => (
-                      <a
-                        href="#"
+                     <p
                         className={classNames(
                           active
                             ? 'bg-gray-100 text-gray-900'
@@ -63,8 +62,9 @@ const Navbar = () => {
                           'block px-4 py-2 text-md'
                         )}
                       >
-                        Histórico
-                      </a>
+                        {' '}
+                        <Link to="/historico">Histórico</Link>
+                      </p>
                     )}
                   </Menu.Item>
 

@@ -8,6 +8,7 @@ import { AuthContextProvider } from './contexts/AuthContext'
 import Navbar from './components/Navbar'
 import RegisterPet from './components/RegisterPet'
 import MyPets from './components/MyPets'
+import Appointments from './components/Appointments'
 
 const App = () => {
   return (
@@ -40,6 +41,15 @@ const App = () => {
               <ProtectedRoute>
                 <Navbar />
                 <MyPets />                
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/historico'
+            element={
+              <ProtectedRoute>
+                <Navbar />
+                <Appointments />                
               </ProtectedRoute>
             }
           />

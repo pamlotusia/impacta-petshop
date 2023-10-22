@@ -85,7 +85,7 @@ const Home = () => {
     
     <div className="w-[700px] mx-auto  p-10 rounded-md shadow-lg my-20 py-8 bg-background-color relative">
 
-      <h1 className="text-2xl text-center font-bold mb-4">
+      <h1 className="text-2xl text-center color-title font-bold font-poppins mb-4">
         Agende seu horário
       </h1>
       <form>
