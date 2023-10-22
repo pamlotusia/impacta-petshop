@@ -11,11 +11,14 @@ _principal funcionalidade: agendar serviço de banho e tosa_
 ### Banco de dados:
 * Firebase Realtime Database
 
+
+
+https://github.com/pamlotusia/impacta-petshop/assets/85904398/01e8496e-cdc5-40a0-99ff-27e182e67b5d
+
 *Projeto demandado pela faculdade*
 
-https://github.com/pamlotusia/impacta-petshop/assets/85904398/6bf46bcd-b92b-4417-baf0-6f4161098e75
-
 ## Para clonar repositório
+* **É necessário ter o NODE instalado na máquina**
 * **git clone [link do repo]**
 * **npm install** - vai procurar as dependencias do arquivo package.json e fazer a instalação delas.
 *  **npm start** - para iniciar o servidor local.
