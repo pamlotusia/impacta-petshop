@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { auth } from '../firebase'
-import { UserAuth } from '../contexts/AuthContext'
 import { getDatabase, ref, get } from 'firebase/database'
 
 // Importe os ícones diretamente
@@ -108,8 +107,6 @@ const MyPets = () => {
     </div>
 
     </div>
-
-    
   )
 }
 
