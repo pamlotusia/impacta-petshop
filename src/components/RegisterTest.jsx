@@ -89,13 +89,13 @@ const CardPreview = ({
   setAgeAnimal,
   setWeightAnimal,
   selectedAnimal = { selectedAnimal },
-  selectedSize = { selectedSize },
+  selectedSize ={selectedSize},
   starValue,
   observations,
 }) => {
   // função envia dados para banco
   const handleConfirmPet = async () => {
-    if (!nameAnimal) {
+    if (!nameAnimal || !ageAnimal || !weightAnimal || !selectedAnimal || !selectedSize) {
       alert('por favor preencha os campos')
       return
     }
@@ -108,8 +108,11 @@ const CardPreview = ({
       const data = {
         nomePet: nameAnimal,
         idadePet: ageAnimal,
-        pesoPeso: weightAnimal,
-        observacoes: observations
+        pesoPet: weightAnimal,
+        observacoes: observations,
+        tipoDeAnimal: selectedAnimal,
+        tamanho: selectedSize,
+        temperamento: starValue
       }
 
       const db = getDatabase()
