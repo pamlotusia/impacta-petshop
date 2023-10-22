@@ -33,6 +33,22 @@ const RegisterTest = () => {
     })
   }
 
+  // Função de limpar todos os valores inputados
+  const handleResetForm = () => {
+    setFormData({
+      campoNome: '',
+      campoIdade: '',
+      campoPeso: ''
+    });
+    setSelectedAnimal(null);
+    setNameAnimal('');
+    setAgeAnimal('');
+    setWeightAnimal('');
+    setSelectedSize(null);
+    setStarValue(null);
+    setObservations('');
+  };
+
   const handleAnimalButtonClick = animal => {
     setSelectedAnimal(animal)
   }
@@ -73,6 +89,7 @@ const RegisterTest = () => {
             setAgeAnimal={setAgeAnimal}
             setWeightAnimal={setWeightAnimal}
             observations={observations}
+            onResetForm={handleResetForm}
           />
         </div>
       </div>
@@ -92,6 +109,7 @@ const CardPreview = ({
   selectedSize ={selectedSize},
   starValue,
   observations,
+  onResetForm
 }) => {
   // função envia dados para banco
   const handleConfirmPet = async () => {
@@ -124,6 +142,12 @@ const CardPreview = ({
       alert(e, e.message)
     }
   }
+
+  //limpa formulário
+  const handleCancel = () => {
+    onResetForm(); // Chama a função recebida para redefinir o formulário
+  };
+
 
   useEffect(() => {
     setNameAnimal(formData.campoNome)
@@ -182,7 +206,8 @@ const CardPreview = ({
         </div>
       </div>
       <div className="flex justify-evenly mt-8">
-        <button className="text-center uppercase  btn-cancel w-[138px] h-[50px] rounded-3xl uppercase font-bold ml-5">
+        <button className="text-center uppercase  btn-cancel w-[138px] h-[50px] rounded-3xl uppercase font-bold ml-5"
+        onClick={handleCancel}>
           cancelar
         </button>
         <button
@@ -373,7 +398,7 @@ const Formulario = ({
           <input
             type="text"
             id="name"
-            className="w-[250px] h-[40px] border rounded  focus:outline-none shadow-md"
+            className="w-[250px] h-[40px] p-2 border rounded  focus:outline-none shadow-md"
             name="campoPeso"
             value={formData.campoPeso}
             placeholder="8kg"
