@@ -10,16 +10,20 @@ import { auth } from '../firebase'
 import { set, getDatabase, ref } from 'firebase/database'
 
 const RegisterTest = () => {
+  // Informações que vão para o CardPreview
   const [formData, setFormData] = useState({
     // Inicialize os campos do formulário com valores padrão se necessário
     campoNome: '',
     campoIdade: '',
     campoPeso: ''
   })
-
   const [selectedAnimal, setSelectedAnimal] = useState(null)
+  const [nameAnimal, setNameAnimal] = useState('')
+  const [ageAnimal, setAgeAnimal] = useState('')
+  const [weightAnimal, setWeightAnimal] = useState('')
   const [selectedSize, setSelectedSize] = useState(null)
   const [starValue, setStarValue] = useState(null)
+  const [observations, setObservations] = useState('')
 
   const handleFormChange = e => {
     const { name, value } = e.target
@@ -33,7 +37,7 @@ const RegisterTest = () => {
     setSelectedAnimal(animal)
   }
 
-  const handleStarValueChange = (value) => {
+  const handleStarValueChange = value => {
     setStarValue(value)
   }
 
@@ -52,10 +56,24 @@ const RegisterTest = () => {
             selectedSize={selectedSize}
             setSelectedSize={setSelectedSize}
             onStarValueChange={handleStarValueChange}
+            observations={observations}
+            setObservations={setObservations}
           />
         </div>
         <div className="flex flex-col mt-10">
-          <CardPreview formData={formData} selectedAnimal={selectedAnimal} selectedSize={selectedSize} starValue={starValue}/>
+          <CardPreview
+            formData={formData}
+            selectedAnimal={selectedAnimal}
+            selectedSize={selectedSize}
+            starValue={starValue}
+            nameAnimal={nameAnimal}
+            ageAnimal={ageAnimal}
+            weightAnimal={weightAnimal}
+            setNameAnimal={setNameAnimal}
+            setAgeAnimal={setAgeAnimal}
+            setWeightAnimal={setWeightAnimal}
+            observations={observations}
+          />
         </div>
       </div>
     </section>
@@ -64,13 +82,45 @@ const RegisterTest = () => {
 
 const CardPreview = ({
   formData,
-  selectedAnimal = {selectedAnimal},
+  nameAnimal,
+  ageAnimal,
+  weightAnimal,
+  setNameAnimal,
+  setAgeAnimal,
+  setWeightAnimal,
+  selectedAnimal = { selectedAnimal },
   selectedSize = { selectedSize },
-  starValue
+  starValue,
+  observations,
 }) => {
-  const [nameAnimal, setNameAnimal] = useState('')
-  const [ageAnimal, setAgeAnimal] = useState('')
-  const [weightAnimal, setWeightAnimal] = useState('')
+  // função envia dados para banco
+  const handleConfirmPet = async () => {
+    if (!nameAnimal) {
+      alert('por favor preencha os campos')
+      return
+    }
+
+    console.log(observations)
+    try {
+      const user = auth.currentUser
+      const uid = user.uid
+
+      const data = {
+        nomePet: nameAnimal,
+        idadePet: ageAnimal,
+        pesoPeso: weightAnimal,
+        observacoes: observations
+      }
+
+      const db = getDatabase()
+      const petRef = ref(db, `users/${uid}/pets/${data.nomePet}`)
+      await set(petRef, data)
+
+      alert('pet cadastrado com sucesso!!!')
+    } catch (e) {
+      alert(e, e.message)
+    }
+  }
 
   useEffect(() => {
     setNameAnimal(formData.campoNome)
@@ -83,31 +133,6 @@ const CardPreview = ({
   useEffect(() => {
     setWeightAnimal(formData.campoPeso)
   }, [formData.campoPeso])
-
-  const handleConfirmPet = async () => {
-    if (!nameAnimal) {
-      alert('por favor preencha os campos')
-      return
-    }
-    try {
-      const user = auth.currentUser
-      const uid = user.uid
-
-      const data = {
-        nomePet: nameAnimal,
-        idadePet: ageAnimal,
-        pesoPeso: weightAnimal
-      }
-
-      const db = getDatabase()
-      const petRef = ref(db, `users/${uid}/pets/${data.nomePet}`)
-      await set(petRef, data)
-
-      alert('pet cadastrado com sucesso!!!')
-    } catch (e) {
-      alert(e, e.message)
-    }
-  }
 
   const animalColors = {
     dog: 'medium-blue',
@@ -175,12 +200,28 @@ const Formulario = ({
   onAnimalButtonClick,
   selectedSize,
   setSelectedSize,
-  onStarValueChange
+  onStarValueChange,
+  observations, 
+  setObservations
 }) => {
-  const [selectedImages, setSelectedImages] = useState([false, false, false, false, false])
-  const starValues = ['poucas ideia', 'calmo', 'moderado', 'simpatico', 'felizão']
+  // legenda de cada estrela
+  const starValues = [
+    'poucas ideia',
+    'calmo',
+    'moderado',
+    'simpático',
+    'felizão'
+  ]
 
-  const handleImageClick = (index) =>{
+  const [selectedImages, setSelectedImages] = useState([
+    false,
+    false,
+    false,
+    false,
+    false
+  ])
+
+  const handleImageClick = index => {
     const newSelectedImages = [...selectedImages]
 
     onStarValueChange(starValues[index])
@@ -189,18 +230,17 @@ const Formulario = ({
     newSelectedImages.fill(false)
 
     //seleciona a imagem da primeira posição pra frente
-    for (let i = 0; i<=index; i++){
-      newSelectedImages[i] =true
+    for (let i = 0; i <= index; i++) {
+      newSelectedImages[i] = true
     }
-     
+
     setSelectedImages(newSelectedImages)
   }
 
   const handleSizeButtonClick = size => {
     setSelectedSize(size)
   }
-
-    return (
+  return (
     <div className="w-[700px] ml-10">
       <div className="flex justify-left mb-[60px]">
         <div className="flex flex-col m-2">
@@ -292,7 +332,7 @@ const Formulario = ({
           <div className="flex justify-left">
             <button
               className={`w-[81px] h-[78px] ${
-                selectedSize === 'pequeno' 
+                selectedSize === 'pequeno'
                   ? 'button-active'
                   : 'light-blue-input'
               } rounded-2xl mx-2`}
@@ -346,11 +386,14 @@ const Formulario = ({
           </p>
           <div className="flex justify-left">
             {selectedImages.map((selected, index) => (
-              <img 
-              key={index}
-              src={selected ? selectedStar : starIcon}
-              className={`w-[30px] mx-1 ${selected ? 'selected-image' : 'unselected-image'}`}
-              onClick={() => handleImageClick(index)}/>
+              <img
+                key={index}
+                src={selected ? selectedStar : starIcon}
+                className={`w-[30px] mx-1 ${
+                  selected ? 'selected-image' : 'unselected-image'
+                }`}
+                onClick={() => handleImageClick(index)}
+              />
             ))}
           </div>
         </div>
@@ -364,6 +407,8 @@ const Formulario = ({
             rows="10"
             className="w-[300px] h-[150px] border rounded  focus:outline-none shadow-md p-2"
             placeholder="descreva caso seu bichinho tenha um comportamento específico. Ex: não gosta que toquem nas patas traseiras"
+            value={observations}
+            onChange={e => setObservations(e.target.value)}
           ></textarea>
         </div>
       </div>
