@@ -35,17 +35,6 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-
-          <Route
-            path='/cadastrar-teste'
-            element={
-              <ProtectedRoute>
-                <Navbar />
-                <RegisterTest />
-              </ProtectedRoute>
-            }
-          />
-
         </Routes>
       </AuthContextProvider>
     </div>

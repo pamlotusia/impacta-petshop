@@ -216,7 +216,7 @@ const Home = () => {
           Cancelar
         </button>
         <button
-          className="px-6 py-2 my-4 m-5 bg-confirm-color rounded-md text-white font-bold uppercase"
+          className="px-6 py-2 my-4 m-5 yellow rounded-md text-white font-bold uppercase"
           onClick={handleConfirm}
         >
           Confirmar

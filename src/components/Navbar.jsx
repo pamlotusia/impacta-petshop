@@ -139,7 +139,7 @@ const Navbar = () => {
                         )}
                       >
                         {' '}
-                        <Link to="/cadastrar-teste">Cadastrar pet</Link>
+                        <Link to="/cadastrar-pet">Cadastrar pet</Link>
                       </p>
                     )}
                   </Menu.Item>
