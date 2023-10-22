@@ -9,6 +9,7 @@ import Navbar from './components/Navbar'
 import RegisterPet from './components/RegisterPet'
 import MyPets from './components/MyPets'
 import Appointments from './components/Appointments'
+import Profile from './components/Profile'
 
 const App = () => {
   return (
@@ -50,6 +51,15 @@ const App = () => {
               <ProtectedRoute>
                 <Navbar />
                 <Appointments />                
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/perfil'
+            element={
+              <ProtectedRoute>
+                <Navbar />
+                <Profile />                
               </ProtectedRoute>
             }
           />

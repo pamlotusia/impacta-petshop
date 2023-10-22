@@ -114,17 +114,17 @@ const Navbar = () => {
                 <div className="py-1">
                   <Menu.Item>
                     {({ active }) => (
-                      <a
-                        href="#"
-                        className={classNames(
-                          active
-                            ? 'bg-gray-100 text-gray-900'
-                            : 'text-gray-700',
-                          'block px-4 py-2 text-md'
-                        )}
-                      >
-                        Meu perfil
-                      </a>
+                      <p
+                      className={classNames(
+                        active
+                          ? 'bg-gray-100 text-gray-900'
+                          : 'text-gray-700',
+                        'block px-4 py-2 text-md'
+                      )}
+                    >
+                      {' '}
+                      <Link to="/perfil">Meu perfil</Link>
+                    </p>
                     )}
                   </Menu.Item>
 

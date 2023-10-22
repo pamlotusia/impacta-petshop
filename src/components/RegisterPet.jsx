@@ -282,6 +282,7 @@ const Formulario = ({
             name="campoNome"
             value={formData.campoNome}
             onChange={onChange}
+            autoComplete='off'
           />
         </div>
         <div className="flex flex-col m-2">
@@ -295,6 +296,7 @@ const Formulario = ({
             name="campoIdade"
             value={formData.campoIdade}
             onChange={onChange}
+            autoComplete='off'
           />
         </div>
       </div>
@@ -403,6 +405,7 @@ const Formulario = ({
             value={formData.campoPeso}
             placeholder="8kg"
             onChange={onChange}
+            autoComplete='off'
           />
         </div>
       </div>
