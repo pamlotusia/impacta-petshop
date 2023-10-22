@@ -13,12 +13,11 @@ const Home = () => {
   const [selectedTime, setSelectedTime] = useState('')
   const [selectedService, setSeletedService] = useState('')
   const [selectedTosa, setSelectedTosa] = useState('')
-  
+
   const [popupData, setPopupData] = useState(null)
 
   let currDate = selectedDate.toString().split('-')
   let finalDate = currDate.reverse().join('/')
-
 
   const handleConfirm = async () => {
     if (!selectedDate || !selectedTime || !selectedService) {
@@ -58,7 +57,7 @@ const Home = () => {
         date: selectedDate,
         time: selectedTime,
         service: selectedService,
-        tosa: selectedTosa,
+        tosa: selectedTosa
       }
 
       const db = getDatabase()
@@ -73,18 +72,16 @@ const Home = () => {
     setPopupData({
       date: finalDate,
       service: selectedService,
-      time: selectedTime,
+      time: selectedTime
     })
   }
 
   const handleClosePopup = () => {
-    setPopupData(null);
+    setPopupData(null)
   }
 
   return (
-    
     <div className="w-[700px] mx-auto  p-10 rounded-md shadow-lg my-20 py-8 bg-background-color relative">
-
       <h1 className="text-2xl text-center color-title font-bold font-poppins mb-4">
         Agende seu horário
       </h1>
@@ -191,7 +188,7 @@ const Home = () => {
               className=""
             />
             <label className="text-gray-700 text-sm font-medium ml-2">
-            Tosa média
+              Tosa média
             </label>
           </div>
 
@@ -223,13 +220,13 @@ const Home = () => {
         </button>
       </div>
       {popupData && (
-      <PopUp
-        date={popupData.date}
-        service={popupData.service}
-        time={popupData.time}
-        onClose={handleClosePopup}
-      />
-    )}
+        <PopUp
+          date={popupData.date}
+          service={popupData.service}
+          time={popupData.time}
+          onClose={handleClosePopup}
+        />
+      )}
     </div>
   )
 }

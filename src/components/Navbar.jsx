@@ -54,7 +54,7 @@ const Navbar = () => {
                 <div className="py-1">
                   <Menu.Item>
                     {({ active }) => (
-                     <p
+                      <p
                         className={classNames(
                           active
                             ? 'bg-gray-100 text-gray-900'
@@ -115,16 +115,16 @@ const Navbar = () => {
                   <Menu.Item>
                     {({ active }) => (
                       <p
-                      className={classNames(
-                        active
-                          ? 'bg-gray-100 text-gray-900'
-                          : 'text-gray-700',
-                        'block px-4 py-2 text-md'
-                      )}
-                    >
-                      {' '}
-                      <Link to="/perfil">Meu perfil</Link>
-                    </p>
+                        className={classNames(
+                          active
+                            ? 'bg-gray-100 text-gray-900'
+                            : 'text-gray-700',
+                          'block px-4 py-2 text-md'
+                        )}
+                      >
+                        {' '}
+                        <Link to="/perfil">Meu perfil</Link>
+                      </p>
                     )}
                   </Menu.Item>
 
@@ -146,16 +146,16 @@ const Navbar = () => {
                   <Menu.Item>
                     {({ active }) => (
                       <p
-                      className={classNames(
-                        active
-                          ? 'bg-gray-100 text-gray-900'
-                          : 'text-gray-700',
-                        'block px-4 py-2 text-md'
-                      )}
-                    >
-                      {' '}
-                      <Link to="/meus-pets">Meus pets</Link>
-                    </p>
+                        className={classNames(
+                          active
+                            ? 'bg-gray-100 text-gray-900'
+                            : 'text-gray-700',
+                          'block px-4 py-2 text-md'
+                        )}
+                      >
+                        {' '}
+                        <Link to="/meus-pets">Meus pets</Link>
+                      </p>
                     )}
                   </Menu.Item>
                   <Menu.Item>
