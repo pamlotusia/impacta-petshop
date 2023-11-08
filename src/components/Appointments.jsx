@@ -25,7 +25,7 @@ const Appointments = () => {
     if (user) {
       const userId = user.uid
       const db = getDatabase()
-      const appointmentsRef = ref(db, 'agendamentos')
+      const appointmentsRef = ref(db, `agendamentos`)
 
       get(appointmentsRef)
         .then(snapshot => {
@@ -36,15 +36,25 @@ const Appointments = () => {
             // Iterar sobre as datas
             for (const date in appointmentsData) {
               if (appointmentsData.hasOwnProperty(date)) {
-                if (appointmentsData[date][userId]) {
+                const dateData = appointmentsData[date]
+
+                if (dateData[userId]) {
                   const formattedDate = formatDate(date)
-                  const appointment = {
-                    ...appointmentsData[date][userId],
-                    date: formattedDate
+                  const userAgendamentos = dateData[userId]
+
+                  for (const time in userAgendamentos) {
+                    if (userAgendamentos.hasOwnProperty(time)) {
+                      const appointment = {
+                        ...appointmentsData[time],
+                        date: formattedDate
+                      }
+                      // Adicionar os agendamentos do usuário
+                userAppointments.push(appointment)
+                    }
                   }
-                  // Adicionar os agendamentos do usuário
-                  userAppointments.push(appointment)
                 }
+
+                
               }
             }
 

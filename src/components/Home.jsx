@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { UserAuth } from '../contexts/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import { db, auth } from '../firebase'
-import { set, getDatabase, ref } from 'firebase/database'
+import { set, getDatabase, ref, get} from 'firebase/database'
 import PopUp from './PopUp'
 
 const Home = () => {
@@ -62,7 +62,24 @@ const Home = () => {
       }
 
       const db = getDatabase()
-      const agendamentoRef = ref(db, `agendamentos/${selectedDate}/${uid}`)
+
+      //consultar o numero de agendamentos para o memso dia
+      const agendamentosDiaRef = ref(db, `agendamentos/${selectedDate}`)
+      const agendamentosSnapshot = await get(agendamentosDiaRef)
+
+      if(agendamentosSnapshot.exists()){
+        const agendamentosData = agendamentosSnapshot.val()
+        const numAgendamentosParaDia = Object.keys(agendamentosData).length
+
+        //verifica se já existem 5 agendamentos par ao mesmo dia
+        if(numAgendamentosParaDia >= 5){
+          alert('Desculpe, o limite de agendamentos para este dia foi atingido e não é mais possivel realizar novos agendamentos. Por favor, tente outra data.')
+          return
+        }
+      }
+
+      //referencia de onde o agendamento ficará salvo agendamento > dia selecionado > hora selecionada > usuario logado
+      const agendamentoRef = ref(db, `agendamentos/${selectedDate}/${selectedTime}/${uid}`)
       await set(agendamentoRef, data)
 
       alert('Dados salvos com sucesso')
