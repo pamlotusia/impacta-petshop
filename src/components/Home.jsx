@@ -3,7 +3,7 @@ import { UserAuth } from '../contexts/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import { db, auth } from '../firebase'
 import { set, getDatabase, ref, get} from 'firebase/database'
-import PopUp from './PopUp'
+import PopUp from './PopUp' 
 
 const Home = () => {
   const { user, logout } = UserAuth()
