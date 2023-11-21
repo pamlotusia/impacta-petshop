@@ -70,7 +70,7 @@ function DropdownPets() {
   };
 
   return (
-    <div className=" relative flex flex-col items-center w-[340px] h-[340px] rounded-lg mt-8 ">
+    <div className=" relative flex flex-col items-center w-[340px] rounded-lg mt-8">
       <div
         onClick={() => setIsOpen((prev) => !prev)}
         className=" shadow bg-white p-4 w-full flex items-center justify-between rounded-lg border-4 border-transparent active:border-yellow duration-300 active:yellow-font "

@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import { UserAuth } from '../contexts/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import { db, auth } from '../firebase'
-import { set, getDatabase, ref, get} from 'firebase/database'
-import PopUp from './PopUp' 
+import { set, getDatabase, ref, get } from 'firebase/database'
+import PopUp from './PopUp'
 import DropdownPets from './DropdownPets'
+import Price from './Price'
 
 const Home = () => {
   const { user, logout } = UserAuth()
@@ -14,12 +15,12 @@ const Home = () => {
   const [selectedTime, setSelectedTime] = useState('')
   const [selectedService, setSeletedService] = useState('')
   const [selectedTosa, setSelectedTosa] = useState('')
-  
+  const [selectedPet, setSelectedPet] = useState(null)
+
   const [popupData, setPopupData] = useState(null)
 
   let currDate = selectedDate.toString().split('-')
   let finalDate = currDate.reverse().join('/')
-
 
   const handleConfirm = async () => {
     if (!selectedDate || !selectedTime || !selectedService) {
@@ -59,7 +60,7 @@ const Home = () => {
         date: selectedDate,
         time: selectedTime,
         service: selectedService,
-        tosa: selectedTosa,
+        tosa: selectedTosa
       }
 
       const db = getDatabase()
@@ -68,19 +69,24 @@ const Home = () => {
       const agendamentosDiaRef = ref(db, `agendamentos/${selectedDate}`)
       const agendamentosSnapshot = await get(agendamentosDiaRef)
 
-      if(agendamentosSnapshot.exists()){
+      if (agendamentosSnapshot.exists()) {
         const agendamentosData = agendamentosSnapshot.val()
         const numAgendamentosParaDia = Object.keys(agendamentosData).length
 
         //verifica se já existem 5 agendamentos par ao mesmo dia
-        if(numAgendamentosParaDia >= 5){
-          alert('Desculpe, o limite de agendamentos para este dia foi atingido e não é mais possivel realizar novos agendamentos. Por favor, tente outra data.')
+        if (numAgendamentosParaDia >= 5) {
+          alert(
+            'Desculpe, o limite de agendamentos para este dia foi atingido e não é mais possivel realizar novos agendamentos. Por favor, tente outra data.'
+          )
           return
         }
       }
 
       //referencia de onde o agendamento ficará salvo agendamento > dia selecionado > hora selecionada > usuario logado
-      const agendamentoRef = ref(db, `agendamentos/${selectedDate}/${selectedTime}/${uid}`)
+      const agendamentoRef = ref(
+        db,
+        `agendamentos/${selectedDate}/${selectedTime}/${uid}`
+      )
       await set(agendamentoRef, data)
 
       alert('Dados salvos com sucesso')
@@ -91,18 +97,20 @@ const Home = () => {
     setPopupData({
       date: finalDate,
       service: selectedService,
-      time: selectedTime,
+      time: selectedTime
     })
   }
 
   const handleClosePopup = () => {
-    setPopupData(null);
+    setPopupData(null)
+  }
+
+  const handlePetSelect = (pet) => {
+    setSelectedPet(pet)
   }
 
   return (
-    
     <div className="w-[700px] mx-auto  p-10 rounded-md shadow-lg my-20 py-8 bg-background-color relative">
-
       <h1 className="text-2xl text-center color-title font-bold font-poppins mb-4">
         Agende seu horário
       </h1>
@@ -174,11 +182,11 @@ const Home = () => {
               }
               name="tipo-tosa"
               id="tosa-higienica"
-              data-text="Tosa Higiênica"
+              data-text="Tosa higiênica"
               type="radio"
             />
             <label className="text-gray-700 text-sm font-medium ml-2">
-              Tosa Higiênica
+              Tosa higiênica
             </label>
           </div>
 
@@ -209,7 +217,7 @@ const Home = () => {
               className=""
             />
             <label className="text-gray-700 text-sm font-medium ml-2">
-            Tosa média
+              Tosa média
             </label>
           </div>
 
@@ -229,14 +237,18 @@ const Home = () => {
           </div>
         </div>
 
-        <div className='flex justify-center'>
-       <DropdownPets />
-
+        <div className="flex justify-center">
+          <DropdownPets onPetSelect={handlePetSelect}/>
+        </div>
+        
+        <div className="flex justify-center ">
+          <Price 
+          serviceType={selectedService}
+          groomingType={selectedTosa}
+          selectedPet={selectedPet}/>
         </div>
 
         
-
-
       </form>
       <div className="flex justify-center">
         <button className="border px-6 py-2 my-4 m-5 rounded-md font-bold uppercase">
@@ -250,13 +262,13 @@ const Home = () => {
         </button>
       </div>
       {popupData && (
-      <PopUp
-        date={popupData.date}
-        service={popupData.service}
-        time={popupData.time}
-        onClose={handleClosePopup}
-      />
-    )}
+        <PopUp
+          date={popupData.date}
+          service={popupData.service}
+          time={popupData.time}
+          onClose={handleClosePopup}
+        />
+      )}
     </div>
   )
 }
