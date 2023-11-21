@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { db, auth } from '../firebase'
 import { set, getDatabase, ref, get} from 'firebase/database'
 import PopUp from './PopUp' 
+import DropdownPets from './DropdownPets'
 
 const Home = () => {
   const { user, logout } = UserAuth()
@@ -227,6 +228,15 @@ const Home = () => {
             </label>
           </div>
         </div>
+
+        <div className='flex justify-center'>
+       <DropdownPets />
+
+        </div>
+
+        
+
+
       </form>
       <div className="flex justify-center">
         <button className="border px-6 py-2 my-4 m-5 rounded-md font-bold uppercase">
