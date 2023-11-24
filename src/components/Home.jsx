@@ -267,6 +267,7 @@ const Home = () => {
           service={popupData.service}
           time={popupData.time}
           onClose={handleClosePopup}
+          
         />
       )}
     </div>
