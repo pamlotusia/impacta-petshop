@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-const PopUp = ({ date, time, service, onClose }) => {
+const PopUp = ({ date, time, service, price, onClose }) => {
   return (
     <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50">
       <div className="absolute w-full h-full bg-gray-900 opacity-50" onClick={onClose}></div>
@@ -17,6 +17,9 @@ const PopUp = ({ date, time, service, onClose }) => {
         </div>
         <div className="mb-2">
           <strong>Serviço:</strong> {service}
+        </div>
+        <div className="mb-2">
+          <strong>Valor final</strong> R$: {price}
         </div>
 
         <button

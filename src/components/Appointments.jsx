@@ -91,8 +91,9 @@ const Appointments = () => {
               <li className="w-full text-lg font-medium px-3 mt-2 color-title ">
                 {appointment.service}
               </li>
-              <li>{appointment.date}</li>
-              <li>às {appointment.time}</li>
+              <li className='my-1'>{appointment.date}</li>
+              <li className='my-1'>às {appointment.time}</li>
+              <li className='font-bold grey-font my-1'>R${appointment.price}</li>
             </ul>
           </div>
         ))}

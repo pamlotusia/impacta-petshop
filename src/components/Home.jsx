@@ -16,11 +16,14 @@ const Home = () => {
   const [selectedService, setSeletedService] = useState('')
   const [selectedTosa, setSelectedTosa] = useState('')
   const [selectedPet, setSelectedPet] = useState(null)
-
+  const [finalPrice, setFinalPrice] = useState(0)
   const [popupData, setPopupData] = useState(null)
 
-  let currDate = selectedDate.toString().split('-')
-  let finalDate = currDate.reverse().join('/')
+  const formatDate = date => {
+    const parts = date.split('-')
+    const formattedDate = `${parts[2]}/${parts[1]}/${parts[0]}`
+    return formattedDate
+  }
 
   const handleConfirm = async () => {
     if (!selectedDate || !selectedTime || !selectedService) {
@@ -56,11 +59,12 @@ const Home = () => {
 
       const uid = user.uid
 
-      const data = {
+        const data = {
         date: selectedDate,
         time: selectedTime,
         service: selectedService,
-        tosa: selectedTosa
+        tosa: selectedTosa,
+        price: finalPrice
       }
 
       const db = getDatabase()
@@ -95,9 +99,10 @@ const Home = () => {
     }
 
     setPopupData({
-      date: finalDate,
+      date: formatDate(selectedDate),
       service: selectedService,
-      time: selectedTime
+      time: selectedTime,
+      price: finalPrice
     })
   }
 
@@ -105,7 +110,7 @@ const Home = () => {
     setPopupData(null)
   }
 
-  const handlePetSelect = (pet) => {
+  const handlePetSelect = pet => {
     setSelectedPet(pet)
   }
 
@@ -238,17 +243,17 @@ const Home = () => {
         </div>
 
         <div className="flex justify-center">
-          <DropdownPets onPetSelect={handlePetSelect}/>
-        </div>
-        
-        <div className="flex justify-center ">
-          <Price 
-          serviceType={selectedService}
-          groomingType={selectedTosa}
-          selectedPet={selectedPet}/>
+          <DropdownPets onPetSelect={handlePetSelect} />
         </div>
 
-        
+        <div className="flex justify-center ">
+          <Price
+            serviceType={selectedService}
+            groomingType={selectedTosa}
+            selectedPet={selectedPet}
+            setFinalPrice={setFinalPrice}
+          />
+        </div>
       </form>
       <div className="flex justify-center">
         <button className="border px-6 py-2 my-4 m-5 rounded-md font-bold uppercase">
@@ -266,8 +271,8 @@ const Home = () => {
           date={popupData.date}
           service={popupData.service}
           time={popupData.time}
+          price={popupData.price}
           onClose={handleClosePopup}
-          
         />
       )}
     </div>
