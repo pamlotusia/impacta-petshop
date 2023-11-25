@@ -102,7 +102,7 @@ const Home = () => {
     setPopupData({
       date: formatDate(selectedDate),
       service: selectedService,
-      time: selectedTime
+      time: selectedTime,
       price: finalPrice
     })
   }
