@@ -1,27 +1,50 @@
+// PopUp.js
+
 import React from 'react'
 
-const PopUp = ({ date, time, service, onClose }) => {
+const PopUp = ({ date, time, service, price, onClose }) => {
   return (
-    <div className="flex items-center justify-center">
-      <div className="fixed top-0 z-50 p-10 rounded-md shadow-lg my-20 py-8 flex flex-col md:w-[550px] bg-white">
-        <span
-          className="text-xl font-bold cursor-pointer top-3 right-3 color-title"
-          onClick={onClose}
-        >
-          &times;
-        </span>
-        <p className="text-2xl text-center font-bold mb-8 color-title">
-          Seu agendamento concluído com sucesso!
-        </p>
-          <div className="p-10 rounded-md shadow-lg bg-white  md:h-[250px] ">
-            <p className="text-lg m-5 text-center font-bold color-title">
-              {service}
-            </p>
-            <p className="text-lg m-5 text-center">{date}</p>
-            <p className="text-lg m-5 text-center">às {time}</p>
+    <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50">
+      <div
+        className="absolute w-full h-full bg-gray-900 opacity-50"
+        onClick={onClose}
+      ></div>
+      <div className="bg-white p-8 rounded-lg z-50">
+        <div className="text-2xl color-title font-bold  mb-4">
+          Agendamento Confirmado!
+        </div>
+        <div className="flex justify-center items-center flex-col grey-font">
+          <div className="mb-2">
+            <strong>Data:</strong> {date}
           </div>
+          <div className="mb-2">
+            <strong>às </strong> {time}
+          </div>
+          <div className="mb-2">
+            <strong>Serviço:</strong> {service}
+          </div>
+          <div className="mb-2">
+            <strong>Valor final</strong> R$: {price}
+          </div>
+
+          <div className="flex justify-between items-center mt-5">
+            <button
+              className="px-4 py-2 yellow-font rounded-md font-bold mx-5"
+              onClick={onClose}
+            >
+              Fechar
+            </button>
+            <a
+              href="/historico"
+              className="px-4 py-2 bg-yellow-500 text-white rounded-md font-bold"
+            >
+              Ver agendamento
+            </a>
+          </div>
+        </div>
       </div>
-    </div> 
+    </div>
   )
 }
+
 export default PopUp

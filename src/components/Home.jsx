@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import { UserAuth } from '../contexts/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import { db, auth } from '../firebase'
-import { set, getDatabase, ref } from 'firebase/database'
+import { set, getDatabase, ref, get } from 'firebase/database'
 import PopUp from './PopUp'
+import DropdownPets from './DropdownPets'
+import Price from './Price'
 
 const Home = () => {
   const { user, logout } = UserAuth()
@@ -12,12 +14,17 @@ const Home = () => {
   const [selectedDate, setSelectedDate] = useState('')
   const [selectedTime, setSelectedTime] = useState('')
   const [selectedService, setSeletedService] = useState('')
+  const [bathSelected, setBathSelected] = useState(false)
   const [selectedTosa, setSelectedTosa] = useState('')
-
+  const [selectedPet, setSelectedPet] = useState(null)
+  const [finalPrice, setFinalPrice] = useState(0)
   const [popupData, setPopupData] = useState(null)
 
-  let currDate = selectedDate.toString().split('-')
-  let finalDate = currDate.reverse().join('/')
+  const formatDate = date => {
+    const parts = date.split('-')
+    const formattedDate = `${parts[2]}/${parts[1]}/${parts[0]}`
+    return formattedDate
+  }
 
   const handleConfirm = async () => {
     if (!selectedDate || !selectedTime || !selectedService) {
@@ -57,11 +64,34 @@ const Home = () => {
         date: selectedDate,
         time: selectedTime,
         service: selectedService,
-        tosa: selectedTosa
+        tosa: selectedTosa,
+        price: finalPrice
       }
 
       const db = getDatabase()
-      const agendamentoRef = ref(db, `agendamentos/${selectedDate}/${uid}`)
+
+      //consultar o numero de agendamentos para o memso dia
+      const agendamentosDiaRef = ref(db, `agendamentos/${selectedDate}`)
+      const agendamentosSnapshot = await get(agendamentosDiaRef)
+
+      if (agendamentosSnapshot.exists()) {
+        const agendamentosData = agendamentosSnapshot.val()
+        const numAgendamentosParaDia = Object.keys(agendamentosData).length
+
+        //verifica se já existem 5 agendamentos par ao mesmo dia
+        if (numAgendamentosParaDia >= 5) {
+          alert(
+            'Desculpe, o limite de agendamentos para este dia foi atingido e não é mais possivel realizar novos agendamentos. Por favor, tente outra data.'
+          )
+          return
+        }
+      }
+
+      //referencia de onde o agendamento ficará salvo agendamento > dia selecionado > hora selecionada > usuario logado
+      const agendamentoRef = ref(
+        db,
+        `agendamentos/${selectedDate}/${selectedTime}/${uid}`
+      )
       await set(agendamentoRef, data)
 
       alert('Dados salvos com sucesso')
@@ -70,14 +100,19 @@ const Home = () => {
     }
 
     setPopupData({
-      date: finalDate,
+      date: formatDate(selectedDate),
       service: selectedService,
       time: selectedTime
+      price: finalPrice
     })
   }
 
   const handleClosePopup = () => {
     setPopupData(null)
+  }
+
+  const handlePetSelect = pet => {
+    setSelectedPet(pet)
   }
 
   return (
@@ -110,9 +145,11 @@ const Home = () => {
         <div className="flex justify-center">
           <div className=" flex mb-3  p-2 rounded-lg">
             <input
-              onChange={e =>
+              onChange={e => {
                 setSeletedService(e.target.nextElementSibling.textContent)
-              }
+                setBathSelected(e.target.value === 'banho')
+                setSelectedTosa('')
+              }}
               name="serviço"
               id="banho"
               value="banho"
@@ -127,9 +164,10 @@ const Home = () => {
 
           <div className=" flex mb-3  p-2 rounded-lg">
             <input
-              onChange={e =>
+              onChange={e => {
                 setSeletedService(e.target.nextElementSibling.textContent)
-              }
+                setBathSelected(false)
+              }}
               name="serviço"
               id="banho_tosa"
               data-text="Banho & Tosa"
@@ -153,11 +191,13 @@ const Home = () => {
               }
               name="tipo-tosa"
               id="tosa-higienica"
-              data-text="Tosa Higiênica"
+              data-text="Tosa higiênica"
               type="radio"
+              disabled={bathSelected}
+              checked={bathSelected? false : undefined}
             />
             <label className="text-gray-700 text-sm font-medium ml-2">
-              Tosa Higiênica
+              Tosa higiênica
             </label>
           </div>
 
@@ -170,6 +210,8 @@ const Home = () => {
               id="tosa-baixa"
               data-text="Tosa baixa"
               type="radio"
+              disabled={bathSelected}
+              checked={bathSelected? false : undefined}
             />
             <label className="text-gray-700 text-sm font-medium ml-2">
               Tosa baixa
@@ -185,10 +227,11 @@ const Home = () => {
               id="tosa-media"
               data-text="Tosa média"
               type="radio"
-              className=""
+              disabled={bathSelected}
+              checked={bathSelected? false : undefined}
             />
             <label className="text-gray-700 text-sm font-medium ml-2">
-              Tosa média
+                Tosa média
             </label>
           </div>
 
@@ -201,13 +244,29 @@ const Home = () => {
               id="tosa-alta"
               data-text="Tosa alta"
               type="radio"
+              disabled={bathSelected}
+              checked={bathSelected? false : undefined}
             />
             <label className="text-gray-700 text-sm font-medium ml-2">
               Tosa alta
             </label>
           </div>
         </div>
+
+        <div className="flex justify-center">
+          <DropdownPets onPetSelect={handlePetSelect} />
+        </div>
+
+        <div className="flex justify-center ">
+          <Price
+            serviceType={selectedService}
+            groomingType={selectedTosa}
+            selectedPet={selectedPet}
+            setFinalPrice={setFinalPrice}
+          />
+        </div>
       </form>
+
       <div className="flex justify-center">
         <button className="border px-6 py-2 my-4 m-5 rounded-md font-bold uppercase">
           Cancelar
@@ -220,13 +279,13 @@ const Home = () => {
         </button>
       </div>
       {popupData && (
-        <PopUp
-          date={popupData.date}
-          service={popupData.service}
-          time={popupData.time}
-          onClose={handleClosePopup}
-        />
-      )}
+      <PopUp
+        date={popupData.date}
+        service={popupData.service}
+        time={popupData.time}
+        onClose={handleClosePopup}
+      />
+    )}
     </div>
   )
 }
