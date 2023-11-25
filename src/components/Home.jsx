@@ -14,6 +14,7 @@ const Home = () => {
   const [selectedDate, setSelectedDate] = useState('')
   const [selectedTime, setSelectedTime] = useState('')
   const [selectedService, setSeletedService] = useState('')
+  const [bathSelected, setBathSelected] = useState(false)
   const [selectedTosa, setSelectedTosa] = useState('')
   const [selectedPet, setSelectedPet] = useState(null)
   const [finalPrice, setFinalPrice] = useState(0)
@@ -59,7 +60,7 @@ const Home = () => {
 
       const uid = user.uid
 
-        const data = {
+      const data = {
         date: selectedDate,
         time: selectedTime,
         service: selectedService,
@@ -144,9 +145,11 @@ const Home = () => {
         <div className="flex justify-center">
           <div className=" flex mb-3  p-2 rounded-lg">
             <input
-              onChange={e =>
+              onChange={e => {
                 setSeletedService(e.target.nextElementSibling.textContent)
-              }
+                setBathSelected(e.target.value === 'banho')
+                setSelectedTosa('')
+              }}
               name="serviço"
               id="banho"
               value="banho"
@@ -161,9 +164,10 @@ const Home = () => {
 
           <div className=" flex mb-3  p-2 rounded-lg">
             <input
-              onChange={e =>
+              onChange={e => {
                 setSeletedService(e.target.nextElementSibling.textContent)
-              }
+                setBathSelected(false)
+              }}
               name="serviço"
               id="banho_tosa"
               data-text="Banho & Tosa"
@@ -189,6 +193,8 @@ const Home = () => {
               id="tosa-higienica"
               data-text="Tosa higiênica"
               type="radio"
+              disabled={bathSelected}
+              checked={bathSelected? false : undefined}
             />
             <label className="text-gray-700 text-sm font-medium ml-2">
               Tosa higiênica
@@ -204,6 +210,8 @@ const Home = () => {
               id="tosa-baixa"
               data-text="Tosa baixa"
               type="radio"
+              disabled={bathSelected}
+              checked={bathSelected? false : undefined}
             />
             <label className="text-gray-700 text-sm font-medium ml-2">
               Tosa baixa
@@ -219,7 +227,8 @@ const Home = () => {
               id="tosa-media"
               data-text="Tosa média"
               type="radio"
-              className=""
+              disabled={bathSelected}
+              checked={bathSelected? false : undefined}
             />
             <label className="text-gray-700 text-sm font-medium ml-2">
               Tosa média
@@ -235,6 +244,8 @@ const Home = () => {
               id="tosa-alta"
               data-text="Tosa alta"
               type="radio"
+              disabled={bathSelected}
+              checked={bathSelected? false : undefined}
             />
             <label className="text-gray-700 text-sm font-medium ml-2">
               Tosa alta
