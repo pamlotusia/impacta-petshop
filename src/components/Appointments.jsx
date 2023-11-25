@@ -76,16 +76,16 @@ const Appointments = () => {
   }, []);
 
   return (
-    <div>
+    <div className='mx-5 md:m-20 lg:mx-[100px]'>
       <h1 className="text-2xl color-title text-center font-poppins my-10">
         Meus <span className="font-bold">agendamentos</span>
       </h1>
 
-      <div className="m-20 grid grid-cols-5 gap-y-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-y-10">
         {userAppointments.map((appointment, index) => (
           <div
             key={index}
-            className={`w-[260px] min-h-[180px] rounded-2xl mx-10 custom-shadow flex flex-col items-center justify-center`}
+            className={`max-w-[content] md:w-[240px] min-h-[180px] rounded-2xl mx-10 lg:mx-0 custom-shadow flex flex-col items-center justify-center`}
           >
             <ul className="text-center break-words">
               <li className="w-full text-lg font-medium px-3 mt-2 color-title ">
