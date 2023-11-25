@@ -266,6 +266,7 @@ const Home = () => {
           />
         </div>
       </form>
+
       <div className="flex justify-center">
         <button className="border px-6 py-2 my-4 m-5 rounded-md font-bold uppercase">
           Cancelar

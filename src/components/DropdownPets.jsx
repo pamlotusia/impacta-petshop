@@ -8,7 +8,7 @@ import iconCat from '../images/icon-cat.svg'
 import iconBird from '../images/icon-bird.svg'
 import iconRodent from '../images/icon-rodent.svg'
 
-function DropdownPets() {
+function DropdownPets({onPetSelect}) {
   const [isOpen, setIsOpen] = useState(false)
   const [pets, setPets] = useState([])
   const [selectedPet, setSelectedPet] = useState(null)
@@ -67,6 +67,9 @@ function DropdownPets() {
   const handlePetClick = pet => {
     setSelectedPet(pet)
     setIsOpen(false)
+
+    // chama a função de callback com o pet selecionado
+    onPetSelect && onPetSelect(pet)
   }
 
   return (
