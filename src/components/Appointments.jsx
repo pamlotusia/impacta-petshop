@@ -1,81 +1,79 @@
-import React, { useState, useEffect } from 'react'
-import { auth } from '../firebase'
-import { getDatabase, ref, get } from 'firebase/database'
+import React, { useState, useEffect } from 'react';
+import { getDatabase, ref, get } from 'firebase/database';
+import { auth } from '../firebase.js'; // Certifique-se de importar a instância correta do Firebase Authentication
 
 const Appointments = () => {
-  const [userAppointments, setUserAppointments] = useState([])
-  const LOCAL_STORAGE_KEY = 'userAppointments'
+  const [userAppointments, setUserAppointments] = useState([]);
+  const LOCAL_STORAGE_KEY = 'userAppointments';  
 
-  const formatDate = date => {
-    const parts = date.split('-')
-    return parts.reverse().join('/')
-  }
+  const formatDate = (date) => {
+    const parts = date.split('-');
+    const formattedDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
+    return formattedDate;
+  };
 
   useEffect(() => {
-    const user = auth.currentUser
+    const user = auth.currentUser;
 
-    const loadAppointmentFromLocalStorage = () => {
-      const storedAppointments = localStorage.getItem(LOCAL_STORAGE_KEY)
+    const loadAppointmentsFromLocalStorage = () => {
+      const storedAppointments = localStorage.getItem(LOCAL_STORAGE_KEY);
       if (storedAppointments) {
-        const parsedAppointments = JSON.parse(storedAppointments)
-        setUserAppointments(parsedAppointments)
+        const parsedAppointments = JSON.parse(storedAppointments);
+        setUserAppointments(parsedAppointments);
       }
-    }
+    };
 
     if (user) {
-      const userId = user.uid
-      const db = getDatabase()
-      const appointmentsRef = ref(db, `agendamentos`)
+      const userId = user.uid;
+      const db = getDatabase();
+      const appointmentsRef = ref(db, 'agendamentos');
 
       get(appointmentsRef)
-        .then(snapshot => {
+        .then((snapshot) => {
           if (snapshot.exists()) {
-            const appointmentsData = snapshot.val()
-            const userAppointments = []
+            const appointmentsData = snapshot.val();
+            const userAppointments = [];
 
-            // Iterar sobre as datas
             for (const date in appointmentsData) {
               if (appointmentsData.hasOwnProperty(date)) {
-                const dateData = appointmentsData[date]
+                const dateData = appointmentsData[date];
 
-                if (dateData[userId]) {
-                  const formattedDate = formatDate(date)
-                  const userAgendamentos = dateData[userId]
+                for (const time in dateData) {
+                  if (dateData.hasOwnProperty(time)) {
+                    const userAgendamentos = dateData[time];
 
-                  for (const time in userAgendamentos) {
-                    if (userAgendamentos.hasOwnProperty(time)) {
+                    if (userAgendamentos[userId]) {
                       const appointment = {
-                        ...appointmentsData[time],
-                        date: formattedDate
-                      }
-                      // Adicionar os agendamentos do usuário
-                userAppointments.push(appointment)
+                        ...userAgendamentos[userId],
+                        date: formatDate(date),
+                        time: time,
+                        userId: userId,
+                      };
+                      userAppointments.push(appointment);
                     }
                   }
                 }
-
-                
               }
             }
 
-            setUserAppointments(userAppointments)
+            setUserAppointments(userAppointments);
             localStorage.setItem(
               LOCAL_STORAGE_KEY,
               JSON.stringify(userAppointments)
-            )
+            );
           } else {
-            loadAppointmentFromLocalStorage()
-            alert('agendamentos não encontrados')
+            loadAppointmentsFromLocalStorage();
+            console.log('Agendamentos não encontrados');
           }
         })
-        .catch(e => {
-          loadAppointmentFromLocalStorage()
-          alert('erro ao obter agendamentos do firebase: ' + e.message)
-        })
+        .catch((e) => {
+          loadAppointmentsFromLocalStorage();
+          console.error('Erro ao obter agendamentos do Firebase:', e.message);
+        });
     } else {
-      loadAppointmentFromLocalStorage()
+      loadAppointmentsFromLocalStorage();
     }
-  }, [])
+  }, []);
 
   return (
     <div>
@@ -100,7 +98,7 @@ const Appointments = () => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Appointments
+export default Appointments;
