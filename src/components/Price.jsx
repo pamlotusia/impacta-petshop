@@ -11,6 +11,7 @@ function Price({ serviceType, groomingType, selectedPet }) {
       basePrice += 40; // Exemplo de preço para banho
     } else if (serviceType === 'Banho & Tosa') {
       basePrice += 50
+      
       if(groomingType !== 'Tosa higiênica'){
         basePrice += 10
       } 
