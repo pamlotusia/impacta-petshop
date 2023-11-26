@@ -55,7 +55,7 @@ const MyPets = () => {
         })
     } else {
       const storedPets = localStorage.getItem('userPets')
-      if (storedPets) {
+      if(storedPets){
         const parsedPets = JSON.parse(storedPets)
         setPets(parsedPets)
       }
@@ -65,16 +65,16 @@ const MyPets = () => {
   return (
     <div className='px-10 '>
       <h1 className="text-2xl color-title text-center font-poppins my-10">
-        Meus <span className="font-bold"> bichinhos</span>
+        Meus <span className='font-bold'> bichinhos</span>
       </h1>
       <div className="grid grid-cols-1 justify-items-center gap-y-10 md:grid-cols-2 lg:grid-cols-5">
       {pets.map((pet, index) => {
         const petType = pet.tipoDeAnimal
         const petInfo = colorIcon[petType]
 
-          if (!petInfo) {
-            return null
-          }
+        if (!petInfo) {
+          return null
+        }
 
         return (
           <div
@@ -97,9 +97,11 @@ const MyPets = () => {
               <p>Idade: {pet.idadePet}</p>
               <p>Peso: {pet.pesoPet}</p>
             </div>
-          )
-        })}
-      </div>
+          </div>
+        )
+      })}
+    </div>
+
     </div>
   )
 }
