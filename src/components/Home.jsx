@@ -231,7 +231,7 @@ const Home = () => {
               checked={bathSelected? false : undefined}
             />
             <label className="text-gray-700 text-sm font-medium ml-2">
-                Tosa média
+              Tosa média
             </label>
           </div>
 
@@ -279,13 +279,14 @@ const Home = () => {
         </button>
       </div>
       {popupData && (
-      <PopUp
-        date={popupData.date}
-        service={popupData.service}
-        time={popupData.time}
-        onClose={handleClosePopup}
-      />
-    )}
+        <PopUp
+          date={popupData.date}
+          service={popupData.service}
+          time={popupData.time}
+          price={popupData.price}
+          onClose={handleClosePopup}
+        />
+      )}
     </div>
   )
 }
