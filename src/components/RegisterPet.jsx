@@ -271,7 +271,7 @@ const Formulario = ({
   return (
     // formulario cadastro de pets
     <div className="color-title">
-      <div className="flex mb-[60px]">
+      <div className="flex flex-col md:flex-row lg:flex-row mb-[60px]">
         <div className="flex flex-col m-2">
           <label htmlFor="name" className="text-1xl uppercase font-bold mb-2">
             nome
@@ -302,9 +302,9 @@ const Formulario = ({
         </div>
       </div>
 
-      <div className="flex flex-col w-[500px] mb-[60px]">
+      <div className="flex flex-col align- mb-[60px]">
         <p className="text-1xl uppercase font-bold text-left ml-2 mb-4">Tipo</p>
-        <div className="flex mx-0">
+        <div className="flex ">
           <button
             className={`w-[80px] h-[80px] lg:w-[110px] lg:h-[100px] ${
               selectedAnimal === 'dog'
@@ -352,14 +352,14 @@ const Formulario = ({
         </div>
       </div>
 
-      <div className="flex mb-[60px]">
+      <div className="flex flex-col lg:flex-row mb-[50px]">
         <div className="flex flex-col">
           <p className="text-1xl uppercase font-bold text-left ml-2 mb-4">
             Tamanho
           </p>
-          <div className="flex justify-left">
+          <div className="flex ">
             <button
-              className={`w-[50px] h-[50px] lg:w-[81px] lg:h-[78px] ${
+              className={`w-[60px] h-[60px] lg:w-[81px] lg:h-[78px] ${
                 selectedSize === 'pequeno'
                   ? 'button-active'
                   : 'light-blue-input'
@@ -370,7 +370,7 @@ const Formulario = ({
             </button>
 
             <button
-              className={`w-[50px] h-[50px] lg:w-[81px] lg:h-[78px] ${
+              className={`w-[60px] h-[60px] lg:w-[81px] lg:h-[78px] ${
                 selectedSize === 'médio' ? 'button-active' : 'light-blue-input'
               } rounded-2xl mx-2`}
               onClick={() => handleSizeButtonClick('médio')}
@@ -378,7 +378,7 @@ const Formulario = ({
               <p className="text-2xl lg:text-4xl text-white uppercase">m</p>
             </button>
             <button
-              className={`w-[50px] h-[50px] lg:w-[81px] lg:h-[78px] ${
+              className={`w-[60px] h-[60px] lg:w-[81px] lg:h-[78px] ${
                 selectedSize === 'grande' ? 'button-active' : 'light-blue-input'
               } rounded-2xl mx-2`}
               onClick={() => handleSizeButtonClick('grande')}
@@ -388,8 +388,8 @@ const Formulario = ({
           </div>
         </div>
 
-        <div className="flex flex-col ml-5 lg:ml-10">
-          <p className="text-1xl uppercase font-bold text-left ml-2 mb-3">
+        <div className="flex flex-col lg:ml-10 mt-5">
+          <p className="text-1xl uppercase font-bold text-left ml-2 mb-2">
             Peso
           </p>
           <small className="text-right text-gray-700">
@@ -398,7 +398,7 @@ const Formulario = ({
           <input
             type="text"
             id="name"
-            className="lg:w-[250px] h-[40px] p-2 border rounded  focus:outline-none shadow-md"
+            className="max-w-[250px] h-[40px] p-2 border rounded  focus:outline-none shadow-md"
             name="campoPeso"
             value={formData.campoPeso}
             placeholder="8kg"
