@@ -116,7 +116,7 @@ const Home = () => {
   }
 
   return (
-    <div className="w-[700px] mx-auto  p-10 rounded-md shadow-lg my-20 py-8 bg-background-color relative">
+    <div className="lg:w-[700px] mx-auto  p-10 rounded-md lg:shadow-lg my-20 py-8 lg:bg-background-color relative">
       <h1 className="text-2xl text-center color-title font-bold font-poppins mb-4">
         Agende seu horário
       </h1>
@@ -143,7 +143,7 @@ const Home = () => {
         </p>
 
         <div className="flex justify-center">
-          <div className=" flex mb-3  p-2 rounded-lg">
+          <div className="flex mb-3  p-2 rounded-lg">
             <input
               onChange={e => {
                 setSeletedService(e.target.nextElementSibling.textContent)
@@ -183,8 +183,8 @@ const Home = () => {
           Escolha a tosa
         </p>
 
-        <div className="flex justify-center">
-          <div className=" flex mb-3  p-2 rounded-lg ml-2">
+        <div className="grid md:flex md:justify-center lg:flex lg:justify-center">
+          <div className=" flex mb-3  p-2 rounded-lg">
             <input
               onChange={e =>
                 setSelectedTosa(e.target.nextElementSibling.textContent)
@@ -268,7 +268,7 @@ const Home = () => {
       </form>
 
       <div className="flex justify-center">
-        <button className="border px-6 py-2 my-4 m-5 rounded-md font-bold uppercase">
+        <button className="border px-6 py-2 my-4 m-3 rounded-md font-bold uppercase">
           Cancelar
         </button>
         <button

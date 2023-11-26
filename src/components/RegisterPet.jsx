@@ -59,11 +59,10 @@ const RegisterTest = () => {
 
   return (
     <section>
-      <p className="text-3xl text-center color-title font-bold mb-[60px] mt-10text-3xl text-center color-title font-bold mb-[60px] mt-10">
+      <p className="text-3xl text-center color-title font-bold mb-[60px] mt-10 ">
         Cadastre seu pet!
       </p>
-      <div className="flex justify-center mt-10">
-        <div className="w-[700px] ml-10">
+      <div className=" w-full flex flex-col justify-center lg:flex-row md:flex-row px-5 overflow-hidden">
           <Formulario
             onChange={handleFormChange}
             formData={formData}
@@ -75,8 +74,8 @@ const RegisterTest = () => {
             observations={observations}
             setObservations={setObservations}
           />
-        </div>
-        <div className="flex flex-col mt-10">
+        
+        <div className="flex flex-col hidden md:block lg:block">
           <CardPreview
             formData={formData}
             selectedAnimal={selectedAnimal}
@@ -183,6 +182,7 @@ const CardPreview = ({
     }
   }
   return (
+    // cardpreview
     <div className="flex flex-col">
       <div className="w-[300px] h-[350px] bg-[#F7F7F9] rounded-2xl mx-10 custom-shadow">
         <div className="flex flex-col items-center">
@@ -234,9 +234,9 @@ const Formulario = ({
 }) => {
   // legenda de cada estrela
   const starValues = [
-    'poucas ideia',
+    'arisco',
+    'reservado',
     'calmo',
-    'moderado',
     'simpático',
     'felizão'
   ]
@@ -269,8 +269,9 @@ const Formulario = ({
     setSelectedSize(size)
   }
   return (
-    <div className="w-[700px] ml-10">
-      <div className="flex justify-left mb-[60px]">
+    // formulario cadastro de pets
+    <div className="color-title">
+      <div className="flex flex-col md:flex-row lg:flex-row mb-[60px]">
         <div className="flex flex-col m-2">
           <label htmlFor="name" className="text-1xl uppercase font-bold mb-2">
             nome
@@ -278,7 +279,7 @@ const Formulario = ({
           <input
             type="text"
             id="name"
-            className="w-[280px] h-[40px] border rounded focus:outline-none shadow-md p-2"
+            className="w-auto lg:w-[280px] lg:h-[40px] border rounded focus:outline-none shadow-md p-2"
             name="campoNome"
             value={formData.campoNome}
             onChange={onChange}
@@ -292,7 +293,7 @@ const Formulario = ({
           <input
             type="text"
             id="name"
-            className="w-[280px] h-[40px] border rounded  focus:outline-none shadow-md p-2"
+            className="lg:w-[280px] h-[40px] border rounded  focus:outline-none shadow-md p-2"
             name="campoIdade"
             value={formData.campoIdade}
             onChange={onChange}
@@ -301,97 +302,94 @@ const Formulario = ({
         </div>
       </div>
 
-      <div className="flex flex-col w-[500px] mb-[60px]">
+      <div className="flex flex-col align- mb-[60px]">
         <p className="text-1xl uppercase font-bold text-left ml-2 mb-4">Tipo</p>
-        <div className="flex justify-center mx-0">
+        <div className="flex ">
           <button
-            className={`w-[110px] h-[100px] ${
+            className={`w-[80px] h-[80px] lg:w-[110px] lg:h-[100px] ${
               selectedAnimal === 'dog'
                 ? 'medium-blue text-white'
                 : 'light-blue-input color-title'
             } rounded-2xl flex flex-col justify-center items-center mx-2 custom-shadow text-white`}
             onClick={() => onAnimalButtonClick('dog')}
           >
-            <img src={iconDog} alt="" className="w-[70px]" />
-            <p className="font-bold -mt-2">cachorro</p>
+            <img src={iconDog} alt="" className="w-[50px] lg:w-[70px]" />
+            <p className="font-bold -mt-2 text-sm">cachorro</p>
           </button>
-
           <button
-            className={`w-[110px] h-[100px] ${
+            className={`w-[80px] h-[80px] lg:w-[110px] lg:h-[100px] ${
               selectedAnimal === 'cat'
                 ? 'yellow text-white'
                 : 'light-blue-input color-title'
             } rounded-2xl flex flex-col justify-center items-center mx-2 custom-shadow`}
             onClick={() => onAnimalButtonClick('cat')}
           >
-            <img src={iconCat} alt="" className="w-[70px]" />
-            <p className="font-bold -mt-2">gato</p>
+            <img src={iconCat} alt="" className="w-[50px] lg:w-[70px]" />
+            <p className="font-bold -mt-2 font-sm">gato</p>
           </button>
-
           <button
-            className={`w-[110px] h-[100px] ${
+            className={`w-[80px] h-[80px] lg:w-[110px] lg:h-[100px] ${
               selectedAnimal === 'bird'
                 ? 'green text-white'
                 : 'light-blue-input color-title'
             } rounded-2xl flex flex-col justify-center items-center mx-2 custom-shadow`}
             onClick={() => onAnimalButtonClick('bird')}
           >
-            <img src={iconBird} alt="" className="w-[70px]" />
-            <p className="font-bold  -mt-2">pássaro</p>
+            <img src={iconBird} alt="" className="w-[50px] lg:w-[70px]" />
+            <p className="font-bold -mt-2 font-sm">pássaro</p>
           </button>
-
           <button
-            className={`w-[110px] h-[100px] ${
+            className={`w-[80px] h-[80px] lg:w-[110px] lg:h-[100px] ${
               selectedAnimal === 'rodent'
                 ? 'pink text-white'
                 : 'light-blue-input color-title'
             } rounded-2xl flex flex-col justify-center items-center mx-2 custom-shadow`}
             onClick={() => onAnimalButtonClick('rodent')}
           >
-            <img src={iconRodent} alt="" className="w-[70px]" />
-            <p className="font-bold -mt-2">roedor</p>
+            <img src={iconRodent} alt="" className="w-[50px] lg:w-[70px]" />
+            <p className="font-bold -mt-2 font-sm">roedor</p>
           </button>
         </div>
       </div>
 
-      <div className="flex mb-[60px]">
+      <div className="flex flex-col lg:flex-row mb-[50px]">
         <div className="flex flex-col">
           <p className="text-1xl uppercase font-bold text-left ml-2 mb-4">
             Tamanho
           </p>
-          <div className="flex justify-left">
+          <div className="flex ">
             <button
-              className={`w-[81px] h-[78px] ${
+              className={`w-[60px] h-[60px] lg:w-[81px] lg:h-[78px] ${
                 selectedSize === 'pequeno'
                   ? 'button-active'
                   : 'light-blue-input'
               } rounded-2xl mx-2`}
               onClick={() => handleSizeButtonClick('pequeno')}
             >
-              <p className="text-4xl text-white uppercase">p</p>
+              <p className="text-2xl lg:text-4xl text-white uppercase">p</p>
             </button>
 
             <button
-              className={`w-[81px] h-[78px] ${
+              className={`w-[60px] h-[60px] lg:w-[81px] lg:h-[78px] ${
                 selectedSize === 'médio' ? 'button-active' : 'light-blue-input'
               } rounded-2xl mx-2`}
               onClick={() => handleSizeButtonClick('médio')}
             >
-              <p className="text-4xl text-white uppercase">m</p>
+              <p className="text-2xl lg:text-4xl text-white uppercase">m</p>
             </button>
             <button
-              className={`w-[81px] h-[78px] ${
+              className={`w-[60px] h-[60px] lg:w-[81px] lg:h-[78px] ${
                 selectedSize === 'grande' ? 'button-active' : 'light-blue-input'
               } rounded-2xl mx-2`}
               onClick={() => handleSizeButtonClick('grande')}
             >
-              <p className="text-4xl text-white uppercase ">g</p>
+              <p className="text-2xl lg:text-4xl text-white uppercase ">g</p>
             </button>
           </div>
         </div>
 
-        <div className="flex flex-col ml-10">
-          <p className="text-1xl uppercase font-bold text-left ml-2 mb-3">
+        <div className="flex flex-col lg:ml-10 mt-5">
+          <p className="text-1xl uppercase font-bold text-left ml-2 mb-2">
             Peso
           </p>
           <small className="text-right text-gray-700">
@@ -400,7 +398,7 @@ const Formulario = ({
           <input
             type="text"
             id="name"
-            className="w-[250px] h-[40px] p-2 border rounded  focus:outline-none shadow-md"
+            className="max-w-[250px] h-[40px] p-2 border rounded  focus:outline-none shadow-md"
             name="campoPeso"
             value={formData.campoPeso}
             placeholder="8kg"
@@ -410,9 +408,9 @@ const Formulario = ({
         </div>
       </div>
 
-      <div className="flex mb-[60px]">
-        <div className="flex flex-col mr-[40px]">
-          <p className="text-1xl uppercase font-bold text-left ml-2 mb-4">
+      <div className="flex mb-[60px] flex-col lg:flex-row">
+        <div className="flex flex-col lg:mr-[40px] mb-5" >
+          <p className="text-1xl uppercase font-bold text-left lg:ml-2 mb-4">
             Temperamento
           </p>
           <div className="flex justify-left">
@@ -420,7 +418,7 @@ const Formulario = ({
               <img
                 key={index}
                 src={selected ? selectedStar : starIcon}
-                className={`w-[30px] mx-1 ${
+                className={`w-[20px] lg:w-[30px] mx-1 ${
                   selected ? 'selected-image' : 'unselected-image'
                 }`}
                 onClick={() => handleImageClick(index)}
@@ -429,8 +427,8 @@ const Formulario = ({
           </div>
         </div>
 
-        <div className="flex flex-col ml-12">
-          <p className="text-1xl uppercase font-bold text-left ml-2 mb-3">
+        <div className="flex flex-col">
+          <p className="text-1xl uppercase font-bold text-left mb-3">
             observações
           </p>
           <textarea
