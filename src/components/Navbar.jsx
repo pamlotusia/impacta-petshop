@@ -227,7 +227,7 @@ const Navbar = () => {
                   <div className="py-1">
                     <Menu.Item>
                       {({ active }) => (
-                         <p
+                        <p
                           className={classNames(
                             active
                               ? 'bg-gray-100 text-gray-900'
@@ -274,84 +274,85 @@ const Navbar = () => {
                 </Menu.Button>
               </div>
 
-            <Transition
-              as={Fragment}
-              enter="transition ease-out duration-100"
-              enterFrom="transform opacity-0 scale-95"
-              enterTo="transform opacity-100 scale-100"
-              leave="transition ease-in duration-75"
-              leaveFrom="transform opacity-100 scale-100"
-              leaveTo="transform opacity-0 scale-95"
-            >
-              <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                <div className="py-1">
-                  <Menu.Item>
-                    {({ active }) => (
-                      <p
-                      className={classNames(
-                        active
-                          ? 'bg-gray-100 text-gray-900'
-                          : 'text-gray-700',
-                        'block px-4 py-2 text-md'
+              <Transition
+                as={Fragment}
+                enter="transition ease-out duration-100"
+                enterFrom="transform opacity-0 scale-95"
+                enterTo="transform opacity-100 scale-100"
+                leave="transition ease-in duration-75"
+                leaveFrom="transform opacity-100 scale-100"
+                leaveTo="transform opacity-0 scale-95"
+              >
+                <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <div className="py-1">
+                    <Menu.Item>
+                      {({ active }) => (
+                        <p
+                          className={classNames(
+                            active
+                              ? 'bg-gray-100 text-gray-900'
+                              : 'text-gray-700',
+                            'block px-4 py-2 text-md'
+                          )}
+                        >
+                          {' '}
+                          <Link to="/perfil">Meu perfil</Link>
+                        </p>
                       )}
-                    >
-                      {' '}
-                      <Link to="/perfil">Meu perfil</Link>
-                    </p>
-                    )}
-                  </Menu.Item>
+                    </Menu.Item>
 
-                  <Menu.Item>
-                    {({ active }) => (
-                      <p
-                        className={classNames(
-                          active
-                            ? 'bg-gray-100 text-gray-900'
-                            : 'text-gray-700',
-                          'block px-4 py-2 text-md'
-                        )}
-                      >
-                        {' '}
-                        <Link to="/cadastrar-pet">Cadastrar pet</Link>
-                      </p>
-                    )}
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <p
-                      className={classNames(
-                        active
-                          ? 'bg-gray-100 text-gray-900'
-                          : 'text-gray-700',
-                        'block px-4 py-2 text-md'
+                    <Menu.Item>
+                      {({ active }) => (
+                        <p
+                          className={classNames(
+                            active
+                              ? 'bg-gray-100 text-gray-900'
+                              : 'text-gray-700',
+                            'block px-4 py-2 text-md'
+                          )}
+                        >
+                          {' '}
+                          <Link to="/cadastrar-pet">Cadastrar pet</Link>
+                        </p>
                       )}
-                    >
-                      {' '}
-                      <Link to="/meus-pets">Meus pets</Link>
-                    </p>
-                    )}
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <button
-                        onClick={handleLogout}
-                        className={classNames(
-                          active
-                            ? 'bg-gray-100 text-gray-900'
-                            : 'text-gray-700',
-                          'block px-4 py-2 text-md w-full text-left'
-                        )}
-                      >
-                        Sair
-                      </button>
-                    )}
-                  </Menu.Item>
-                </div>
-              </Menu.Items>
-            </Transition>
-          </Menu>
-        </li>
-      </ul>
+                    </Menu.Item>
+                    <Menu.Item>
+                      {({ active }) => (
+                        <p
+                          className={classNames(
+                            active
+                              ? 'bg-gray-100 text-gray-900'
+                              : 'text-gray-700',
+                            'block px-4 py-2 text-md'
+                          )}
+                        >
+                          {' '}
+                          <Link to="/meus-pets">Meus pets</Link>
+                        </p>
+                      )}
+                    </Menu.Item>
+                    <Menu.Item>
+                      {({ active }) => (
+                        <button
+                          onClick={handleLogout}
+                          className={classNames(
+                            active
+                              ? 'bg-gray-100 text-gray-900'
+                              : 'text-gray-700',
+                            'block px-4 py-2 text-md w-full text-left'
+                          )}
+                        >
+                          Sair
+                        </button>
+                      )}
+                    </Menu.Item>
+                  </div>
+                </Menu.Items>
+              </Transition>
+            </Menu>
+          </li>
+        </ul>
+      </div>
     </div>
   )
 }
