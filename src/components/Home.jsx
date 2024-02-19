@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useId, useState } from 'react'
 import { UserAuth } from '../contexts/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import { db, auth } from '../firebase'
@@ -6,6 +6,7 @@ import { set, getDatabase, ref, get } from 'firebase/database'
 import PopUp from './PopUp'
 import DropdownPets from './DropdownPets'
 import Price from './Price'
+import WhatsappReminder from './WhatsappReminder'
 
 const Home = () => {
   const { user, logout } = UserAuth()
@@ -25,6 +26,9 @@ const Home = () => {
     const formattedDate = `${parts[2]}/${parts[1]}/${parts[0]}`
     return formattedDate
   }
+
+  // whatsapp message
+  const [sendWhatsAppReminder, setSendWhatsAppReminder] = useState(false)
 
   const handleConfirm = async () => {
     if (!selectedDate || !selectedTime || !selectedService) {
@@ -80,10 +84,8 @@ const Home = () => {
 
         //verifica se já existem 5 agendamentos par ao mesmo dia
         if (numAgendamentosParaDia >= 5) {
-          alert(
-            'Desculpe, o limite de agendamentos para este dia foi atingido e não é mais possivel realizar novos agendamentos. Por favor, tente outra data.'
-          )
-          return
+          alert('Desculpe, o limite de agendamentos para este dia foi atingido e não é mais possivel realizar novos agendamentos. Por favor, tente outra data.')
+          return 
         }
       }
 
@@ -106,6 +108,7 @@ const Home = () => {
       price: finalPrice
     })
   }
+
 
   const handleClosePopup = () => {
     setPopupData(null)
@@ -194,7 +197,7 @@ const Home = () => {
               data-text="Tosa higiênica"
               type="radio"
               disabled={bathSelected}
-              checked={bathSelected? false : undefined}
+              checked={bathSelected ? false : undefined}
             />
             <label className="text-gray-700 text-sm font-medium ml-2">
               Tosa higiênica
@@ -211,7 +214,7 @@ const Home = () => {
               data-text="Tosa baixa"
               type="radio"
               disabled={bathSelected}
-              checked={bathSelected? false : undefined}
+              checked={bathSelected ? false : undefined}
             />
             <label className="text-gray-700 text-sm font-medium ml-2">
               Tosa baixa
@@ -228,7 +231,7 @@ const Home = () => {
               data-text="Tosa média"
               type="radio"
               disabled={bathSelected}
-              checked={bathSelected? false : undefined}
+              checked={bathSelected ? false : undefined}
             />
             <label className="text-gray-700 text-sm font-medium ml-2">
               Tosa média
@@ -245,7 +248,7 @@ const Home = () => {
               data-text="Tosa alta"
               type="radio"
               disabled={bathSelected}
-              checked={bathSelected? false : undefined}
+              checked={bathSelected ? false : undefined}
             />
             <label className="text-gray-700 text-sm font-medium ml-2">
               Tosa alta
@@ -257,6 +260,8 @@ const Home = () => {
           <DropdownPets onPetSelect={handlePetSelect} />
         </div>
 
+        {/* <AppointmentInvalid /> */}
+
         <div className="flex justify-center ">
           <Price
             serviceType={selectedService}
@@ -264,6 +269,11 @@ const Home = () => {
             selectedPet={selectedPet}
             setFinalPrice={setFinalPrice}
           />
+        </div>
+
+        <div className="flex justify-center mt-5">
+          <WhatsappReminder 
+          onSendMessage={()=> setSendWhatsAppReminder(true)}/>
         </div>
       </form>
 

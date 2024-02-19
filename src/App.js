@@ -1,17 +1,25 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Signin from './components/Signin'
 import Signup from './components/Signup'
 import Home from './components/Home'
 import ProtectedRoute from './components/ProtectedRoute'
 import { Route, Routes } from 'react-router-dom'
-import { AuthContextProvider } from './contexts/AuthContext'
+import { AuthContextProvider, UserAuth } from './contexts/AuthContext'
 import Navbar from './components/Navbar'
 import RegisterPet from './components/RegisterPet'
 import MyPets from './components/MyPets'
 import Appointments from './components/Appointments'
 import Profile from './components/Profile'
+import Dashboard from './components/Dashboard'
 
 const App = () => {
+  const{user} = UserAuth()
+  const userEmail = user? user.email : null
+  console.log(userEmail)
+  const employeeEmails = ['funcionario@gmail.com']
+
+  const isEmployee = employeeEmails.includes(userEmail)
+  console.log(isEmployee)
   return (
     <div>
       <AuthContextProvider>
@@ -21,10 +29,14 @@ const App = () => {
           <Route
             path='/home'
             element={
-              <ProtectedRoute>
+              isEmployee? ( <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>) : (
+                <ProtectedRoute>
                 <Navbar />
                 <Home />
               </ProtectedRoute>
+              )
             }
           />
           <Route
