@@ -16,7 +16,7 @@ const App = () => {
   const{user} = UserAuth()
   const userEmail = user? user.email : null
   console.log(userEmail)
-  const employeeEmails = ['funcionario@gmail.com']
+  const employeeEmails = ['employee@gmail.com', 'funcionario@gmail.com']
 
   const isEmployee = employeeEmails.includes(userEmail)
   console.log(isEmployee)
