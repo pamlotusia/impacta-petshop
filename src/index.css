@@ -5,48 +5,48 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Poppins:wght@400;500&display=swap');
 
 .bg-background-color {
-  background-color: #F7F7F9; /* Substitua pelos valores RGB que desejar */
+  background-color: #f7f7f9; /* Substitua pelos valores RGB que desejar */
 }
 
-.btn-cancel{
-  background-color: #F0F0F9;
+.btn-cancel {
+  background-color: #f0f0f9;
 }
-.color-title{
-  color: #211F51;
-}
-
-.light-blue-input{
-  background-color: #E3E3F3;
+.color-title {
+  color: #211f51;
 }
 
-.medium-blue{
-  background-color: #5F6CAF;
+.light-blue-input {
+  background-color: #e3e3f3;
+}
+
+.medium-blue {
+  background-color: #5f6caf;
 }
 .yellow {
-  background-color: #FFA31A;/* Substitua pelos valores RGB que desejar */
+  background-color: #ffa31a; /* Substitua pelos valores RGB que desejar */
 }
-.green{
-  background-color: #65E7A8;
+.green {
+  background-color: #65e7a8;
 }
-.pink{
-  background-color: #FF6B6C;
+.pink {
+  background-color: #ff6b6c;
 }
 
-.yellow-font{
-  color:#FFA31A;
+.yellow-font {
+  color: #ffa31a;
 }
-.font-button-confirm{
+.font-button-confirm {
   font-family: 'Inter', sans-serif;
   font-size: 20px;
   border-radius: 6px;
 }
 
-.grey-font{
+.grey-font {
   color: #575757;
 }
 
-.light-grey-font{
-  color: #928484 ;
+.light-grey-font {
+  color: #928484;
 }
 
 .custom-shadow {
@@ -54,21 +54,21 @@
 }
 
 .button-active {
-  background-color: #211F51; /* Cor do fundo quando ativo (clicado) */
+  background-color: #211f51; /* Cor do fundo quando ativo (clicado) */
   color: #fff; /* Cor do texto quando ativo (clicado) */
 }
 
-.font-poppins{
+.font-poppins {
   font-family: 'Poppins';
 }
-.login-img{
+.login-img {
   margin-bottom: -8.5px;
 }
 
 .date-input::-webkit-calendar-picker-indicator {
-  font-size: 24px; 
+  font-size: 24px;
 }
 
 .time-input::-webkit-calendar-picker-indicator {
-  font-size: 24px; 
+  font-size: 24px;
 }

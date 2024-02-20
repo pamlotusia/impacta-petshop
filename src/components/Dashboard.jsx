@@ -4,7 +4,7 @@ import Content from './Content'
 
 const Dashboard = () => {
   return (
-    <div className='flex'>
+    <div className='flex justify-center'>
       <Sidebar/>
       <Content />
     </div>
