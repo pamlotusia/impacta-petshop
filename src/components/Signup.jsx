@@ -2,13 +2,8 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserAuth } from '../contexts/AuthContext'
 import {
-  getDatabase,
   ref,
-  get,
   set,
-  child,
-  update,
-  remove
 } from 'firebase/database'
 import { db, auth } from '../firebase'
 

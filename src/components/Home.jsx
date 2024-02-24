@@ -1,6 +1,5 @@
 import React, { useId, useState } from 'react'
 import { UserAuth } from '../contexts/AuthContext'
-import { useNavigate } from 'react-router-dom'
 import { db, auth } from '../firebase'
 import { set, getDatabase, ref, get } from 'firebase/database'
 import PopUp from './PopUp'
@@ -9,8 +8,7 @@ import Price from './Price'
 import WhatsappReminder from './WhatsappReminder'
 
 const Home = () => {
-  const { user, logout } = UserAuth()
-  const navigate = useNavigate()
+  const { user } = UserAuth()
 
   const [selectedDate, setSelectedDate] = useState('')
   const [selectedTime, setSelectedTime] = useState('')
@@ -26,9 +24,6 @@ const Home = () => {
     const formattedDate = `${parts[2]}/${parts[1]}/${parts[0]}`
     return formattedDate
   }
-
-  // whatsapp message
-  const [sendWhatsAppReminder, setSendWhatsAppReminder] = useState(false)
 
   const handleConfirm = async () => {
     if (!selectedDate || !selectedTime || !selectedService) {
@@ -74,7 +69,7 @@ const Home = () => {
 
       const db = getDatabase()
 
-      //consultar o numero de agendamentos para o memso dia
+      //consultar o numero de agendamentos para o mesmo dia
       const agendamentosDiaRef = ref(db, `agendamentos/${selectedDate}`)
       const agendamentosSnapshot = await get(agendamentosDiaRef)
 
@@ -84,8 +79,10 @@ const Home = () => {
 
         //verifica se já existem 5 agendamentos par ao mesmo dia
         if (numAgendamentosParaDia >= 5) {
-          alert('Desculpe, o limite de agendamentos para este dia foi atingido e não é mais possivel realizar novos agendamentos. Por favor, tente outra data.')
-          return 
+          alert(
+            'Desculpe, o limite de agendamentos para este dia foi atingido e não é mais possivel realizar novos agendamentos. Por favor, tente outra data.'
+          )
+          return
         }
       }
 
@@ -108,7 +105,6 @@ const Home = () => {
       price: finalPrice
     })
   }
-
 
   const handleClosePopup = () => {
     setPopupData(null)
@@ -260,8 +256,6 @@ const Home = () => {
           <DropdownPets onPetSelect={handlePetSelect} />
         </div>
 
-        {/* <AppointmentInvalid /> */}
-
         <div className="flex justify-center ">
           <Price
             serviceType={selectedService}
@@ -272,8 +266,7 @@ const Home = () => {
         </div>
 
         <div className="flex justify-center mt-5">
-          <WhatsappReminder 
-          onSendMessage={()=> setSendWhatsAppReminder(true)}/>
+          <WhatsappReminder />
         </div>
       </form>
 
