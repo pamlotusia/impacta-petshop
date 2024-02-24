@@ -6,6 +6,7 @@ import PopUp from './PopUp'
 import DropdownPets from './DropdownPets'
 import Price from './Price'
 import WhatsappReminder from './WhatsappReminder'
+import { differenceInDays } from 'date-fns'
 
 const Home = () => {
   const { user } = UserAuth()
@@ -18,6 +19,13 @@ const Home = () => {
   const [selectedPet, setSelectedPet] = useState(null)
   const [finalPrice, setFinalPrice] = useState(0)
   const [popupData, setPopupData] = useState(null)
+
+  // whatsapp
+  const [whatsappReminderChecked, setWhatsappReminderChecked] = useState(false)
+  const [userData, setUserData] = useState(null)
+  const handleUserDataChange = (newUserData) => {
+    setUserData(newUserData)
+  }
 
   const formatDate = date => {
     const parts = date.split('-')
@@ -104,7 +112,28 @@ const Home = () => {
       time: selectedTime,
       price: finalPrice
     })
+
+    // whatsapp
+    if(whatsappReminderChecked && isDateNear(selectedDate)){
+      sendMessageViaWhatsapp()
+    }
   }
+
+  const isDateNear = (selectedDate) => {
+    const currentDate = new Date()
+    const selectedDateObject = new Date(selectedDate)
+    const difference = differenceInDays(selectedDateObject, currentDate)
+
+    return difference <= 1
+  }
+
+  const sendMessageViaWhatsapp = () => {
+    const phoneNumber = userData;
+    const message = encodeURIComponent(`Olá, ${userData}. Lembrandando que o seu agendamento está marcado para o dia ${selectedDate}, estamos ansiosos para te atender!`);
+    const url = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${message}`;
+    window.open(url, '_blank');
+  };
+
 
   const handleClosePopup = () => {
     setPopupData(null)
@@ -266,7 +295,9 @@ const Home = () => {
         </div>
 
         <div className="flex justify-center mt-5">
-          <WhatsappReminder />
+          <WhatsappReminder 
+          onCheckboxChange={setWhatsappReminderChecked} 
+          onUserDataChange={handleUserDataChange}/>
         </div>
       </form>
 

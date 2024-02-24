@@ -2,15 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { auth } from '../firebase';
 import { getDatabase, ref, get } from 'firebase/database';
 
-const WhatsappReminder = () => {
+const WhatsappReminder = ({onCheckboxChange, onUserDataChange}) => {
   const [userData, setUserData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isChecked, setIsChecked] = useState(false)
 
+  const handleCheckboxChange = () =>{
+    setIsChecked(!isChecked)
+    onCheckboxChange(!isChecked)
+  }
   useEffect(() => {
-    const user = auth.currentUser;
-
     // Função para obter dados do banco de dados
     const fetchUserData = async () => {
+    const user = auth.currentUser;
+
       if (user) {
         const userId = user.uid;
         const db = getDatabase();
@@ -21,6 +26,7 @@ const WhatsappReminder = () => {
           if (snapshot.exists()) {
             const userData = snapshot.val();
             setUserData(userData);
+            onUserDataChange(userData)
           } else {
             alert('Dados do usuário não encontrados');
           }
@@ -57,8 +63,10 @@ const WhatsappReminder = () => {
       ) : userData ? (
         <div>
           <label>
-            <input type="checkbox" />
-            Desejo receber lembrete no WhatsApp {userData.phone}
+            <input type="checkbox" 
+            checked={isChecked}
+            onChange={handleCheckboxChange}/>            
+            Desejo receber lembrete no WhatsApp
           </label>
         </div>
       ) : (
