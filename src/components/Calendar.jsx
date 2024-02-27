@@ -1,13 +1,12 @@
 import React from 'react'
 
-const Dashboard = () => {
+const Calendar = () => {
   return (
-    
     <div className='flex justify-center h-screen top-0 bg-gray-200 ml-[20%] w-[80%]'>
-      <p>Home</p>
+      <p>Agendamentos</p>
       
     </div>
   )
 }
 
-export default Dashboard
+export default Calendar

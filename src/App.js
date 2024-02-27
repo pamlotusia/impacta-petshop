@@ -11,65 +11,97 @@ import MyPets from './components/MyPets'
 import Appointments from './components/Appointments'
 import Profile from './components/Profile'
 import Dashboard from './components/Dashboard'
+import Calendar from './components/Calendar'
+import Finances from './components/Finances'
+import Sidebar from './components/Sidebar'
 
 const App = () => {
-  const{user} = UserAuth()
-  const userEmail = user? user.email : null
+  const { user } = UserAuth()
+  const userEmail = user ? user.email : null
   const employeeEmails = ['employee@gmail.com', 'funcionario@gmail.com']
 
   const isEmployee = employeeEmails.includes(userEmail)
   return (
     <div>
       <AuthContextProvider>
-      <Routes>
-          <Route path='/' element={<Signin />} />
-          <Route path='/signup' element={<Signup />} />
+        <Routes>
+          <Route path="/" element={<Signin />} />
+          <Route path="/signup" element={<Signup />} />
+
+          {/* Rota para funcionarios */}
+          {isEmployee && (
+            <Route path='/dashboard' element={<ProtectedRoute><Dashboard/></ProtectedRoute>}/>
+          )}
+
+          {/* Rota para clientes */}
+          {!isEmployee && (
+            <Route path='/home' element={<ProtectedRoute><Home/></ProtectedRoute>}/>
+          )}
+
           <Route
-            path='/home'
+            path="/cadastrar-pet"
             element={
-              isEmployee? ( <ProtectedRoute>
+              <ProtectedRoute>
+                <Navbar />
+                <RegisterPet />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/meus-pets"
+            element={
+              <ProtectedRoute>
+                <Navbar />
+                <MyPets />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/historico"
+            element={
+              <ProtectedRoute>
+                <Navbar />
+                <Appointments />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/perfil"
+            element={
+              <ProtectedRoute>
+                <Navbar />
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Rotas para a versão funcionário*/}
+          <Route
+            path="/dashboard/home"
+            element={
+              <ProtectedRoute>
+                <Sidebar />
                 <Dashboard />
-              </ProtectedRoute>) : (
-                <ProtectedRoute>
-                <Navbar />
-                <Home />
-              </ProtectedRoute>
-              )
-            }
-          />
-          <Route
-            path='/cadastrar-pet'
-            element={
-              <ProtectedRoute>
-                <Navbar />
-                <RegisterPet />                
               </ProtectedRoute>
             }
           />
+
           <Route
-            path='/meus-pets'
+            path="/dashboard/finances"
             element={
               <ProtectedRoute>
-                <Navbar />
-                <MyPets />                
+                <Sidebar />
+                <Finances />
               </ProtectedRoute>
             }
           />
+
           <Route
-            path='/historico'
+            path="/dashboard/calendar"
             element={
               <ProtectedRoute>
-                <Navbar />
-                <Appointments />                
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path='/perfil'
-            element={
-              <ProtectedRoute>
-                <Navbar />
-                <Profile />                
+                <Sidebar />
+                <Calendar />
               </ProtectedRoute>
             }
           />
