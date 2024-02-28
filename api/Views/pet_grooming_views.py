@@ -19,6 +19,7 @@ class CreateSchedules(Resource):
         guardian_id = get_jwt_identity()
         pet_id = request.json.get('pet_id')
         schedules = request.json.get('schedules')
+        price = request.json.get('price')
         
         guardian_pets = pet_services.filter_all_pets_by_guardian(guardian_id)
         pet_exist = any(data.id == pet_id for data in guardian_pets)
@@ -35,6 +36,7 @@ class CreateSchedules(Resource):
                     guardian_id = guardian_id
                     , pet_id = pet_id
                     , schedules = schedules
+                    , price = price
                 )
                 
                 create = pet_grooming_services.create_schedules(new_schedules)

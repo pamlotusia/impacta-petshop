@@ -7,6 +7,7 @@ def create_schedules(pet):
         guardian_id = pet.guardian_id
         , pet_id = pet.pet_id
         , schedules = pet.schedules
+        , price = pet.price
     )
     db.session.add(new_schedules)
     db.session.commit()

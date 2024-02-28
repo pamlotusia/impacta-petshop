@@ -1,4 +1,6 @@
 
+
+
 # Rotas da api 
 ### **/create-account:**
 ```JSON
@@ -13,6 +15,7 @@
 
 
 ### **/login:**
+Devolve um token jwt
 ```JSON
 {
     "email": "joao@example.com",
@@ -21,6 +24,7 @@
 ```
 
 ### **/creat-pet**
+Necessário estar autenticado pelo token jwt
 ```JSON
 {
     "name": "Fido",
@@ -33,6 +37,7 @@
 ```
 
 ### **/create-schedules**
+Necessário estar autenticado pelo token jwt
 ```JSON
 {
     "pet_id": 1,
