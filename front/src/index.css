@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Poppins:wght@400;500&display=swap');
+
+.bg-background-color {
+  background-color: #f7f7f9; /* Substitua pelos valores RGB que desejar */
+}
+
+.btn-cancel {
+  background-color: #f0f0f9;
+}
+.color-title {
+  color: #211f51;
+}
+
+.light-blue-input {
+  background-color: #e3e3f3;
+}
+
+.medium-blue {
+  background-color: #5f6caf;
+}
+.yellow {
+  background-color: #ffa31a; /* Substitua pelos valores RGB que desejar */
+}
+.green {
+  background-color: #65e7a8;
+}
+.pink {
+  background-color: #ff6b6c;
+}
+
+.yellow-font {
+  color: #ffa31a;
+}
+.font-button-confirm {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  border-radius: 6px;
+}
+
+.grey-font {
+  color: #575757;
+}
+
+.light-grey-font {
+  color: #928484;
+}
+
+.custom-shadow {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Altere os valores conforme necessário */
+}
+
+.button-active {
+  background-color: #211f51; /* Cor do fundo quando ativo (clicado) */
+  color: #fff; /* Cor do texto quando ativo (clicado) */
+}
+
+.font-poppins {
+  font-family: 'Poppins';
+}
+.login-img {
+  margin-bottom: -8.5px;
+}
+
+.date-input::-webkit-calendar-picker-indicator {
+  font-size: 24px;
+}
+
+.time-input::-webkit-calendar-picker-indicator {
+  font-size: 24px;
+}
