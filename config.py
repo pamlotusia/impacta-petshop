@@ -1,10 +1,10 @@
 DEBUG = True
 
 USERNAME = 'postgres'
-PASSWORD = 'Wess3705'
-SERVER = 'localhost'
-PORT = '5432'
-DB = 'api'
+PASSWORD = 'AGGGAGg4Ege*fEe*GGDFgA142f46C163'
+SERVER = 'roundhouse.proxy.rlwy.net'
+PORT = '15076'
+DB = 'railway'
 
 SQLALCHEMY_DATABASE_URI = f"postgresql+psycopg2://{USERNAME}:{PASSWORD}\
 @{SERVER}:{PORT}/{DB}"
