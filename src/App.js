@@ -29,14 +29,20 @@ const App = () => {
           <Route path="/signup" element={<Signup />} />
 
           {/* Rota para funcionarios */}
-          {isEmployee && (
-            <Route path='/dashboard' element={<ProtectedRoute><Dashboard/></ProtectedRoute>}/>
-          )}
-
-          {/* Rota para clientes */}
-          {!isEmployee && (
-            <Route path='/home' element={<ProtectedRoute><Home/></ProtectedRoute>}/>
-          )}
+          <Route
+            path='/home'
+            element={
+              isEmployee? ( <ProtectedRoute>
+                <Sidebar/>
+                <Dashboard />
+              </ProtectedRoute>) : (
+                <ProtectedRoute>
+                <Navbar />
+                <Home />
+              </ProtectedRoute>
+              )
+            }
+          />
 
           <Route
             path="/cadastrar-pet"
@@ -75,17 +81,8 @@ const App = () => {
             }
           />
 
-          {/* Rotas para a versão funcionário*/}
-          <Route
-            path="/dashboard/home"
-            element={
-              <ProtectedRoute>
-                <Sidebar />
-                <Dashboard />
-              </ProtectedRoute>
-            }
-          />
 
+          {/* Rotas para a versão funcionário*/}
           <Route
             path="/dashboard/finances"
             element={
