@@ -36,7 +36,7 @@ Necessário estar autenticado pelo token jwt
 }
 ```
 
-### **/create-schedules**
+### **/schedules**
 Necessário estar autenticado pelo token jwt
 ```JSON
 {

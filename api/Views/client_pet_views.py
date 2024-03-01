@@ -8,7 +8,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import request, jsonify, make_response
 
 
-class CreatePet(Resource):
+class Pets(Resource):
     @jwt_required()
     def post(self):
         schema = pet_schema.CreatePetSchema()
@@ -53,11 +53,10 @@ class CreatePet(Resource):
                 , 201
             )
             
-class ListPets(Resource):
     @jwt_required()
     def get(self):
         guardian_id = get_jwt_identity()
-        pet_list = pet_services.list_all_pets(guardian_id)
+        pet_list = pet_services.filter_all_pets_by_guardian(guardian_id)
         print('\n', pet_list, '\n')
         schema = pet_schema.PetSchema(many=True)
         response = schema.dump(pet_list)
@@ -67,5 +66,4 @@ class ListPets(Resource):
         )
         
 
-api.add_resource(CreatePet, '/create-pet')
-api.add_resource(ListPets, '/pet-list')
+api.add_resource(Pets, '/pets')
