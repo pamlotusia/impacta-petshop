@@ -42,7 +42,7 @@ class Login(Resource):
                 , 401)
 
 
-class Register(Resource):
+class CreateAccount(Resource):
     def post(self):
         schema = client_schema.ClientRegisterSchema()
         errors = schema.validate(request.json)
@@ -82,4 +82,4 @@ class Register(Resource):
 
 # Criando rotas
 api.add_resource(Login, '/login')
-api.add_resource(Register, '/create-account')
+api.add_resource(CreateAccount, '/create-account')

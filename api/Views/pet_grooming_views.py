@@ -49,10 +49,7 @@ class CreateSchedules(Resource):
             return make_response(
                 jsonify({"error": "Schedules already exists"})
                 , 400)
-            
-        
-        
-class ListSchedules(Resource):
+
     @jwt_required()
     def get(self):
         pet_list = (pet_grooming_services
@@ -66,4 +63,3 @@ class ListSchedules(Resource):
         
 
 api.add_resource(CreateSchedules, '/create-schedules')
-api.add_resource(ListSchedules, '/list-schedules')
