@@ -23,7 +23,7 @@ Devolve um token jwt
 }
 ```
 
-### **/creat-pet**
+### **/pet**
 Necessário estar autenticado pelo token jwt
 ```JSON
 {
