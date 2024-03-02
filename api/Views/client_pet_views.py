@@ -3,7 +3,7 @@ from datetime import datetime
 from ..Schemas import pet_schema
 from flask_restful import Resource
 from ..Services import pet_services
-from ..Entities import pet_ident
+from ..Entities import pet_ident, comments_ident
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import request, jsonify, make_response
 
@@ -24,6 +24,7 @@ class Pets(Resource):
         pet_size = request.json.get('size')
         pet_temper = request.json.get('temper')
         pet_guardian_id = get_jwt_identity()
+        pet_comment = request.json.get('comment')
         
         pet_exist = pet_services.filter_pet_by_name_and_guardian(pet_name
                                                                 , pet_guardian_id)
@@ -44,8 +45,10 @@ class Pets(Resource):
                 , temper = pet_temper
                 , guardian = pet_guardian_id
             )
+            
+          
 
-            create_pet = pet_services.create_pet(new_pet)
+            create_pet = pet_services.create_pet(new_pet, pet_comment)
             response = schema.dump(create_pet)
 
             return make_response(

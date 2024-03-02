@@ -3,6 +3,7 @@ from marshmallow import fields
 from ..Models import pet_grooming_model
 
 
+
 class PetSchedules(ma.Schema):
     class Meta:
         model = pet_grooming_model.PetGroomingSchedules
@@ -14,8 +15,7 @@ class PetSchedules(ma.Schema):
     schediules = fields.DateTime(required=True)
     price = fields.Decimal(required=True)
     
-    
-    
+
 class CreateSchedules(ma.Schema):
     class Meta:
         model = pet_grooming_model.PetGroomingSchedules
@@ -25,3 +25,4 @@ class CreateSchedules(ma.Schema):
     schedules = fields.DateTime(required=True)
     price = fields.Decimal(required=True)
     
+

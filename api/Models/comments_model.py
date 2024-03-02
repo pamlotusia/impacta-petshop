@@ -13,6 +13,7 @@ class petComments(db.Model):
     
     pet_id: Mapped[int] = db.Column(db.Integer, db.ForeignKey("pet.id")
                                , nullable=False, index=True)
-    client_id: Mapped[int] = db.Column(db.Integer, db.ForeignKey("user_client.id")
+    
+    guardian_id: Mapped[int] = db.Column(db.Integer, db.ForeignKey("user_client.id")
                                , nullable=False, index=True)
     
