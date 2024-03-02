@@ -48,7 +48,7 @@ class Pets(Resource):
             
           
 
-            create_pet = pet_services.create_pet(new_pet, pet_comment)
+            create_pet = pet_services.create_pet(new_pet, pet_comment) # alterado
             response = schema.dump(create_pet)
 
             return make_response(
