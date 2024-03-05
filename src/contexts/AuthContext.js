@@ -1,6 +1,8 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 
+// Dá merge nessa 
+
 const UserContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {

@@ -5,6 +5,8 @@ import iconCat from '../images/icon-cat.svg';
 import iconBird from '../images/icon-bird.svg';
 import iconRodent from '../images/icon-rodent.svg';
 
+// Dá merge nessa 
+
 const Appointments = () => {
   const [userAppointments, setUserAppointments] = useState([]);
 

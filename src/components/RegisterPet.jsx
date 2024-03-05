@@ -7,6 +7,8 @@ import iconRodent from '../images/icon-rodent.svg';
 import starIcon from '../images/star.svg';
 import selectedStar from '../images/star-selected.svg';
 
+// Dá merge nessa 
+
 const RegisterTest = () => {
   const [formData, setFormData] = useState({
     campoNome: '',

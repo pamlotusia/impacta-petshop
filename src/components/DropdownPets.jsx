@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+// Dá merge nessa 
+
 import { FaPlus, FaMinus } from 'react-icons/fa';
 import iconDog from '../images/icon-dog.svg';
 import iconCat from '../images/icon-cat.svg';

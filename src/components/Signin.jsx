@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { UserAuth } from '../contexts/AuthContext';
 import ImagemLogin from '../images/login-icon.svg';
 
+// Dá merge nessa 
+
 const Signin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

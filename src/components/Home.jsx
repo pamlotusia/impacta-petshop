@@ -7,6 +7,8 @@ import DropdownPets from './DropdownPets';
 import Price from './Price';
 import WhatsappReminder from './WhatsappReminder';
 
+// Dá merge nessa 
+
 const Home = () => {
   const { user, logout } = UserAuth();
   const navigate = useNavigate();
