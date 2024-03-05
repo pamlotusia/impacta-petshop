@@ -1,34 +1,39 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios'; // Importar a biblioteca Axios
-import iconDog from '../images/icon-dog.svg';
-import iconCat from '../images/icon-cat.svg';
-import iconBird from '../images/icon-bird.svg';
-import iconRodent from '../images/icon-rodent.svg';
-import starIcon from '../images/star.svg';
-import selectedStar from '../images/star-selected.svg';
+import React, { useEffect, useState } from 'react'
+import iconDog from '../images/icon-dog.svg'
+import iconCat from '../images/icon-cat.svg'
+import iconBird from '../images/icon-bird.svg'
+import iconRodent from '../images/icon-rodent.svg'
+import starIcon from '../images/star.svg'
+import selectedStar from '../images/star-selected.svg'
+
+import { auth } from '../firebase'
+import { set, getDatabase, ref } from 'firebase/database'
 
 const RegisterTest = () => {
+  // Informações que vão para o CardPreview
   const [formData, setFormData] = useState({
+    // Inicialize os campos do formulário com valores padrão se necessário
     campoNome: '',
     campoIdade: '',
     campoPeso: ''
-  });
-  const [selectedAnimal, setSelectedAnimal] = useState(null);
-  const [nameAnimal, setNameAnimal] = useState('');
-  const [ageAnimal, setAgeAnimal] = useState('');
-  const [weightAnimal, setWeightAnimal] = useState('');
-  const [selectedSize, setSelectedSize] = useState(null);
-  const [starValue, setStarValue] = useState(null);
-  const [observations, setObservations] = useState('');
+  })
+  const [selectedAnimal, setSelectedAnimal] = useState(null)
+  const [nameAnimal, setNameAnimal] = useState('')
+  const [ageAnimal, setAgeAnimal] = useState('')
+  const [weightAnimal, setWeightAnimal] = useState('')
+  const [selectedSize, setSelectedSize] = useState(null)
+  const [starValue, setStarValue] = useState(null)
+  const [observations, setObservations] = useState('')
 
   const handleFormChange = e => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setFormData({
       ...formData,
       [name]: value
-    });
-  };
+    })
+  }
 
+  // Função de limpar todos os valores inputados
   const handleResetForm = () => {
     setFormData({
       campoNome: '',
@@ -45,31 +50,31 @@ const RegisterTest = () => {
   };
 
   const handleAnimalButtonClick = animal => {
-    setSelectedAnimal(animal);
-  };
+    setSelectedAnimal(animal)
+  }
 
   const handleStarValueChange = value => {
-    setStarValue(value);
-  };
+    setStarValue(value)
+  }
 
   return (
     <section>
       <p className="text-3xl text-center color-title font-bold mb-[60px] mt-10 ">
         Cadastre seu pet!
       </p>
-      <div className="w-full flex flex-col justify-center lg:flex-row md:flex-row px-5 overflow-hidden">
-        <Formulario
-          onChange={handleFormChange}
-          formData={formData}
-          selectedAnimal={selectedAnimal}
-          onAnimalButtonClick={handleAnimalButtonClick}
-          selectedSize={selectedSize}
-          setSelectedSize={setSelectedSize}
-          onStarValueChange={handleStarValueChange}
-          observations={observations}
-          setObservations={setObservations}
-        />
-
+      <div className=" w-full flex flex-col justify-center lg:flex-row md:flex-row px-5 overflow-hidden">
+          <Formulario
+            onChange={handleFormChange}
+            formData={formData}
+            selectedAnimal={selectedAnimal}
+            onAnimalButtonClick={handleAnimalButtonClick}
+            selectedSize={selectedSize}
+            setSelectedSize={setSelectedSize}
+            onStarValueChange={handleStarValueChange}
+            observations={observations}
+            setObservations={setObservations}
+          />
+        
         <div className="flex flex-col hidden md:block lg:block">
           <CardPreview
             formData={formData}
@@ -88,8 +93,8 @@ const RegisterTest = () => {
         </div>
       </div>
     </section>
-  );
-};
+  )
+}
 
 const CardPreview = ({
   formData,
@@ -105,78 +110,79 @@ const CardPreview = ({
   observations,
   onResetForm
 }) => {
+  // função envia dados para banco
   const handleConfirmPet = async () => {
     if (!nameAnimal || !ageAnimal || !weightAnimal || !selectedAnimal || !selectedSize) {
-      alert('Por favor, preencha todos os campos');
-      return;
+      alert('por favor preencha os campos')
+      return
     }
 
+    console.log(observations)
     try {
-      const data = {
-        name: nameAnimal,
-        age: parseInt(ageAnimal),
-        pet_type: selectedAnimal,
-        weight: parseFloat(weightAnimal),
-        size: selectedSize,
-        temper: starValue,
-        comment: observations
-      };
-      
-      console.log('nome:', data.name);
-      console.log('idade:', data.age);
-      console.log('peso:', data.weight);
-      console.log('tipo:', data.pet_type);
-      console.log('tamanho:', data.size);
-      console.log('temperamento:', data.temper);
-      console.log('comentario:', data.comment);
-      const response = await axios.post('http://127.0.0.1:5000/pets', data, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        },
-      });
+      const user = auth.currentUser
+      const uid = user.uid
 
-      alert('Pet cadastrado com sucesso!!!');
-    } catch (error) {
-      alert('Ocorreu um erro ao cadastrar o pet: ' + error.message);
+      const data = {
+        nomePet: nameAnimal,
+        idadePet: ageAnimal,
+        pesoPet: weightAnimal,
+        observacoes: observations,
+        tipoDeAnimal: selectedAnimal,
+        tamanho: selectedSize,
+        temperamento: starValue
+      }
+
+      const db = getDatabase()
+      const petRef = ref(db, `users/${uid}/pets/${data.nomePet}`)
+      await set(petRef, data)
+
+      alert('pet cadastrado com sucesso!!!')
+    } catch (e) {
+      alert(e, e.message)
     }
+  }
+
+  //limpa formulário
+  const handleCancel = () => {
+    onResetForm(); // Chama a função recebida para redefinir o formulário
   };
 
-  useEffect(() => {
-    setNameAnimal(formData.campoNome);
-  }, [formData.campoNome]);
 
   useEffect(() => {
-    setAgeAnimal(formData.campoIdade);
-  }, [formData.campoIdade]);
+    setNameAnimal(formData.campoNome)
+  }, [formData.campoNome])
 
   useEffect(() => {
-    setWeightAnimal(formData.campoPeso);
-  }, [formData.campoPeso]);
+    setAgeAnimal(formData.campoIdade)
+  }, [formData.campoIdade])
+
+  useEffect(() => {
+    setWeightAnimal(formData.campoPeso)
+  }, [formData.campoPeso])
 
   const animalColors = {
     dog: 'medium-blue',
     cat: 'yellow',
     bird: 'green',
     rodent: 'pink'
-  };
+  }
 
   const getAnimalIcon = animalType => {
     switch (animalType) {
       case 'dog':
-        return iconDog;
+        return iconDog
       case 'cat':
-        return iconCat;
+        return iconCat
       case 'bird':
-        return iconBird;
+        return iconBird
       case 'rodent':
-        return iconRodent;
+        return iconRodent
       default:
-        return iconDog;
+        return iconDog
     }
-  };
-
+  }
   return (
+    // cardpreview
     <div className="flex flex-col">
       <div className="w-[300px] h-[350px] bg-[#F7F7F9] rounded-2xl mx-10 custom-shadow">
         <div className="flex flex-col items-center">
@@ -201,7 +207,7 @@ const CardPreview = ({
       </div>
       <div className="flex justify-evenly mt-8">
         <button className="text-center uppercase  btn-cancel w-[138px] h-[50px] rounded-3xl uppercase font-bold ml-5"
-        onClick={onResetForm}>
+        onClick={handleCancel}>
           cancelar
         </button>
         <button
@@ -212,8 +218,8 @@ const CardPreview = ({
         </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
 const Formulario = ({
   onChange,
@@ -226,13 +232,14 @@ const Formulario = ({
   observations, 
   setObservations
 }) => {
+  // legenda de cada estrela
   const starValues = [
     'arisco',
     'reservado',
     'calmo',
     'simpático',
     'felizão'
-  ];
+  ]
 
   const [selectedImages, setSelectedImages] = useState([
     false,
@@ -240,26 +247,29 @@ const Formulario = ({
     false,
     false,
     false
-  ]);
+  ])
 
   const handleImageClick = index => {
-    const newSelectedImages = [...selectedImages];
+    const newSelectedImages = [...selectedImages]
 
-    onStarValueChange(starValues[index]);
+    onStarValueChange(starValues[index])
 
-    newSelectedImages.fill(false);
+    //deselecionar estrelas
+    newSelectedImages.fill(false)
 
+    //seleciona a imagem da primeira posição pra frente
     for (let i = 0; i <= index; i++) {
-      newSelectedImages[i] = true;
+      newSelectedImages[i] = true
     }
 
-    setSelectedImages(newSelectedImages);
-  };
+    setSelectedImages(newSelectedImages)
+  }
 
   const handleSizeButtonClick = size => {
-    setSelectedSize(size);
-  };
+    setSelectedSize(size)
+  }
   return (
+    // formulario cadastro de pets
     <div className="color-title">
       <div className="flex flex-col md:flex-row lg:flex-row mb-[60px]">
         <div className="flex flex-col m-2">
@@ -379,7 +389,7 @@ const Formulario = ({
         </div>
 
         <div className="flex flex-col lg:ml-10 mt-5">
-          <p className="text-1xl uppercase font-bold text-left mb-2">
+          <p className="text-1xl uppercase font-bold text-left ml-2 mb-2">
             Peso
           </p>
           <small className="text-right text-gray-700">
@@ -432,7 +442,7 @@ const Formulario = ({
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default RegisterTest;
+export default RegisterTest

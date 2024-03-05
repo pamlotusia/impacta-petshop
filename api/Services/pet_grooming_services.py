@@ -8,6 +8,8 @@ def create_schedules(pet):
         , pet_id = pet.pet_id
         , schedules = pet.schedules
         , price = pet.price
+        , type_service = pet.type_service
+        , service = pet.service
     )
     db.session.add(new_schedules)
     db.session.commit()
@@ -15,8 +17,24 @@ def create_schedules(pet):
 
 
 def filter_schedules_by_petGuardian(guardian_id: int):
-    schedules: List = PetGroomingSchedules.query.filter_by(guardian_id = guardian_id).all()
-    return schedules
+    pet_schedules: List = PetGroomingSchedules.query.filter_by(guardian_id = guardian_id).all()
+    json_data = []
+    for schedule in pet_schedules:
+    # Montar um dicionário com as informações necessárias, incluindo o nome do pet
+        schedule_data = {
+            "guardian_id": schedule.guardian_id
+            , "id": schedule.id
+            , "pet_id": schedule.pet_id
+            , "price": str(schedule.price) # Convertendo para string, se necessário
+            , "schedules": schedule.schedules # Formatando a data e hora no formato ISO 8601
+            , "service": schedule.service
+            , "type_service": schedule.type_service
+            , "pet_name": schedule.pet.name  # Obtendo o nome do pet através do relacionamento
+            , "pet_type": schedule.pet.pet_type  # Obtendo o nome do pet através do relacionamento
+        }
+        
+        json_data.append(schedule_data)
+    return json_data
 
 
 def filter_schedules_by_pet(pet_id: int):

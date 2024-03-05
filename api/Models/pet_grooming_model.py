@@ -14,5 +14,7 @@ class PetGroomingSchedules(db.Model):
     pet = db.relationship('Pet', lazy='joined')
     
     schedules = db.Column(db.DateTime, nullable=False, index=True)
+    type_service = db.Column(db.String(20), nullable=False)
+    service = db.Column(db.String(20), nullable=False)
     price = db.Column(db.DECIMAL(18, 2), nullable=False)
 
