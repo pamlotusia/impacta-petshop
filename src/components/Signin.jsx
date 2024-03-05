@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserAuth } from '../contexts/AuthContext'
 import ImagemLogin from '../images/login-icon.svg'
-
+import axios from 'axios'
 
 const Signin = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
+  const [error, setError] = useState(null)
   const navigate = useNavigate()
   const { signIn } = UserAuth()
 
@@ -15,9 +15,22 @@ const Signin = () => {
     e.preventDefault()
     setError('')
     try {
-      await signIn(email, password)
-      navigate('/home')
-    } catch (e) {
+      const response = await axios.post('http://127.0.0.1:5000/login', {email, password})
+
+      if (response.data.access === 'allowed' && response.data.token) {
+        // Armazene o token JWT no localStorage ou em outro local seguro
+        localStorage.setItem('token', response.data.token);
+
+        // Faça o login no contexto (ajuste conforme necessário)
+        signIn(email, password);
+
+        // Redirecione para a página desejada
+        navigate('/home');
+      } else {
+        setError('Falha ao fazer login. Verifique suas credenciais.');
+      }
+
+    }catch (e) {
       setError(e.message)
       console.log(e.message)
     }

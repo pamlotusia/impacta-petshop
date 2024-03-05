@@ -1,6 +1,3 @@
-
-
-
 # Rotas da api 
 ### **/create-account:**
 ```JSON
