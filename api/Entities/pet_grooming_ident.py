@@ -1,10 +1,12 @@
 from datetime import datetime
 class PetGrooming:
-    def __init__(self, guardian_id: int, pet_id: int, schedules: datetime, price: float) -> None:
+    def __init__(self, guardian_id: int, pet_id: int, schedules: datetime, price: float, type_service: str, service: str) -> None:
         self.__guardian_id = guardian_id
         self.__pet_id = pet_id
         self.__schedules = schedules
         self.__price = price
+        self.__type_service = type_service
+        self.__service = service
         
     
     @property
@@ -38,3 +40,19 @@ class PetGrooming:
     @price.setter
     def price(self, price):
         self.__price = price
+        
+    @property
+    def type_service(self):
+        return self.__type_service
+    
+    @type_service.setter
+    def type_service(self, type_service):
+        self.__type_service = type_service
+        
+    @property
+    def service(self):
+        return self.__service
+    
+    @service.setter
+    def service(self, service):
+        self.__service = service

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserAuth } from '../contexts/AuthContext'
@@ -6,6 +7,13 @@ import {
   set,
 } from 'firebase/database'
 import { db, auth } from '../firebase'
+=======
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { UserAuth } from '../contexts/AuthContext';
+
+// Dá merge nessa 
+>>>>>>> 05477f3cb8ab03ecc30c44ac17b6cd8b1cd1dd5c
 
 const Signup = () => {
   const [email, setEmail] = useState('');

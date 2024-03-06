@@ -1,5 +1,5 @@
 // PopUp.js
-
+import { Link } from 'react-router-dom';
 import React from 'react'
 
 const PopUp = ({ date, time, service, price, onClose }) => {
@@ -34,12 +34,12 @@ const PopUp = ({ date, time, service, price, onClose }) => {
             >
               Fechar
             </button>
-            <a
-              href="/historico"
+            <Link
+              to="/historico"
               className="px-4 py-2 bg-yellow-500 text-white rounded-md font-bold"
             >
               Ver agendamento
-            </a>
+            </Link>
           </div>
         </div>
       </div>

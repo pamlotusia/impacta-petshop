@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserAuth } from '../contexts/AuthContext'
@@ -10,6 +11,21 @@ const Signin = () => {
   const [error, setError] = useState(null)
   const navigate = useNavigate()
   const { signIn } = UserAuth()
+=======
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { UserAuth } from '../contexts/AuthContext';
+import ImagemLogin from '../images/login-icon.svg';
+
+// Dá merge nessa 
+
+const Signin = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const { signIn } = UserAuth();
+>>>>>>> 05477f3cb8ab03ecc30c44ac17b6cd8b1cd1dd5c
 
   const handleSubmit = async (e) => {
     e.preventDefault();
