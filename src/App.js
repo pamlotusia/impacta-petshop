@@ -11,7 +11,7 @@ import MyPets from './components/MyPets'
 import Appointments from './components/Appointments'
 import Profile from './components/Profile'
 import Dashboard from './components/Dashboard'
-
+import Sidebar from './components/Sidebar'
 const App = () => {
   const{user} = UserAuth()
   const userEmail = user? user.email : null
@@ -28,6 +28,7 @@ const App = () => {
             path='/home'
             element={
               isEmployee? ( <ProtectedRoute>
+                <Sidebar/>
                 <Dashboard />
               </ProtectedRoute>) : (
                 <ProtectedRoute>

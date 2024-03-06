@@ -3,12 +3,12 @@ from datetime import datetime
 from ..Schemas import pet_schema
 from flask_restful import Resource
 from ..Services import pet_services
-from ..Entities import pet_ident
+from ..Entities import pet_ident, comments_ident
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import request, jsonify, make_response
 
 
-class CreatePet(Resource):
+class Pets(Resource):
     @jwt_required()
     def post(self):
         schema = pet_schema.CreatePetSchema()
@@ -24,6 +24,7 @@ class CreatePet(Resource):
         pet_size = request.json.get('size')
         pet_temper = request.json.get('temper')
         pet_guardian_id = get_jwt_identity()
+        pet_comment = request.json.get('comment')
         
         pet_exist = pet_services.filter_pet_by_name_and_guardian(pet_name
                                                                 , pet_guardian_id)
@@ -44,8 +45,10 @@ class CreatePet(Resource):
                 , temper = pet_temper
                 , guardian = pet_guardian_id
             )
+            
+          
 
-            create_pet = pet_services.create_pet(new_pet)
+            create_pet = pet_services.create_pet(new_pet, pet_comment) # alterado
             response = schema.dump(create_pet)
 
             return make_response(
@@ -53,11 +56,10 @@ class CreatePet(Resource):
                 , 201
             )
             
-class ListPets(Resource):
     @jwt_required()
     def get(self):
         guardian_id = get_jwt_identity()
-        pet_list = pet_services.list_all_pets(guardian_id)
+        pet_list = pet_services.filter_all_pets_by_guardian(guardian_id)
         print('\n', pet_list, '\n')
         schema = pet_schema.PetSchema(many=True)
         response = schema.dump(pet_list)
@@ -67,5 +69,4 @@ class ListPets(Resource):
         )
         
 
-api.add_resource(CreatePet, '/create-pet')
-api.add_resource(ListPets, '/pet-list')
+api.add_resource(Pets, '/pets')

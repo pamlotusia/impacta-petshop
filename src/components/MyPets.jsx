@@ -1,83 +1,64 @@
-import React, { useEffect, useState } from 'react'
-import { auth } from '../firebase'
-import { getDatabase, ref, get } from 'firebase/database'
+import React, { useEffect, useState } from 'react';
 
 // Importe os ícones diretamente
-import iconDog from '../images/icon-dog.svg'
-import iconCat from '../images/icon-cat.svg'
-import iconBird from '../images/icon-bird.svg'
-import iconRodent from '../images/icon-rodent.svg'
+import iconDog from '../images/icon-dog.svg';
+import iconCat from '../images/icon-cat.svg';
+import iconBird from '../images/icon-bird.svg';
+import iconRodent from '../images/icon-rodent.svg';
 
 const MyPets = () => {
-  const [pets, setPets] = useState([])
+  const [pets, setPets] = useState([]);
 
   const colorIcon = {
-    dog: {
-      color: 'medium-blue',
-      icon: iconDog
-    },
-    cat: {
-      color: 'yellow',
-      icon: iconCat
-    },
-    bird: {
-      color: 'green',
-      icon: iconBird
-    },
-    rodent: {
-      color: 'pink',
-      icon: iconRodent
-    }
-  }
+    dog: { color: 'medium-blue', icon: iconDog },
+    cat: { color: 'yellow', icon: iconCat },
+    bird: { color: 'green', icon: iconBird },
+    rodent: { color: 'pink', icon: iconRodent },
+  };
 
   useEffect(() => {
-    const user = auth.currentUser
-    const db = getDatabase()
-
-    if (user) {
-      const uid = user.uid
-      const petsRef = ref(db, `users/${uid}/pets`)
-
-      get(petsRef)
-        .then(snapshot => {
-          if (snapshot.exists()) {
-            const petData = snapshot.val()
-            const petsArray = Object.values(petData)
-            setPets(petsArray)
-
-            localStorage.setItem('userPets', JSON.stringify(petsArray))
-          } else {
-            alert('pet nao encontrado')
-          }
-        })
-        .catch(e => {
-          alert(e.message)
-        })
-    } else {
-      const storedPets = localStorage.getItem('userPets')
-      if(storedPets){
-        const parsedPets = JSON.parse(storedPets)
-        setPets(parsedPets)
+    const fetchPets = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:5000/pets', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          },
+        });
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data)
+          setPets(data);
+          localStorage.setItem('userPets', JSON.stringify(data));
+        } else {
+          alert('Erro ao buscar os pets');
+        }
+      } catch (error) {
+        alert('Erro ao buscar os pets');
+        console.error('Erro ao buscar os pets:', error);
       }
-    }
-  }, [])
+    };
+
+    fetchPets();
+  }, []);
 
   return (
-    <div className='px-10 '>
+    <div className="px-10 ">
       <h1 className="text-2xl color-title text-center font-poppins my-10">
-        Meus <span className='font-bold'> bichinhos</span>
+        Meus <span className="font-bold"> bichinhos</span>
       </h1>
       <div className="grid grid-cols-1 justify-items-center gap-y-10 md:grid-cols-2 lg:grid-cols-5">
-      {pets.map((pet, index) => {
-        const petType = pet.tipoDeAnimal
-        const petInfo = colorIcon[petType]
+        {pets.map((pet, index) => {
+          const petType = pet.pet_type.toLowerCase(); // Alteração aqui para usar o nome correto do campo
+          const petInfo = colorIcon[petType];
 
-        if (!petInfo) {
-          return null
-        }
+          if (!petInfo) {
+            return null;
+          }
 
-        return (
-          <div
+          return (
+            <div
             className={`w-[260px] h-[170px] lg:h-[290px] rounded-2xl custom-shadow`}
             key={index}
           >
@@ -87,23 +68,22 @@ const MyPets = () => {
               >
                 <img
                   src={petInfo.icon}
-                  alt={pet.nomePet}
+                  alt={pet.name}
                   className="h-[60px] w-[60px] lg:h-[100px] lg:w-[100px]"
                 />
               </div>
               <p className="w-full text-lg text-center font-medium break-words px-3 lg:mt-2 ">
-                {pet.nomePet}
+                {pet.name}
               </p>
-              <p>Idade: {pet.idadePet}</p>
-              <p>Peso: {pet.pesoPet}</p>
+              <p>Idade: {pet.age}</p>
+              <p>Peso: {pet.weight}</p>
             </div>
           </div>
-        )
-      })}
+          );
+        })}
+      </div>
     </div>
+  );
+};
 
-    </div>
-  )
-}
-
-export default MyPets
+export default MyPets;

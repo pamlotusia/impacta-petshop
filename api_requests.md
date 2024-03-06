@@ -20,7 +20,7 @@ Devolve um token jwt
 }
 ```
 
-### **/creat-pet**
+### **/pet**
 Necessário estar autenticado pelo token jwt
 ```JSON
 {
@@ -29,11 +29,12 @@ Necessário estar autenticado pelo token jwt
     "pet_type": "Dog",
     "weight": 10,
     "size": "Medium",
-    "temper": "Friendly"
+    "temper": "Friendly",
+    "comment": "O meu dog é top"
 }
 ```
 
-### **/create-schedules**
+### **/schedules**
 Necessário estar autenticado pelo token jwt
 ```JSON
 {

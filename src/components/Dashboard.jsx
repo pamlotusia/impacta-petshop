@@ -1,12 +1,10 @@
 import React from 'react'
-import Sidebar  from './Sidebar'
-import Content from './Content'
+import Agendamentos from './Agendamentos'
 
 const Dashboard = () => {
   return (
-    <div className='flex justify-center'>
-      <Sidebar/>
-      <Content />
+    <div className='flex justify-center h-screen top-0 ml-[20%] w-[80%]'>
+      <Agendamentos />
     </div>
   )
 }

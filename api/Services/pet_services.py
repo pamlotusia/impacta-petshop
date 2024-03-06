@@ -1,8 +1,9 @@
 from ..Models.pet_model import Pet
+from ..Models.comments_model import petComments
 from api import db
 
 
-def create_pet(pet):
+def create_pet(pet, comment):
     new_pet = Pet(
         name = pet.name
         , age = pet.age
@@ -12,8 +13,16 @@ def create_pet(pet):
         , temper = pet.temper
         , guardian_id = pet.guardian
     )
-    
     db.session.add(new_pet)
+    db.session.commit()
+    
+    new_comment = petComments(
+        comment = comment
+        , pet_id = new_pet.id
+        , guardian_id = pet.guardian
+    )
+    
+    db.session.add(new_comment)
     db.session.commit()
     
     return new_pet

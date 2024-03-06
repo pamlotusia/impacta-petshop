@@ -7,7 +7,7 @@ from flask import request, make_response, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 
-class CreateSchedules(Resource):
+class Schedules(Resource):
     @jwt_required()
     def post(self):
         schema = pet_grooming_schema.CreateSchedules()
@@ -49,10 +49,8 @@ class CreateSchedules(Resource):
             return make_response(
                 jsonify({"error": "Schedules already exists"})
                 , 400)
-            
-        
-        
-class ListSchedules(Resource):
+
+
     @jwt_required()
     def get(self):
         pet_list = (pet_grooming_services
@@ -65,5 +63,4 @@ class ListSchedules(Resource):
         )
         
 
-api.add_resource(CreateSchedules, '/create-schedules')
-api.add_resource(ListSchedules, '/list-schedules')
+api.add_resource(Schedules, '/schedules')
