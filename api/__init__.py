@@ -21,9 +21,5 @@ CORS(app)
 CORS(app, resources={r"/*": {"origins": ["http://localhost:3000"]}}) # Permite solicitações apenas de http://localhost:3000
 
 # importando nossas rotas (precisa estar no modulo inicial)
-<<<<<<< HEAD
 from .Views import client_pet_views, client_petgrooming_views, client_views
-=======
-from .Views import client_pet_views, client_views, petgrooming_views
->>>>>>> 05477f3cb8ab03ecc30c44ac17b6cd8b1cd1dd5c
 from .Models import client_model, pet_grooming_model, pet_model, comments_model
