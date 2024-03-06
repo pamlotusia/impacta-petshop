@@ -1,49 +1,26 @@
-<<<<<<< HEAD
-import React, { useId, useState } from 'react'
+import React, { useState } from 'react'
 import { UserAuth } from '../contexts/AuthContext'
-import { db, auth } from '../firebase'
-import { set, getDatabase, ref, get } from 'firebase/database'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 import PopUp from './PopUp'
 import DropdownPets from './DropdownPets'
 import Price from './Price'
 import WhatsappReminder from './WhatsappReminder'
-import { differenceInDays } from 'date-fns'
+
+// Dá merge nessa
 
 const Home = () => {
-  const { user } = UserAuth()
-=======
-import React, { useState } from 'react';
-import { UserAuth } from '../contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import PopUp from './PopUp';
-import DropdownPets from './DropdownPets';
-import Price from './Price';
-import WhatsappReminder from './WhatsappReminder';
+  const { user, logout } = UserAuth()
+  const navigate = useNavigate()
 
-// Dá merge nessa 
-
-const Home = () => {
-  const { user, logout } = UserAuth();
-  const navigate = useNavigate();
->>>>>>> 05477f3cb8ab03ecc30c44ac17b6cd8b1cd1dd5c
-
-  const [selectedDate, setSelectedDate] = useState('');
-  const [selectedTime, setSelectedTime] = useState('');
-  const [selectedService, setSeletedService] = useState('');
-  const [bathSelected, setBathSelected] = useState(false);
-  const [selectedTosa, setSelectedTosa] = useState('');
-  const [selectedPet, setSelectedPet] = useState(null);
-  const [finalPrice, setFinalPrice] = useState(0);
-  const [popupData, setPopupData] = useState(null);
-
-<<<<<<< HEAD
-  // whatsapp
-  const [whatsappReminderChecked, setWhatsappReminderChecked] = useState(false)
-  const [userData, setUserData] = useState(null)
-  const handleUserDataChange = (newUserData) => {
-    setUserData(newUserData)
-  }
+  const [selectedDate, setSelectedDate] = useState('')
+  const [selectedTime, setSelectedTime] = useState('')
+  const [selectedService, setSeletedService] = useState('')
+  const [bathSelected, setBathSelected] = useState(false)
+  const [selectedTosa, setSelectedTosa] = useState('')
+  const [selectedPet, setSelectedPet] = useState(null)
+  const [finalPrice, setFinalPrice] = useState(0)
+  const [popupData, setPopupData] = useState(null)
 
   const formatDate = date => {
     const parts = date.split('-')
@@ -51,124 +28,60 @@ const Home = () => {
     return formattedDate
   }
 
-=======
-  const formatDate = (date) => {
-    const parts = date.split('-');
-    const formattedDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
-    return formattedDate;
-  };
-
   // whatsapp message
-  const [sendWhatsAppReminder, setSendWhatsAppReminder] = useState(false);
+  const [sendWhatsAppReminder, setSendWhatsAppReminder] = useState(false)
 
->>>>>>> 05477f3cb8ab03ecc30c44ac17b6cd8b1cd1dd5c
   const handleConfirm = async () => {
     if (!selectedDate || !selectedTime || !selectedService) {
       alert(
         'Por favor, preencha todos os campos para garantir que o seu agendamento seja concluido com sucesso'
-      );
-      return;
+      )
+      return
     }
 
     try {
-      const accessToken = 'seu-token-de-acesso'; // Substitua pelo token de acesso real
+      const accessToken = 'seu-token-de-acesso' // Substitua pelo token de acesso real
 
       const data = {
         pet_id: selectedPet.id,
         schedules: `${selectedDate}T${selectedTime}`,
         price: finalPrice,
         type_service: selectedService,
-        service: selectedService,
-      };
-
-      // Enviar os dados para a API
-      const response = await axios.post('http://127.0.0.1:5000/schedules', data, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        },
-      });
-
-<<<<<<< HEAD
-      //consultar o numero de agendamentos para o mesmo dia
-      const agendamentosDiaRef = ref(db, `agendamentos/${selectedDate}`)
-      const agendamentosSnapshot = await get(agendamentosDiaRef)
-
-      if (agendamentosSnapshot.exists()) {
-        const agendamentosData = agendamentosSnapshot.val()
-        const numAgendamentosParaDia = Object.keys(agendamentosData).length
-
-        //verifica se já existem 5 agendamentos par ao mesmo dia
-        if (numAgendamentosParaDia >= 5) {
-          alert(
-            'Desculpe, o limite de agendamentos para este dia foi atingido e não é mais possivel realizar novos agendamentos. Por favor, tente outra data.'
-          )
-          return
-        }
+        service: selectedService
       }
 
-      //referencia de onde o agendamento ficará salvo agendamento > dia selecionado > hora selecionada > usuario logado
-      const agendamentoRef = ref(
-        db,
-        `agendamentos/${selectedDate}/${selectedTime}/${uid}`
+      // Enviar os dados para a API
+      const response = await axios.post(
+        'http://127.0.0.1:5000/schedules',
+        data,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+          }
+        }
       )
-      await set(agendamentoRef, data)
 
       alert('Dados salvos com sucesso')
-    } catch (e) {
-      alert(e, e.message)
-    }
-
-    setPopupData({
-      date: formatDate(selectedDate),
-      service: selectedService,
-      time: selectedTime,
-      price: finalPrice
-    })
-
-    // whatsapp
-    if(whatsappReminderChecked && isDateNear(selectedDate)){
-      sendMessageViaWhatsapp()
-    }
-  }
-
-  const isDateNear = (selectedDate) => {
-    const currentDate = new Date()
-    const selectedDateObject = new Date(selectedDate)
-    const difference = differenceInDays(selectedDateObject, currentDate)
-
-    return difference <= 1
-  }
-
-  const sendMessageViaWhatsapp = () => {
-    const phoneNumber = userData;
-    const message = encodeURIComponent(`Olá, ${userData}. Lembrandando que o seu agendamento está marcado para o dia ${selectedDate}, estamos ansiosos para te atender!`);
-    const url = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${message}`;
-    window.open(url, '_blank');
-  };
-
-=======
-      alert('Dados salvos com sucesso');
 
       setPopupData({
         date: formatDate(selectedDate),
         service: selectedService,
         time: selectedTime,
-        price: finalPrice,
-      });
+        price: finalPrice
+      })
     } catch (error) {
-      alert(error.message);
+      alert(error.message)
     }
-  };
->>>>>>> 05477f3cb8ab03ecc30c44ac17b6cd8b1cd1dd5c
+  }
 
   const handleClosePopup = () => {
-    setPopupData(null);
-  };
+    setPopupData(null)
+  }
 
-  const handlePetSelect = (pet) => {
-    setSelectedPet(pet);
-  };
+  const handlePetSelect = pet => {
+    setSelectedPet(pet)
+  }
 
   return (
     <div className="lg:w-[700px] mx-auto  p-10 rounded-md lg:shadow-lg my-20 py-8 lg:bg-background-color relative">
@@ -179,7 +92,7 @@ const Home = () => {
         <div className="mb-3 p-2 rounded-lg">
           <label className="text-gray-700 text-mdn font-bold ">Data</label>
           <input
-            onChange={(e) => setSelectedDate(e.target.value)}
+            onChange={e => setSelectedDate(e.target.value)}
             type="date"
             className="w-full px-3 py-3 focus:outline-none light-blue-input date-input "
           />
@@ -187,7 +100,7 @@ const Home = () => {
         <div className="mb-4 p-2 rounded-lg">
           <label className="text-gray-700 text-md font-bold">Horário</label>
           <input
-            onChange={(e) => setSelectedTime(e.target.value)}
+            onChange={e => setSelectedTime(e.target.value)}
             type="time"
             className="w-full px-3 py-3 focus:outline-none light-blue-input time-input"
           />
@@ -200,10 +113,10 @@ const Home = () => {
         <div className="flex justify-center">
           <div className="flex mb-3  p-2 rounded-lg">
             <input
-              onChange={(e) => {
-                setSeletedService(e.target.nextElementSibling.textContent);
-                setBathSelected(e.target.value === 'banho');
-                setSelectedTosa('');
+              onChange={e => {
+                setSeletedService(e.target.nextElementSibling.textContent)
+                setBathSelected(e.target.value === 'banho')
+                setSelectedTosa('')
               }}
               name="serviço"
               id="banho"
@@ -219,9 +132,9 @@ const Home = () => {
 
           <div className=" flex mb-3  p-2 rounded-lg">
             <input
-              onChange={(e) => {
-                setSeletedService(e.target.nextElementSibling.textContent);
-                setBathSelected(false);
+              onChange={e => {
+                setSeletedService(e.target.nextElementSibling.textContent)
+                setBathSelected(false)
               }}
               name="serviço"
               id="banho_tosa"
@@ -241,7 +154,7 @@ const Home = () => {
         <div className="grid md:flex md:justify-center lg:flex lg:justify-center">
           <div className=" flex mb-3  p-2 rounded-lg">
             <input
-              onChange={(e) =>
+              onChange={e =>
                 setSelectedTosa(e.target.nextElementSibling.textContent)
               }
               name="tipo-tosa"
@@ -258,7 +171,7 @@ const Home = () => {
 
           <div className=" flex mb-3  p-2 rounded-lg">
             <input
-              onChange={(e) =>
+              onChange={e =>
                 setSelectedTosa(e.target.nextElementSibling.textContent)
               }
               name="tipo-tosa"
@@ -275,7 +188,7 @@ const Home = () => {
 
           <div className=" flex mb-3  p-2 rounded-lg">
             <input
-              onChange={(e) =>
+              onChange={e =>
                 setSelectedTosa(e.target.nextElementSibling.textContent)
               }
               name="tipo-tosa"
@@ -292,7 +205,7 @@ const Home = () => {
 
           <div className=" flex mb-3  p-2 rounded-lg">
             <input
-              onChange={(e) =>
+              onChange={e =>
                 setSelectedTosa(e.target.nextElementSibling.textContent)
               }
               name="tipo-tosa"
@@ -322,15 +235,9 @@ const Home = () => {
         </div>
 
         <div className="flex justify-center mt-5">
-<<<<<<< HEAD
-          <WhatsappReminder 
-          onCheckboxChange={setWhatsappReminderChecked} 
-          onUserDataChange={handleUserDataChange}/>
-=======
           <WhatsappReminder
             onSendMessage={() => setSendWhatsAppReminder(true)}
           />
->>>>>>> 05477f3cb8ab03ecc30c44ac17b6cd8b1cd1dd5c
         </div>
       </form>
 
@@ -355,7 +262,7 @@ const Home = () => {
         />
       )}
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
