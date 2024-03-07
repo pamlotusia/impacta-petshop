@@ -16,7 +16,7 @@ const Signin = () => {
     try {
       const response = await signIn(email, password);
       console.log('Resposta da API:', response); // Adicionando instrução de depuração
-      navigate('/home'); // Redireciona para a rota '/home' após o login bem-sucedido
+      navigate('/dashboard'); // Redireciona para a rota '/home' após o login bem-sucedido
     } catch (error) {
       setError('Erro ao fazer login. Verifique suas credenciais.');
       console.error('Erro ao fazer login:', error);

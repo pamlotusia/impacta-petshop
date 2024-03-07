@@ -1,5 +1,14 @@
 export const AgendamentosData = [
   {
+  date: '06/03/2024',
+  time: '7:30',
+  nameOwner: 'Pam', 
+  typeService: 'banho e tosa', 
+  sizeAnimal: 'G',
+  price: 'R$85,00',
+  state: ['active','cancel', 'completed']
+},
+  {
   date: '25/02/2024',
   time: '13:30',
   nameOwner: 'Pam', 

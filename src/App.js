@@ -13,66 +13,72 @@ import Profile from './components/Profile'
 import Dashboard from './components/Dashboard'
 import Sidebar from './components/Sidebar'
 const App = () => {
-  const{user} = UserAuth()
-  const userEmail = user? user.email : null
+  const { user } = UserAuth()
+  const userEmail = user ? user.email : null
   const employeeEmails = ['employee@gmail.com', 'funcionario@gmail.com']
 
   const isEmployee = employeeEmails.includes(userEmail)
   return (
     <div>
       <AuthContextProvider>
-      <Routes>
-          <Route path='/' element={<Signin />} />
-          <Route path='/signup' element={<Signup />} />
+        <Routes>
+          <Route path="/" element={<Signin />} />
+          <Route path="/signup" element={<Signup />} />
           <Route
-            path='/home'
+            path="/home"
             element={
-              isEmployee? ( <ProtectedRoute>
-                <Sidebar/>
-                <Dashboard />
-              </ProtectedRoute>) : (
-                <ProtectedRoute>
+              <ProtectedRoute>
                 <Navbar />
                 <Home />
               </ProtectedRoute>
-              )
             }
           />
           <Route
-            path='/cadastrar-pet'
+            path="/cadastrar-pet"
             element={
               <ProtectedRoute>
                 <Navbar />
-                <RegisterPet />                
+                <RegisterPet />
               </ProtectedRoute>
             }
           />
           <Route
-            path='/meus-pets'
+            path="/meus-pets"
             element={
               <ProtectedRoute>
                 <Navbar />
-                <MyPets />                
+                <MyPets />
               </ProtectedRoute>
             }
           />
           <Route
-            path='/historico'
+            path="/historico"
             element={
               <ProtectedRoute>
                 <Navbar />
-                <Appointments />                
+                <Appointments />
               </ProtectedRoute>
             }
           />
           <Route
-            path='/perfil'
+            path="/perfil"
             element={
               <ProtectedRoute>
                 <Navbar />
-                <Profile />                
+                <Profile />
               </ProtectedRoute>
             }
+          />
+
+          {/* rotas dashboard */}
+          <Route
+          path='/dashboard'
+          element={
+            <ProtectedRoute>
+                <Sidebar/>
+                <Dashboard />
+              </ProtectedRoute>            
+          }
           />
         </Routes>
       </AuthContextProvider>
