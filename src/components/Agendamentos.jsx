@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { AgendamentosData } from '../Data/Data'
 
 const Agendamentos = () => {
-  const [selectedFilter, setSelectedFilter] = useState(null);
+  const [selectedFilter, setSelectedFilter] = useState(null)
 
-  const handleFilterClick = (filter) => {
-    setSelectedFilter(filter);
+  const handleFilterClick = filter => {
+    setSelectedFilter(filter)
   }
 
   return (
@@ -14,19 +14,25 @@ const Agendamentos = () => {
         <p className="text-2xl grey-font">Agendamentos</p>
         <div className="flex">
           <p
-            className={`mx-1 p-2 px-5 light-blue-input rounded-[50px] ${selectedFilter === 'dia' ? 'button-active' : 'text-black'}`}
+            className={`mx-1 p-2 px-5 light-blue-input rounded-[50px] ${
+              selectedFilter === 'dia' ? 'button-active' : 'text-black'
+            }`}
             onClick={() => handleFilterClick('dia')}
           >
             dia
           </p>
           <p
-            className={`mx-1 p-2 px-5 light-blue-input rounded-[50px] ${selectedFilter === 'semana' ? 'button-active' : 'text-black'}`}
+            className={`mx-1 p-2 px-5 light-blue-input rounded-[50px] ${
+              selectedFilter === 'semana' ? 'button-active' : 'text-black'
+            }`}
             onClick={() => handleFilterClick('semana')}
           >
             semana
           </p>
           <p
-            className={`mx-1 p-2 px-5 light-blue-input rounded-[50px] ${selectedFilter === 'mês' ? 'bg-blue-500 text-white' : 'text-black'}`}
+            className={`mx-1 p-2 px-5 light-blue-input rounded-[50px] ${
+              selectedFilter === 'mês' ? 'button-active' : 'text-black'
+            }`}
             onClick={() => handleFilterClick('mês')}
           >
             mês

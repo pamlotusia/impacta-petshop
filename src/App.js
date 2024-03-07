@@ -12,6 +12,7 @@ import Appointments from './components/Appointments'
 import Profile from './components/Profile'
 import Dashboard from './components/Dashboard'
 import Sidebar from './components/Sidebar'
+import LoginEmployee from './components/LoginEmployee'
 const App = () => {
   const { user } = UserAuth()
   const userEmail = user ? user.email : null
@@ -71,6 +72,14 @@ const App = () => {
           />
 
           {/* rotas dashboard */}
+          <Route
+          path='/signin-employee'
+          element={
+            <ProtectedRoute>
+                <LoginEmployee/>
+              </ProtectedRoute>            
+          }
+          />
           <Route
           path='/dashboard'
           element={
