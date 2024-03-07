@@ -7,6 +7,7 @@ from ..Services import client_services
 from ..Schemas import client_schema
 from ..Entities import client_ident
 from ..Models.client_model import User
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 
 class Login(Resource):
@@ -80,6 +81,23 @@ class CreateAccount(Resource):
             return make_response(response, 201)
 
 
+
+class Profile(Resource):
+    @jwt_required()
+    def get(self):
+        schema = client_schema.UserSchema()
+        user_id = get_jwt_identity()
+        
+        data = client_services.filter_client_by_id(user_id)
+        
+        response = schema.dump(data)
+        return make_response(
+            response
+            , 201
+        )
+
+
 # Criando rotas
 api.add_resource(Login, '/login')
 api.add_resource(CreateAccount, '/create-account')
+api.add_resource(Profile, '/profile')

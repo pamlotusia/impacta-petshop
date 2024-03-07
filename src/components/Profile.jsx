@@ -1,33 +1,30 @@
 import React, { useState, useEffect } from 'react'
-import { auth } from '../firebase'
-import { getDatabase, ref, get } from 'firebase/database'
+import axios from 'axios'
+import { UserAuth } from '../contexts/AuthContext'
 
 const Profile = () => {
+  const { user } = UserAuth();
   const [userData, setUserData] = useState(null)
 
   useEffect(() => {
-    const user = auth.currentUser
-
-    if (user) {
-      const userId = user.uid
-      const db = getDatabase()
-      const userRef = ref(db, `users/${userId}`)
-
-      get(userRef)
-        .then(snapshot => {
-          if (snapshot.exists()) {
-            const userData = snapshot.val()
-            setUserData(userData)
-          } else {
-            alert('dados do usuario nao encontrados')
-          }
-        })
-        .catch(e => {
-          alert('Erro ao obter dados do usuário no Firebase:', e.message)
-        })
-    }
-  }, [])
-  const db = getDatabase()
+    const fetchData = async () => {
+      if ( user ) {
+        try {
+          const response = await axios.get('http://127.0.0.1:5000/profile',{
+            headers: {
+              'Content-Type': 'application/json'
+              , Authorization: `Bearer ${user.token}`
+            }
+          });
+          setUserData(response.data)
+        } catch (error) {
+          console.log('Erro ao obyer dados do usuário:', error)
+          alert('Erro ao obter dados do usuário:', error.message)
+        }
+      }
+    };
+    fetchData();
+  }, [user]); 
   return (
     <div className="mx-20 font-poppins">
       <h1 className="text-3xl color-title text-left font-poppins  font-medium my-10">

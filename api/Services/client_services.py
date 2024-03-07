@@ -20,5 +20,9 @@ def client_register(client):
 
 
 def filter_client_by_email(email):
-    user = User.query.filter_by(email=email).first()
+    user = User.query.filter_by(email=email).one_or_none()
+    return user
+
+def filter_client_by_id(id):
+    user = User.query.filter_by(id=id).one_or_none()
     return user

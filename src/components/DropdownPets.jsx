@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { UserAuth } from '../contexts/AuthContext';
 import axios from 'axios';
 
-// Dá merge nessa 
+// Dá merge NESTE AQUI!
 
 import { FaPlus, FaMinus } from 'react-icons/fa';
 import iconDog from '../images/icon-dog.svg';
@@ -10,6 +11,7 @@ import iconBird from '../images/icon-bird.svg';
 import iconRodent from '../images/icon-rodent.svg';
 
 function DropdownPets({ onPetSelect }) {
+  const { user } = UserAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [pets, setPets] = useState([]);
   const [selectedPet, setSelectedPet] = useState(null);
@@ -34,29 +36,25 @@ function DropdownPets({ onPetSelect }) {
   };
 
   useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken');
-    if (!accessToken) {
-      console.error('Token de acesso não encontrado');
-      return;
-    }
-
-    // Configuração do cabeçalho da requisição
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`
-      }
+    const fetchPets = async () => {
+      if ( user ) {
+        try {
+          const response = await axios.get('http://127.0.0.1:5000/pets', {
+            headers: {
+              'Content-Type': 'application/json'
+              , Authorization: `Bearer ${user.token}`
+            }
+          });
+          setPets(response.data)
+        } catch ( error ) {
+          console.log('Erro ao obyer dados dos pets:', error)
+          alert('Erro ao obter dados dos pets:', error.message)
+        }
+      };
     };
 
-    // Fazendo a requisição GET para a API
-    axios.get('http://127.0.0.1:5000/pets', config)
-      .then(response => {
-        setPets(response.data);
-      })
-      .catch(error => {
-        console.error('Erro ao obter os pets:', error);
-      });
-  }, []);
+    fetchPets();
+  }, [user]);
 
   const handlePetClick = pet => {
     setSelectedPet(pet);

@@ -7,8 +7,6 @@ import DropdownPets from './DropdownPets';
 import Price from './Price';
 import WhatsappReminder from './WhatsappReminder';
 
-// Dá merge nessa 
-
 const Home = () => {
   const { user, logout } = UserAuth();
   const navigate = useNavigate();
@@ -40,7 +38,6 @@ const Home = () => {
     }
 
     try {
-      const accessToken = 'seu-token-de-acesso'; // Substitua pelo token de acesso real
 
       const data = {
         pet_id: selectedPet.id,
