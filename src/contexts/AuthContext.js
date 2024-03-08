@@ -1,12 +1,11 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 
-// Dá merge nessa 
-
-const UserContext = createContext();
+const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [isEmployee, setIsEmployee] = useState(false);
 
   const createUser = async (name, email, password, phone) => {
     try {
@@ -23,11 +22,6 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem('accessToken'); // Remove o token de acesso do cache do navegador ao fazer logout
-  };
-
   const signIn = async (email, password) => {
     try {
       const response = await axios.post('http://127.0.0.1:5000/login', {
@@ -35,12 +29,35 @@ export const AuthContextProvider = ({ children }) => {
         password: password
       });
       setUser(response.data);
-      localStorage.setItem('accessToken', response.data.token); // Armazena o token de acesso no cache do navegador ao fazer login
+      localStorage.setItem('accessToken', response.data.token);
+      setIsEmployee(false); // Define que o usuário autenticado não é um funcionário
       return response.data;
     } catch (error) {
       console.error('Erro ao fazer login:', error);
       throw error;
     }
+  };
+
+  const signInEmployee = async (email, password) => {
+    try {
+      const response = await axios.post('http://127.0.0.1:5000/employee-login', {
+        email: email,
+        password: password
+      });
+      setUser(response.data);
+      localStorage.setItem('accessToken', response.data.token);
+      setIsEmployee(true); // Define que o usuário autenticado é um funcionário
+      return response.data;
+    } catch (error) {
+      console.error('Erro ao fazer login de funcionário:', error);
+      throw error;
+    }
+  };
+
+  const logout = () => {
+    setUser(null);
+    setIsEmployee(false);
+    localStorage.removeItem('accessToken');
   };
 
   useEffect(() => {
@@ -51,12 +68,12 @@ export const AuthContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ createUser, user, logout, signIn }}>
+    <AuthContext.Provider value={{ createUser, signIn, signInEmployee, logout, user, isEmployee }}>
       {children}
-    </UserContext.Provider>
+    </AuthContext.Provider>
   );
 };
 
 export const UserAuth = () => {
-  return useContext(UserContext);
+  return useContext(AuthContext);
 };

@@ -77,6 +77,7 @@ class EmployeeLogin(Resource):
                             "acess_time": datetime.utcnow().isoformat()
                             , "client_ip": request.remote_addr
                             , "client_id": employee_exist.id
+                            , "office": employee_exist.office
                             }
                         )
                     }

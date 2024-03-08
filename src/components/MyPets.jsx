@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from 'react';
-
-// Dá merge nessa 
-
 // Importe os ícones diretamente
 import iconDog from '../images/icon-dog.svg';
 import iconCat from '../images/icon-cat.svg';

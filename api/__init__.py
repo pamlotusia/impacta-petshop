@@ -22,6 +22,6 @@ CORS(app, resources={r"/*": {"origins": ["http://localhost:3000"]}}) # Permite s
 
 # importando nossas rotas (precisa estar no modulo inicial)
 from .Views import (client_pet_views, client_views, petgrooming_views
-                    , employee_views)
+                    , employee_views, employee_petgrooming_views)
 from .Models import (client_model, pet_grooming_model, pet_model
                      , comments_model, employees_model)

@@ -31,6 +31,29 @@ def filter_schedules_by_petGuardian(guardian_id: int):
             , "type_service": schedule.type_service
             , "pet_name": schedule.pet.name  # Obtendo o nome do pet através do relacionamento
             , "pet_type": schedule.pet.pet_type  # Obtendo o nome do pet através do relacionamento
+            , "nameOwner": schedule.guardian.name  # Obtendo o nome do pet através do relacionamento
+        }
+        
+        json_data.append(schedule_data)
+    return json_data
+
+def filter_all_schedules():
+    pet_schedules: List = PetGroomingSchedules.query.all()
+    json_data = []
+    for schedule in pet_schedules:
+    # Montar um dicionário com as informações necessárias, incluindo o nome do pet
+        schedule_data = {
+            "guardian_id": schedule.guardian_id
+            , "id": schedule.id
+            , "pet_id": schedule.pet_id
+            , "pet_size": schedule.pet.size
+            , "price": str(schedule.price) # Convertendo para string, se necessário
+            , "schedules": schedule.schedules # Formatando a data e hora no formato ISO 8601
+            , "service": schedule.service
+            , "type_service": schedule.type_service
+            , "pet_name": schedule.pet.name  # Obtendo o nome do pet através do relacionamento
+            , "pet_type": schedule.pet.pet_type  # Obtendo o nome do pet através do relacionamento
+            , "nameOwner": schedule.guardian.name  # Obtendo o nome do pet através do relacionamento
         }
         
         json_data.append(schedule_data)

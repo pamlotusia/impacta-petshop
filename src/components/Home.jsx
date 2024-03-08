@@ -1,80 +1,87 @@
-import React, { useState } from 'react';
-import { UserAuth } from '../contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import PopUp from './PopUp';
-import DropdownPets from './DropdownPets';
-import Price from './Price';
-import WhatsappReminder from './WhatsappReminder';
+import React, { useState } from 'react'
+import { UserAuth } from '../contexts/AuthContext'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import PopUp from './PopUp'
+import DropdownPets from './DropdownPets'
+import Price from './Price'
+import WhatsappReminder from './WhatsappReminder'
+
+// Dá merge nessa
 
 const Home = () => {
-  const { user, logout } = UserAuth();
-  const navigate = useNavigate();
+  const { user, logout } = UserAuth()
+  const navigate = useNavigate()
 
-  const [selectedDate, setSelectedDate] = useState('');
-  const [selectedTime, setSelectedTime] = useState('');
-  const [selectedService, setSeletedService] = useState('');
-  const [bathSelected, setBathSelected] = useState(false);
-  const [selectedTosa, setSelectedTosa] = useState('');
-  const [selectedPet, setSelectedPet] = useState(null);
-  const [finalPrice, setFinalPrice] = useState(0);
-  const [popupData, setPopupData] = useState(null);
+  const [selectedDate, setSelectedDate] = useState('')
+  const [selectedTime, setSelectedTime] = useState('')
+  const [selectedService, setSeletedService] = useState('')
+  const [bathSelected, setBathSelected] = useState(false)
+  const [selectedTosa, setSelectedTosa] = useState('')
+  const [selectedPet, setSelectedPet] = useState(null)
+  const [finalPrice, setFinalPrice] = useState(0)
+  const [popupData, setPopupData] = useState(null)
 
-  const formatDate = (date) => {
-    const parts = date.split('-');
-    const formattedDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
-    return formattedDate;
-  };
+  const formatDate = date => {
+    const parts = date.split('-')
+    const formattedDate = `${parts[2]}/${parts[1]}/${parts[0]}`
+    return formattedDate
+  }
 
   // whatsapp message
-  const [sendWhatsAppReminder, setSendWhatsAppReminder] = useState(false);
+  const [sendWhatsAppReminder, setSendWhatsAppReminder] = useState(false)
 
   const handleConfirm = async () => {
     if (!selectedDate || !selectedTime || !selectedService) {
       alert(
         'Por favor, preencha todos os campos para garantir que o seu agendamento seja concluido com sucesso'
-      );
-      return;
+      )
+      return
     }
 
     try {
+      const accessToken = 'seu-token-de-acesso' // Substitua pelo token de acesso real
 
       const data = {
         pet_id: selectedPet.id,
         schedules: `${selectedDate}T${selectedTime}`,
         price: finalPrice,
         type_service: selectedService,
-        service: selectedService,
-      };
+        service: selectedService
+      }
 
       // Enviar os dados para a API
-      const response = await axios.post('http://127.0.0.1:5000/schedules', data, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        },
-      });
+      const response = await axios.post(
+        'http://127.0.0.1:5000/schedules',
+        data,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+          }
+        }
+      )
 
-      alert('Dados salvos com sucesso');
+      alert('Dados salvos com sucesso')
 
       setPopupData({
         date: formatDate(selectedDate),
         service: selectedService,
         time: selectedTime,
-        price: finalPrice,
-      });
+        price: finalPrice
+      })
     } catch (error) {
-      alert(error.message);
+      alert(error.message)
     }
-  };
+  }
 
   const handleClosePopup = () => {
-    setPopupData(null);
-  };
+    setPopupData(null)
+  }
 
-  const handlePetSelect = (pet) => {
-    setSelectedPet(pet);
-  };
+  const handlePetSelect = pet => {
+    setSelectedPet(pet)
+  }
 
   return (
     <div className="lg:w-[700px] mx-auto  p-10 rounded-md lg:shadow-lg my-20 py-8 lg:bg-background-color relative">
@@ -85,7 +92,7 @@ const Home = () => {
         <div className="mb-3 p-2 rounded-lg">
           <label className="text-gray-700 text-mdn font-bold ">Data</label>
           <input
-            onChange={(e) => setSelectedDate(e.target.value)}
+            onChange={e => setSelectedDate(e.target.value)}
             type="date"
             className="w-full px-3 py-3 focus:outline-none light-blue-input date-input "
           />
@@ -93,7 +100,7 @@ const Home = () => {
         <div className="mb-4 p-2 rounded-lg">
           <label className="text-gray-700 text-md font-bold">Horário</label>
           <input
-            onChange={(e) => setSelectedTime(e.target.value)}
+            onChange={e => setSelectedTime(e.target.value)}
             type="time"
             className="w-full px-3 py-3 focus:outline-none light-blue-input time-input"
           />
@@ -106,10 +113,10 @@ const Home = () => {
         <div className="flex justify-center">
           <div className="flex mb-3  p-2 rounded-lg">
             <input
-              onChange={(e) => {
-                setSeletedService(e.target.nextElementSibling.textContent);
-                setBathSelected(e.target.value === 'banho');
-                setSelectedTosa('');
+              onChange={e => {
+                setSeletedService(e.target.nextElementSibling.textContent)
+                setBathSelected(e.target.value === 'banho')
+                setSelectedTosa('')
               }}
               name="serviço"
               id="banho"
@@ -125,9 +132,9 @@ const Home = () => {
 
           <div className=" flex mb-3  p-2 rounded-lg">
             <input
-              onChange={(e) => {
-                setSeletedService(e.target.nextElementSibling.textContent);
-                setBathSelected(false);
+              onChange={e => {
+                setSeletedService(e.target.nextElementSibling.textContent)
+                setBathSelected(false)
               }}
               name="serviço"
               id="banho_tosa"
@@ -147,7 +154,7 @@ const Home = () => {
         <div className="grid md:flex md:justify-center lg:flex lg:justify-center">
           <div className=" flex mb-3  p-2 rounded-lg">
             <input
-              onChange={(e) =>
+              onChange={e =>
                 setSelectedTosa(e.target.nextElementSibling.textContent)
               }
               name="tipo-tosa"
@@ -164,7 +171,7 @@ const Home = () => {
 
           <div className=" flex mb-3  p-2 rounded-lg">
             <input
-              onChange={(e) =>
+              onChange={e =>
                 setSelectedTosa(e.target.nextElementSibling.textContent)
               }
               name="tipo-tosa"
@@ -181,7 +188,7 @@ const Home = () => {
 
           <div className=" flex mb-3  p-2 rounded-lg">
             <input
-              onChange={(e) =>
+              onChange={e =>
                 setSelectedTosa(e.target.nextElementSibling.textContent)
               }
               name="tipo-tosa"
@@ -198,7 +205,7 @@ const Home = () => {
 
           <div className=" flex mb-3  p-2 rounded-lg">
             <input
-              onChange={(e) =>
+              onChange={e =>
                 setSelectedTosa(e.target.nextElementSibling.textContent)
               }
               name="tipo-tosa"
@@ -255,7 +262,7 @@ const Home = () => {
         />
       )}
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

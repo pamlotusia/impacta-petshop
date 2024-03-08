@@ -72,3 +72,34 @@
 .time-input::-webkit-calendar-picker-indicator {
   font-size: 24px;
 }
+
+.parentContainer {
+  width: 328px;
+  height: 100px;
+  background-color: #e3e3f3;
+  color: #575757;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+}
+.parentContainer::before {
+  content: '';
+  background-color: #211f51;
+  height: 100%;
+  width: 8px;
+}
+
+.Cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 10em 10em 10em;
+  row-gap: 10px;
+}
+
+
+.btn-select{
+  background-color: #e3e3f3;
+  border: none;
+  outline: none;
+}
+
