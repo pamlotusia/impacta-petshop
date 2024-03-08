@@ -4,29 +4,32 @@ import iconDog from '../images/icon-dog.svg';
 import iconCat from '../images/icon-cat.svg';
 import iconBird from '../images/icon-bird.svg';
 import iconRodent from '../images/icon-rodent.svg';
-
+import { UserAuth } from '../contexts/AuthContext'
 // Dá merge nessa 
 
 const Appointments = () => {
+  const { user } = UserAuth();
   const [userAppointments, setUserAppointments] = useState([]);
 
   useEffect(() => {
     const fetchAppointments = async () => {
-      try {
-        const response = await axios.get('http://127.0.0.1:5000/schedules', {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-          },
-        });
-        setUserAppointments(response.data);
-      } catch (error) {
-        console.error('Erro ao obter os agendamentos:', error);
+      if ( user ) {
+        try {
+          const response = await axios.get('http://127.0.0.1:5000/schedules', {
+            headers: {
+              'Content-Type': 'application/json'
+              , Authorization: `Bearer ${user.token}`
+            },
+          });
+          setUserAppointments(response.data);
+        } catch (error) {
+          console.error('Erro ao obter os agendamentos:', error);
+        }
       }
     };
 
     fetchAppointments();
-  }, []);
+  }, [user]);
 
   const getIconAndColor = (petType) => {
     switch (petType.toLowerCase()) {

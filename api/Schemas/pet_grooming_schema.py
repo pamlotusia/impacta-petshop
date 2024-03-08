@@ -8,13 +8,19 @@ class PetSchedules(ma.Schema):
     class Meta:
         model = pet_grooming_model.PetGroomingSchedules
         fields = ('id', 'guardian_id', 'pet_id', 'pet_name', 'pet_type', 'schedules'
-                  , 'price', 'type_service', 'service')
+                  , 'price', 'type_service', 'service', 'nameOwner', 'pet_size')
         
     id = fields.Integer(required=True)
     guardian_id = fields.Integer(required=True)
     pet_id = fields.Integer(required=True)
+    pet_size = fields.String(required=True)
+    pet_name = fields.String(required=True)
+    pet_type = fields.String(required=True)
     schedules = fields.DateTime(required=True)
     price = fields.Decimal(required=True)
+    type_service = fields.String(required=True)
+    service = fields.String(required=True)
+    nameOwner = fields.String(required=True)
     
 
 class CreateSchedules(ma.Schema):

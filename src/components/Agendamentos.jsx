@@ -1,12 +1,100 @@
-import React, { useState } from 'react'
-import { AgendamentosData } from '../Data/Data'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { UserAuth } from '../contexts/AuthContext';
 
 const Agendamentos = () => {
-  const [selectedFilter, setSelectedFilter] = useState(null)
+  const [selectedFilter, setSelectedFilter] = useState(null);
+  const { user } = UserAuth();
+  const [userAppointments, setUserAppointments] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+
+  useEffect(() => {
+    const fetchAppointments = async () => {
+      if (user) {
+        try {
+          const response = await axios.get('http://127.0.0.1:5000/all-schedules', {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${user.token}`,
+            },
+          });
+          setUserAppointments(response.data);
+        } catch (error) {
+          console.error('Erro ao obter os agendamentos:', error);
+        }
+      }
+    };
+
+    fetchAppointments();
+  }, [user]);
+
+  useEffect(() => {
+    const applyFilter = () => {
+      switch (selectedFilter) {
+        case 'dia':
+          filterByDay();
+          break;
+        case 'semana':
+          filterByWeek();
+          break;
+        case 'mês':
+          filterByMonth();
+          break;
+        default:
+          setFilteredData(userAppointments);
+      }
+    };
+
+    applyFilter();
+  }, [selectedFilter, userAppointments]);
+
+  const filterByDay = () => {
+    const today = new Date();
+    const filtered = userAppointments.filter(item => {
+      const itemDate = new Date(item.schedules);
+      return (
+        itemDate.getDate() === today.getDate() &&
+        itemDate.getMonth() === today.getMonth() &&
+        itemDate.getFullYear() === today.getFullYear()
+      );
+    });
+    setFilteredData(filtered);
+  };
+
+  const filterByWeek = () => {
+    const today = new Date();
+    const firstDayOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay());
+    const lastDayOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay() + 6);
+    const filtered = userAppointments.filter(item => {
+      const itemDate = new Date(item.schedules);
+      return itemDate >= firstDayOfWeek && itemDate <= lastDayOfWeek;
+    });
+    setFilteredData(filtered);
+  };
+
+  const filterByMonth = () => {
+    const today = new Date();
+    const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+    const filtered = userAppointments.filter(item => {
+      const itemDate = new Date(item.schedules);
+      return itemDate >= firstDayOfMonth && itemDate <= lastDayOfMonth;
+    });
+    setFilteredData(filtered);
+  };
 
   const handleFilterClick = filter => {
-    setSelectedFilter(filter)
-  }
+    setSelectedFilter(filter);
+  };
+
+  const formatDateTime = dateTimeString => {
+    const dateTime = new Date(dateTimeString);
+
+    const options = { hour: 'numeric', minute: 'numeric' };
+    const formattedTime = dateTime.toLocaleTimeString([], options);
+
+    return `${formattedTime}`;
+  };
 
   return (
     <div className="">
@@ -41,37 +129,33 @@ const Agendamentos = () => {
       </div>
 
       <div className="Cards flex mt-10">
-        {AgendamentosData.map((card, id) => {
-          return (
-            <div>
-              <p className="m-3">{card.time}</p>
+        {filteredData.map((card, id) => (
+          <div key={id}>
+            <p className="m-3">{formatDateTime(card.schedules)}</p>
 
-              <div className="parentContainer">
-                <p className="text-md font-bold">{card.typeService}</p>
-                <p className="text-sm">
-                  {card.nameOwner}, {card.sizeAnimal}, {card.price}
-                </p>
-                <p>
-                  <span className="font-bold font-md">alterar status </span>
+            <div className="parentContainer">
+              <p className="text-md font-bold">{card.type_service}</p>
+              <p className="text-sm">
+                {card.nameOwner}, {card.pet_size}, {card.price}
+              </p>
+              <p>
+                <span className="font-bold font-md">alterar status </span>
 
-                  <select className="btn-select">
-                    <option value="">Selecione uma opção</option>
-                    {Array.from(
-                      new Set(AgendamentosData.flatMap(card => card.state))
-                    ).map((state, index) => (
-                      <option key={index} value={state}>
-                        {state}
-                      </option>
-                    ))}
-                  </select>
-                </p>
-              </div>
+                <select className="btn-select">
+                  <option value="">Selecione uma opção</option>
+                  {Array.from(new Set(userAppointments.flatMap(card => card.state))).map((state, index) => (
+                    <option key={index} value={state}>
+                      {state}
+                    </option>
+                  ))}
+                </select>
+              </p>
             </div>
-          )
-        })}
+          </div>
+        ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Agendamentos
+export default Agendamentos;

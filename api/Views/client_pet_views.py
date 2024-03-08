@@ -15,7 +15,6 @@ class Pets(Resource):
         errors = schema.validate(request.json)
         
         if errors:
-            print(errors)
             return make_response(jsonify({'errors': errors}), 400)
         
         pet_name = request.json.get('name')

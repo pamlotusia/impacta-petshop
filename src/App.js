@@ -76,13 +76,12 @@ const App = () => {
           <Route path="/signin-employee" element={<LoginEmployee />} />
 
           <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
-                <Sidebar />
-                <Dashboard />
-              </ProtectedRoute>
-            }
+          path='/signin-employee'
+          element={
+
+            <LoginEmployee/>
+           
+          }
           />
           <Route
             path="/agendamentos"

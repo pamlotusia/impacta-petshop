@@ -8,13 +8,13 @@ const LoginEmployee = () => {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const navigate = useNavigate()
-  const { signIn } = UserAuth()
+  const { signInEmployee } = UserAuth()
 
   const handleSubmit = async e => {
     e.preventDefault()
     setError('')
     try {
-      const response = await signIn(email, password)
+      const response = await signInEmployee(email, password)
       console.log('Resposta da API:', response) // Adicionando instrução de depuração
       navigate('/dashboard') // Redireciona para a rota '/dashboard' após o login bem-sucedido
     } catch (error) {
