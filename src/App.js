@@ -75,13 +75,15 @@ const App = () => {
           {/* rotas dashboard */}
           <Route path="/signin-employee" element={<LoginEmployee />} />
 
+          <Route path="/signin-employee" element={<LoginEmployee />} />
           <Route
-          path='/signin-employee'
-          element={
-
-            <LoginEmployee/>
-           
-          }
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Sidebar />
+                <Dashboard/>
+              </ProtectedRoute>
+            }
           />
           <Route
             path="/agendamentos"
@@ -92,7 +94,6 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-          
         </Routes>
       </AuthContextProvider>
     </div>
