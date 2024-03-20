@@ -13,6 +13,7 @@ import Profile from './components/Profile'
 import Dashboard from './components/Dashboard'
 import Sidebar from './components/Sidebar'
 import LoginEmployee from './components/LoginEmployee'
+import Agendamentos from './components/Agendamentos'
 const App = () => {
   const { user } = UserAuth()
   const userEmail = user ? user.email : null
@@ -72,22 +73,26 @@ const App = () => {
           />
 
           {/* rotas dashboard */}
-          <Route
-          path='/signin-employee'
-          element={
+          <Route path="/signin-employee" element={<LoginEmployee />} />
 
-            <LoginEmployee/>
-           
-          }
+          <Route path="/signin-employee" element={<LoginEmployee />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Sidebar />
+                <Dashboard/>
+              </ProtectedRoute>
+            }
           />
           <Route
-          path='/dashboard'
-          element={
-            <ProtectedRoute>
-                <Sidebar/>
-                <Dashboard />
-              </ProtectedRoute>            
-          }
+            path="/agendamentos"
+            element={
+              <ProtectedRoute>
+                <Sidebar />
+                <Agendamentos />
+              </ProtectedRoute>
+            }
           />
         </Routes>
       </AuthContextProvider>

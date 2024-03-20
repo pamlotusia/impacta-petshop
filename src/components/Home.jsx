@@ -5,8 +5,6 @@ import axios from 'axios'
 import PopUp from './PopUp'
 import DropdownPets from './DropdownPets'
 import Price from './Price'
-import WhatsappReminder from './WhatsappReminder'
-
 // Dá merge nessa
 
 const Home = () => {
@@ -231,12 +229,6 @@ const Home = () => {
             groomingType={selectedTosa}
             selectedPet={selectedPet}
             setFinalPrice={setFinalPrice}
-          />
-        </div>
-
-        <div className="flex justify-center mt-5">
-          <WhatsappReminder
-            onSendMessage={() => setSendWhatsAppReminder(true)}
           />
         </div>
       </form>
