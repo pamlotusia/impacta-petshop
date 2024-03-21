@@ -17,7 +17,8 @@ class AllSchedules(Resource):
             response
             , 201
         )
-        
+    
+    @jwt_required()
     def post(self):
         schema = pet_grooming_schema.UpdateSchedulesState()  
         errors = schema.validate(request.json)   
