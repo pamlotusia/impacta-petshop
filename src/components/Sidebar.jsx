@@ -1,6 +1,6 @@
 import React from 'react'
 import { UserAuth } from '../contexts/AuthContext'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 // icons
 import { IoHome } from 'react-icons/io5'
 import { IoCalendar } from 'react-icons/io5'
@@ -38,7 +38,10 @@ const Sidebar = () => {
         <p className="font-medium ml-6">Financeiro</p>
       </div>
 
-      <div className="flex items-center mt-[50%] light-grey-font cursor-pointer" onClick={handleLogout}>
+      <div
+        className="flex items-center mt-[50%] light-grey-font cursor-pointer"
+        onClick={handleLogout}
+      >
         <IoIosExit size={40} />
         <p className="font-medium ml-6">Sair</p>
       </div>

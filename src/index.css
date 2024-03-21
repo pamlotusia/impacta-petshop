@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Poppins:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Poppins:wght@400;500;600;700&display=swap');
 
 .bg-background-color {
   background-color: #f7f7f9; /* Substitua pelos valores RGB que desejar */
@@ -49,6 +50,9 @@
   color: #928484;
 }
 
+.pink-font {
+  color: #ff6b6c;
+}
 .custom-shadow {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Altere os valores conforme necessário */
 }
@@ -60,6 +64,10 @@
 
 .font-poppins {
   font-family: 'Poppins';
+}
+
+.font-nunito {
+  font-family: 'Nunito', sans-serif;
 }
 .login-img {
   margin-bottom: -8.5px;
@@ -95,11 +103,15 @@
   grid-template-rows: 10em 10em 10em;
   row-gap: 10px;
 }
+.finance-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  row-gap: 5em;
+  column-gap: 8px;
+}
 
-
-.btn-select{
+.btn-select {
   background-color: #e3e3f3;
   border: none;
   outline: none;
 }
-

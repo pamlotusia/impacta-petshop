@@ -14,6 +14,7 @@ import Dashboard from './components/Dashboard'
 import Sidebar from './components/Sidebar'
 import LoginEmployee from './components/LoginEmployee'
 import Agendamentos from './components/Agendamentos'
+import Finance from './components/Finance'
 const App = () => {
   const { user } = UserAuth()
   const userEmail = user ? user.email : null
@@ -81,7 +82,7 @@ const App = () => {
             element={
               <ProtectedRoute>
                 <Sidebar />
-                <Dashboard/>
+                <Finance/>
               </ProtectedRoute>
             }
           />
@@ -91,6 +92,15 @@ const App = () => {
               <ProtectedRoute>
                 <Sidebar />
                 <Agendamentos />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/financeiro"
+            element={
+              <ProtectedRoute>
+                <Sidebar />
+                <Finance />
               </ProtectedRoute>
             }
           />

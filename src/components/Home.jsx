@@ -217,7 +217,7 @@ const Home = () => {
               Tosa alta
             </label>
           </div>
-        </div>
+        </div>''
 
         <div className="flex justify-center">
           <DropdownPets onPetSelect={handlePetSelect} />
