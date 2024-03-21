@@ -54,6 +54,7 @@ def filter_all_schedules():
             , "pet_name": schedule.pet.name  # Obtendo o nome do pet através do relacionamento
             , "pet_type": schedule.pet.pet_type  # Obtendo o nome do pet através do relacionamento
             , "nameOwner": schedule.guardian.name  # Obtendo o nome do pet através do relacionamento
+            , "status": schedule.status # Obtendo o nome do pet através do relacionamento
         }
         
         json_data.append(schedule_data)
@@ -63,6 +64,10 @@ def filter_all_schedules():
 def filter_schedules_by_pet(pet_id: int):
     schedules: List = PetGroomingSchedules.query.filter_by(pet_id = pet_id).all()
     return schedules
+
+def filter_schedules_by_id(schedules_id: int):
+    schedule: PetGroomingSchedules = PetGroomingSchedules.query.filter_by(id = schedules_id).one_or_none()
+    return schedule
 
 def schedules_exist(date):
     scheduless = (PetGroomingSchedules

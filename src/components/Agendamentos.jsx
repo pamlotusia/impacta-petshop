@@ -96,6 +96,30 @@ const Agendamentos = () => {
     return `${formattedTime}`;
   };
 
+  const handleStatusChange = async (cardId, newStatus) => {
+    try {
+      await axios.post('http://127.0.0.1:5000/all-schedules', {
+        id: cardId,
+        status: newStatus
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+
+      // Atualiza o status no estado local para refletir a mudança na UI imediatamente
+      const updatedAppointments = userAppointments.map(card => {
+        if (card.id === cardId) {
+          return { ...card, status: newStatus };
+        }
+        return card;
+      });
+      setUserAppointments(updatedAppointments);
+    } catch (error) {
+      console.error('Erro ao atualizar o status:', error);
+    }
+  };
   return (
     <div className="">
       <div className="flex mt-10 justify-between items-center">
@@ -141,14 +165,15 @@ const Agendamentos = () => {
               <p>
                 <span className="font-bold font-md">alterar status </span>
 
-                <select className="btn-select">
-                  <option value="">Selecione uma opção</option>
-                  {Array.from(new Set(userAppointments.flatMap(card => card.state))).map((state, index) => (
-                    <option key={index} value={state}>
-                      {state}
-                    </option>
-                  ))}
-                </select>
+                 <select
+                    className="btn-select"
+                    value={card.status}
+                    onChange={(e) => handleStatusChange(card.id, e.target.value)}
+                  >
+                    <option value="Ativo">Ativo</option>
+                    <option value="Concluido">Concluído</option>
+                    <option value="Cancelado">Cancelado</option>
+                  </select>
               </p>
             </div>
           </div>
