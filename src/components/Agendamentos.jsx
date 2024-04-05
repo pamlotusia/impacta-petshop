@@ -18,7 +18,9 @@ const Agendamentos = () => {
               Authorization: `Bearer ${user.token}`,
             },
           });
-          setUserAppointments(response.data);
+          // Ordena os agendamentos por data antes de atualizar o estado
+          const sortedData = response.data.sort((a, b) => new Date(a.schedules) - new Date(b.schedules));
+          setUserAppointments(sortedData);
         } catch (error) {
           console.error('Erro ao obter os agendamentos:', error);
         }
@@ -41,7 +43,8 @@ const Agendamentos = () => {
           filterByMonth();
           break;
         default:
-          setFilteredData(userAppointments);
+          // Garante que os dados estejam ordenados mesmo sem filtro específico
+          setFilteredData([...userAppointments].sort((a, b) => new Date(a.schedules) - new Date(b.schedules)));
       }
     };
 
@@ -89,10 +92,8 @@ const Agendamentos = () => {
 
   const formatDateTime = dateTimeString => {
     const dateTime = new Date(dateTimeString);
-
     const options = { hour: 'numeric', minute: 'numeric' };
     const formattedTime = dateTime.toLocaleTimeString([], options);
-
     return `${formattedTime}`;
   };
 
@@ -108,7 +109,6 @@ const Agendamentos = () => {
         },
       });
 
-      // Atualiza o status no estado local para refletir a mudança na UI imediatamente
       const updatedAppointments = userAppointments.map(card => {
         if (card.id === cardId) {
           return { ...card, status: newStatus };

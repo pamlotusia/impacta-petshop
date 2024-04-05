@@ -32,7 +32,7 @@ const Finance = () => {
     };
 
     fetchData();
-  }, [user]); // Adicionado 'user' como dependência para refazer a busca quando o usuário mudar
+  }, [user]);
 
   const processFinanceData = (data) => {
     const mesesOrdenados = [
@@ -51,12 +51,14 @@ const Finance = () => {
       acc[month][week].expectativa += parseFloat(curr.price);
       if (curr.status === 'Concluido') {
         acc[month][week].rendimento_bruto += parseFloat(curr.price);
+      } else {
+        // Se o status não for "Concluido", garantimos que o rendimento bruto é tratado como R$ 0.00
+        acc[month][week].rendimento_bruto += 0;
       }
 
       return acc;
     }, {});
 
-    // Ordena os dados com base nos meses
     const financeDataSorted = Object.entries(financeData).sort((a, b) => {
       return mesesOrdenados.indexOf(a[0].toLowerCase()) - mesesOrdenados.indexOf(b[0].toLowerCase());
     }).map(([month, weeks]) => ({
