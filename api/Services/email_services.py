@@ -1,6 +1,6 @@
 import win32com.client as win32
 import pythoncom
-
+import os
 
 
 class Email:
@@ -10,9 +10,13 @@ class Email:
         
         self.__outlook = win32.Dispatch('outlook.application')
         self.__email = self.__outlook.CreateItem(0)
-        self.__attachment_path = "C:\\Users\\wesle\\OneDrive\\Área de Trabalho\\Projeto - Vets\\src\\images\\pet_logo.png"
+
+        script_directory = os.path.dirname(os.path.abspath(__file__))
+        project_root = os.path.dirname(os.path.dirname(script_directory))
+        image_path = os.path.join(project_root, 'src', 'images', 'pet_logo.png')
+        
         self.__attachment = self.__email.Attachments.Add(
-            self.__attachment_path, 1, 0, "pet_logo.png")
+            image_path, 1, 0, "pet_logo.png")
         self.__cid = "image.png@myemail.com"
         self.__attachment.PropertyAccessor.SetProperty(
             "http://schemas.microsoft.com/mapi/proptag/0x3712001F"
