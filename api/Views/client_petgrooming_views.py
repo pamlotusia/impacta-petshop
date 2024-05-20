@@ -26,9 +26,7 @@ class Schedules(Resource):
         guardian_pets = pet_services.filter_all_pets_by_guardian(guardian_id)
         pet_exist = any(data.id == pet_id for data in guardian_pets)
         schedules_exist = pet_grooming_services.schedules_exist(schedules)
-        
-        print('\n', pet_exist, '\n')
-        print('\n', schedules_exist, '\n')
+    
         
         if not schedules_exist:
             if not pet_exist:

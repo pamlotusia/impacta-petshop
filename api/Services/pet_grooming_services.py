@@ -1,6 +1,7 @@
 from api import db
 from typing import List
 from ..Models.pet_grooming_model import PetGroomingSchedules 
+from .email_services import Email
 
 def create_schedules(pet):
     new_schedules: PetGroomingSchedules = PetGroomingSchedules(
@@ -13,6 +14,24 @@ def create_schedules(pet):
     )
     db.session.add(new_schedules)
     db.session.commit()
+    
+    with Email() as email:
+        if ('outlook' in new_schedules.guardian.email
+            or 'hotmail' in new_schedules.guardian.email):
+            email.send_outlook(new_schedules.guardian.email
+                            , 'Confirmação de Agendamento'
+                            , new_schedules.guardian.name
+                            , new_schedules.schedules
+                            , new_schedules.service
+                            , new_schedules.pet.name) 
+        else:
+             email.send_gmail(new_schedules.guardian.email
+                            , 'Confirmação de Agendamento'
+                            , new_schedules.guardian.name
+                            , new_schedules.schedules
+                            , new_schedules.service
+                            , new_schedules.pet.name)            
+
     return new_schedules
 
 
