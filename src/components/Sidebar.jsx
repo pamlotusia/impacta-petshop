@@ -30,12 +30,12 @@ const Sidebar = () => {
 
       <div className="flex items-center mb-8 cursor-pointer">
         <IoCalendar size={40} />
-        <p className="font-medium ml-6">Agendamentos</p>
+        <p className="font-medium ml-6"><Link to={'/agendamentos'}>Agendamentos</Link></p>
       </div>
 
       <div className="flex items-center cursor-pointer">
         <FaMoneyBillTransfer size={40} />
-        <p className="font-medium ml-6">Financeiro</p>
+        <p className="font-medium ml-6"><Link to={'/financeiro'}>Financeiro</Link></p>
       </div>
 
       <div
