@@ -121,8 +121,8 @@ const Agendamentos = () => {
     }
   };
   return (
-    <div className="">
-      <div className="flex mt-10 justify-between items-center">
+    <div className="flex flex-col h-screen top-0 ml-[20%] w-[80%]'">
+      <div className="flex mt-10 px-10 justify-between items-center">
         <p className="text-2xl grey-font">Agendamentos</p>
         <div className="flex">
           <p

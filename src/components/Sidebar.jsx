@@ -22,7 +22,7 @@ const Sidebar = () => {
   return (
     <div className="p-6 pt-[10%] bg-background-color w-[20%] h-screen fixed left-0 top-0 color-title">
       {/* Envolver cada item em um componente Link ou usar navigate para redirecionar */}
-      <Link to="" className="flex items-center mb-8 cursor-pointer">
+      <Link to="/dashboard" className="flex items-center mb-8 cursor-pointer">
         <IoHome size={40} />
         <p className="font-medium ml-6">Home</p>
       </Link>

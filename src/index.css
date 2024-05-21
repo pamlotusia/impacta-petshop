@@ -82,7 +82,7 @@
 }
 
 .parentContainer {
-  width: 328px;
+  width: 248px;
   height: 100px;
   background-color: #e3e3f3;
   color: #575757;
@@ -90,6 +90,7 @@
   padding: 10px;
   border-radius: 10px;
 }
+
 .parentContainer::before {
   content: '';
   background-color: #211f51;

@@ -82,7 +82,7 @@ const App = () => {
             element={
               <ProtectedRoute>
                 <Sidebar />
-                <Finance/>
+                <Dashboard/>
               </ProtectedRoute>
             }
           />
