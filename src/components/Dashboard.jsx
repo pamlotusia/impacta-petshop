@@ -1,11 +1,12 @@
 import React from 'react'
-import Agendamentos from './Agendamentos'
-import Finance from './Finance'
+import Graphics from './Graphics'
 
 const Dashboard = () => {
   return (
-    <div className='flex justify-center h-screen top-0 ml-[20%] w-[80%]'>
-      <h1>hello</h1>
+    <div className='flex  flex-col  h-screen top-0 ml-[20%] w-[80%]'>
+      
+      <Graphics/>
+
     </div>
   )
 }

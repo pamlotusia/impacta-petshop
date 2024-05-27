@@ -119,3 +119,13 @@
   border: none;
   outline: none;
 }
+
+.GraphicCard{
+  display: flex;
+  gap: 10px;
+
+}
+
+.cardContainer{
+  width: 100%;
+}
