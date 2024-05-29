@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import { useSidebar } from '../contexts/SidebarContext';
 import Graphics from './Graphics';
@@ -96,19 +95,3 @@ const Dashboard = () => {
 }
 
 export default Dashboard;
-=======
-import React from 'react'
-import Graphics from './Graphics'
-
-const Dashboard = () => {
-  return (
-    <div className='flex  flex-col  h-screen top-0 ml-[20%] w-[80%]'>
-      
-      <Graphics/>
-
-    </div>
-  )
-}
-
-export default Dashboard
->>>>>>> origin/main

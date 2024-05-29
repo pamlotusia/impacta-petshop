@@ -138,10 +138,7 @@
   position: relative;
   cursor: pointer;
   padding: 1rem;
-<<<<<<< HEAD
   margin: 50px;
-=======
->>>>>>> origin/main
 }
 
 .CompactCard:hover{
@@ -154,11 +151,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-<<<<<<< HEAD
   gap: 0rem;
-=======
-  gap: 1rem;
->>>>>>> origin/main
 }
 
 .CircularProgressBar{
