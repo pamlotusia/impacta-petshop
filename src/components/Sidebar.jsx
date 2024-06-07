@@ -42,7 +42,7 @@ const Sidebar = () => {
     <section id="sidebar" className={isSidebarHidden ? 'hide' : ''}>
       <a href="#" className="brand">
         <i className='bx bxs-cat' style={{ fontSize: '35px' }}></i>
-        <span className="text">MyPet</span>
+        <span className="text">Pelos&Plumas</span>
       </a>
       <ul className="side-menu top">
         {menuItems.map((menu) => (

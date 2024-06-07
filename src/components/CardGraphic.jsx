@@ -1,119 +1,78 @@
-import React, { useState } from 'react';
-import { motion, LayoutGroup } from 'framer-motion';
-import { CircularProgressbar } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
-import { UilTimes } from "@iconscout/react-unicons";
-import Chart from 'react-apexcharts'; // Importação correta do Chart
+import React from 'react';
+import PropTypes from 'prop-types';
+import { PieChart, Pie, Cell, Tooltip, Legend, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
+import './graphic.css';
 
-const CardGraphic = (props) => {
-  const [expanded, setExpanded] = useState(false);
-
+// Donut Chart Component
+const StatusDonutChart = ({ data }) => {
+  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
   return (
-    <LayoutGroup>
-      {expanded ? <ExpandedCard param={props} setExpanded={() => setExpanded(false)} /> : <CompactCard param={props} setExpanded={() => setExpanded(true)} />}
-    </LayoutGroup>
+    <PieChart width={400} height={400}>
+      <Pie
+        data={data}
+        cx={200}
+        cy={200}
+        outerRadius={150}
+        innerRadius={70}  // Definindo innerRadius para criar o efeito de rosca
+        fill="#8884d8"
+        label
+        dataKey="value"
+      >
+        {data && data.map((entry, index) => (
+          <Cell key={`cell-${index}`} fill={entry.name === 'Canceled' ? 'red' : COLORS[index % COLORS.length]} />
+        ))}
+      </Pie>
+      <Tooltip formatter={(value) => `R$${value.toLocaleString('pt-BR')}`} />
+      <Legend />
+    </PieChart>
   );
 };
 
-// CompactCard
-function CompactCard({ param, setExpanded }) {
-  const Png = param.png;
+// Custom Tooltip for Bar Chart
+const CustomBarTooltip = ({ active, payload, label }) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="custom-bar-tooltip">
+        <p className="earning">Earnings</p>
+        <p className="value">R${payload[0].value.toLocaleString('pt-BR')}</p>
+      </div>
+    );
+  }
+
+  return null;
+};
+
+// Bar Chart Component
+const EarningsBarChart = ({ data }) => {
   return (
-    <motion.div
-      className="CompactCard"
-      style={{
-        background: param.color.backGround,
-        boxShadow: param.color.boxShadow,
-      }}
-      layoutId="expandableCard"
-      onClick={setExpanded}
-    >
-      <div className="radialBar">
-        <CircularProgressbar
-          value={param.barValue}
-          text={`${param.barValue}%`}
-        />
-        <span>{param.title}</span>
+    <BarChart width={700} height={400} data={data}>
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis dataKey="month" />
+      <YAxis domain={[0, 10000]} tickFormatter={(value) => `R$${value.toLocaleString('pt-BR')}`} />
+      <Tooltip content={<CustomBarTooltip />} />
+      <Legend formatter={() => 'Ganhos'} />
+      <Bar dataKey="earnings" name="Ganhos" fill="#8884d8" />
+    </BarChart>
+  );
+};
+
+// Main Graphics Component
+const Graphics = ({ donutData, barData, showDonutChart = true, showBarChart = true }) => {
+  return (
+    <div className="graphics-container">
+      <div className="charts-container">
+        {showDonutChart && <StatusDonutChart data={donutData} />}
+        {showBarChart && <EarningsBarChart data={barData} />}
       </div>
-      <div className="detail">
-        <Png />
-        <span>${param.value}</span>
-        <span>Last 24 hours</span>
-      </div>
-    </motion.div>
+    </div>
   );
 }
 
-// ExpandedCard
-function ExpandedCard({ param, setExpanded }) {
-  const data = {
-    options: {
-      chart: {
-        type: "area",
-        height: "auto",
-      },
-      dropShadow: {
-        enabled: false,
-        top: 0,
-        left: 0,
-        blur: 3,
-        color: "#000",
-        opacity: 0.35,
-      },
-      fill: {
-        colors: ['#fff'],
-        type: "gradient",
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      stroke: {
-        curve: "smooth",
-        colors: ["white"],
-      },
-      tooltip: {
-        x: {
-          format: "dd/MM/yy HH:mm",
-        },
-      },
-      grid: {
-        show: true,
-      },
-      xaxis: {
-        type: "datetime",
-        categories: [
-          "2024-01-19T00:00:00.000Z",
-          "2024-01-19T01:30:00.000Z",
-          "2024-01-19T02:30:00.000Z",
-          "2024-01-19T03:30:00.000Z",
-          "2024-01-19T04:30:00.000Z",
-          "2024-01-19T05:30:00.000Z",
-          "2024-01-19T06:30:00.000Z",
-        ],
-      },
-    },
-    series: param.series,
-  };
+Graphics.propTypes = {
+  donutData: PropTypes.array.isRequired,
+  barData: PropTypes.array.isRequired,
+  showDonutChart: PropTypes.bool,
+  showBarChart: PropTypes.bool,
+};
 
-  return (
-    <motion.div
-      className="ExpandedCard"
-      style={{
-        background: param.color.backGround,
-        boxShadow: param.color.boxShadow,
-      }}
-      layoutId="expandableCard"
-    >
-      <div style={{ alignSelf: "flex-end", cursor: "pointer", color: "white" }}>
-        <UilTimes onClick={setExpanded} />
-      </div>
-      <span>{param.title}</span>
-      <div className="chartContainer">
-        <Chart options={data.options} series={data.series} type="area" />
-      </div>
-      <span>Last 24 hours</span>
-    </motion.div>
-  );
-}
-
-export default CardGraphic;
+export default Graphics;
